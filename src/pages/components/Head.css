@@ -1,0 +1,123 @@
+#head-banner {
+    position: fixed;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+    padding: 0 3rem;
+    width: 100%;
+    height: 5rem;
+    background-color: #000;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+}
+
+#head-banner img {
+    width: 2rem;
+    fill: #fff !important;
+    margin: 0.5rem 0;
+}
+
+#head-banner > nav {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#head-banner > nav > a {
+    padding: 0 2rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    align-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    color: rgb(230, 230, 230);
+}
+
+.selected-link {
+    color: rgb(250, 50, 50) !important;
+    border-bottom: 0.3rem solid rgb(250, 50, 50);
+}
+
+#head-user {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#head-user svg {
+    margin: 0 2rem;
+    width: 2.5rem;
+    height: 2rem;
+}
+
+#head-banner .content {
+    fill: #eee !important;
+}
+
+/************************************* Seccion del logo, el nombre del sitio y el eslogan ********************************************/
+#head-firm {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    width: 100%;
+    height: 60vh;
+    padding: 0 25rem;
+    color: #eee;
+    background-color: transparent;
+}
+
+#head-firm > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#head-firm > div > div {
+    display: flex;
+    align-items: center;
+    margin: 3rem 0;
+    box-sizing: border-box;
+}
+
+#head-firm img {
+    width: 10rem;
+    margin-right: 4rem;
+}
+
+#head-firm h1 {
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+}
+
+#head-firm span {
+    display: block;
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+}
+
+#head-info h2 {
+    width: 70%;
+    align-content: center;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #ddd;
+}
+
+#head-firm-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: end;
+    padding: 10rem 0;
+}
+
+#head-firm-nav svg {
+    width: 2.5rem;
+}
+
+#head-firm-nav .content {
+    fill: #eee !important;
+}

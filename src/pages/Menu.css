@@ -1,0 +1,157 @@
+#head-foot {
+    height: 20rem;
+    width: 100%;
+    background: linear-gradient(transparent, #000 50%);
+}
+
+#head-main {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    font-size: 1.7rem;
+    background-image: linear-gradient(#000, transparent 30%, transparent 70%, #000), url('/src/assets/img/8582471f716c55d3e95d9842a00c80d4.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.head-bg {
+    background-attachment: initial;
+}
+
+#courses {
+    padding: 5rem 15rem;
+    background: linear-gradient(to right, #000, transparent 20%, transparent 80%, #000);
+    backdrop-filter: blur(1rem);
+}
+
+#course {
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+    height: 70rem;
+    border-radius: 2rem;
+}
+
+#course-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#course-left img {
+    width: 45rem;
+    height: 45rem;
+    border-radius: 50%;
+}
+
+#course-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+}
+
+#course-rat {
+    margin-bottom: 3rem;
+    width: 60%;
+}
+
+#stars {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+}
+
+#stars .star {
+    width: 4rem;
+    height: 4rem;
+}
+
+#course-right h2 {
+    margin: 1rem 0;
+    font-size: 3rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+}
+
+#course-rat > h3 {
+    margin: 1rem 0;
+}
+
+#course-right p {
+    margin: 1rem 0;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+}
+
+#course h3 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.5rem;
+}
+
+#course-pg {
+    display: flex;
+    gap: 4rem;
+}
+
+#course-pg h3 {
+    margin: 2rem 0;
+    font-size: 3rem;
+}
+
+#course-right button {
+    margin: 2rem 0;
+    padding: 1rem 5rem;
+    background-color: transparent;
+    border: 1px solid #eee;
+    border-radius: 3rem;
+    align-self: flex-start;
+}
+
+#course-right svg {
+    height: 2rem;
+    width: 2rem;
+}
+
+#course-right svg .content {
+    fill: #eee !important;
+}
+
+#course-buttons {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    gap: 2rem;
+    height: 15rem;
+}
+
+#course-buttons nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+}
+
+#course-buttons nav button {
+    background-position: center;
+    background-size: 100%;
+    border: none;
+    border-radius: 3rem;
+}
+
+#course-buttons nav h3 {
+    font-size: 8rem;
+    letter-spacing: 1rem;
+    color: #fff8;
+}
+
+#course-buttons > button {
+    border: none;
+    background-color:  #0005;
+}
+
+#categories {
+    background-color: #000;
+}

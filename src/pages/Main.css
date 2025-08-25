@@ -1,0 +1,487 @@
+button {
+    color: #eee;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#main-root {
+    font-size: 1.7rem;
+    background-image: url('/src/assets/img/pexels-anastasia-shuraeva-6232549.webp');
+    background-repeat: repeat-y;
+    background-position: center;
+    background-size: cover;
+}
+
+.blur {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, #000, #0005, transparent, #0005, #000);
+    backdrop-filter: blur(2rem);
+}
+
+#main-root h3 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 180%;
+}
+
+#main-root h3 > a, strong > a {
+    font-size: 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+}
+
+.root {
+    padding: 10rem 0;
+    width: 100%;
+    background: linear-gradient(#000, #6005, #000);
+}
+
+strong {
+    font-weight: 600;
+
+}
+
+.root h2 {
+    align-self: center;
+    font-size: 3rem;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1rem;
+    color: rgb(250, 50, 50);
+}
+
+/********** Estilos de la seccion de indice de enlaces a las secciones princiales de la pagina ************/
+#index-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 8rem;
+    background: linear-gradient(transparent, #000 50%);
+}
+
+#index-root h3 {
+    margin-top: 4rem;
+    width: 60%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 180%;
+}
+
+#app-index {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 5rem;
+    width: 80%;
+}
+
+#app-index a {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 30rem;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 2rem black;
+}
+
+#index-au {
+    background: linear-gradient(transparent 50%, #000f), url("/src/assets/img/link-au-bg.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+#index-ev {
+    background: linear-gradient(transparent 50%, #000f), url("/src/assets/img/link-ev-bg.png");
+    background-position: center center;
+    background-size: cover;
+}
+
+#index-bc {
+    background: linear-gradient(transparent 50%, #000f), url("/src/assets/img/link-bc-bg.webp");
+    background-position: center center;
+    background-size: cover;
+}
+
+#index-ct {
+    background: linear-gradient(transparent 50%, #000f), url("/src/assets/img/link-ct-bg.webp");
+    background-position: center center;
+    background-size: cover;
+}
+
+#app-index p {
+    font-size: 2rem;
+}
+
+#app-index strong {
+    margin: 2rem 0;
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8rem;
+    color: var(--primary-color);
+}
+
+/************************** Estilos de la seccion de informacion *****************************************/
+#au {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#au img {
+    flex-basis: 20rem;
+    max-width: 50rem;
+    border-radius: 1rem;
+}
+
+#au div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 3rem 0;
+    padding: 0 5rem;
+    width: 80vw;
+}
+
+#au p {
+    flex: 1 0 30rem;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+#au > p {
+    margin-top: 4rem;
+    padding: 0 10rem;
+    max-width: 90rem;
+    text-align: center;
+}
+
+#au-fir {
+    flex-wrap: wrap;
+}
+
+#au-sec {
+    flex-wrap: wrap-reverse;
+}
+
+#au-sec p {
+    text-align: end;
+}
+
+/************************** Estilos de la seccion de eventos *****************************************/
+#evt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#evt-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-width: 70vw;
+    flex: 1 0 0;
+}
+
+#evt-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex: 1 0 40rem;
+    padding: 3rem;
+    min-height: 40rem;
+}
+
+#evt-header h3 {
+    align-self: center;
+    align-content: center;
+}
+
+#evt-header div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#evt-header button {
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border: 0.5px solid #eee;
+    border-radius: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+}
+
+#evt-header button:hover {
+    color: #000;
+    background-color: #eee;
+}
+
+#evt-win {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1 0 60rem;
+    min-height: 70rem;
+    position: relative;
+}
+
+.evt-fr {
+    align-self: flex-end;
+    min-height: 30rem;
+    min-width: 30rem;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 1rem;
+    box-shadow: 0 0 2rem #000;
+}
+
+.evt-blur {
+    backdrop-filter: blur(1rem);
+    height: 100%;
+    border-radius: 1rem;
+}
+
+.blackbg {
+    position: absolute;
+    height: 40rem;
+    width: 40rem;
+    background-color: #000;
+    border-radius: 1rem;
+    z-index: 20;
+    transition: width .2s, height .2s;
+}
+
+#evt-ct {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    opacity: 0.7;
+    padding: 2rem;
+    transition:  opacity .2s;
+}
+
+.blackbg:hover  {
+    height: 50rem;
+    width: 50rem;
+}
+
+#evt-ct:hover {
+    opacity: 1;
+}
+
+.evt-fr h4 {
+    margin: 0.5rem 0;
+    font-size: 4rem;
+    font-weight: 400;
+    color: rgb(250, 39, 28);
+    letter-spacing: 0.4rem;
+}
+
+.evt-fr time {
+    margin: 0.5rem 0;
+    width: 80%;
+    letter-spacing: 0.2rem;
+}
+
+.evt-fr h5 {
+    margin: 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.2rem;
+}
+
+/************************* Estilos de la seccion de mejores platos segun su valoracion ***********************/
+#bc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bc-body {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-evenly;
+    max-width: 80vw;
+    flex: 1 0 0;
+}
+
+#bc-win {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    flex: 1 0 70rem;
+    min-height: 60rem;
+}
+
+.bc-fr {
+    height: 30rem;
+    width: 30rem;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 1rem;
+    box-shadow: 0 0 2rem #000;
+}
+
+.bc-blur {
+    backdrop-filter: blur(1rem);
+    height: 100%;
+    border-radius: 1rem;
+}
+
+#bc-ct {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+#bc-ct:hover {
+    opacity: 1;
+}
+
+#bc-ct #stars {
+    width: 70%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#bc-ct #stars .star {
+    width: 4rem;
+    height: 4rem;
+}
+
+.bc-fr h4  {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+}
+
+.bc-fr h5 {
+    margin: 1rem 0;
+    font-size: 2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+}
+
+.bc-fr-btt {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+#bc-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex: 1 0 35rem;
+    padding: 3rem;
+    min-height: 40rem;
+}
+
+#bc-header h3 {
+    align-self: center;
+    align-content: center;
+}
+
+#bc-header div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#bc-header button {
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border: 1px solid #eee;
+    border-radius: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+}
+
+#bc-header button:hover {
+    color: #000;
+    background-color: #eee;
+}
+
+/***************************************** Estilos de la seccion de cta ************************************************/
+#cta {
+    padding: 0 10rem;
+    width: 100%;
+    min-height: 16rem;
+    background-color: #000;
+}
+
+#cta p {
+    max-width: 90rem;
+    margin: auto;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 180%;
+}
+
+/***************************************** Estilos de la seccion de contacto ************************************************/
+#ctc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#ctc h2 {
+    margin-bottom: 6rem;
+}
+
+#ctc-nav {
+    align-self: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 6rem;
+    column-gap: 4rem;
+}
+
+#ctc-nav div {
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #000c, transparent 50%);
+    border-left: 1px solid rgb(212, 39, 28);
+}
+
+#ctc-nav h4 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    color: rgb(212, 39, 28);
+}
+
+#ctc-nav a {
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 0.1rem;
+    color: inherit;
+}

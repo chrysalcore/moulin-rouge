@@ -1,0 +1,143 @@
+.footer-root {
+    display: flex;
+    flex-direction: column;
+    padding: 10rem 8rem 2rem 8rem;
+    background-color: #000;
+    color: #ddd;
+}
+
+.footer-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 3fr;
+}
+
+.footer-layout a, address {
+    display: block;
+    font-size: 1.7rem;;
+    font-style: normal;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.2rem;
+    color: #ddd;
+}
+
+.footer-layout h3 {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    width: 70%;
+    color: rgb(250, 50, 50);
+    font-size: 2.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    border-bottom: 1px solid rgb(250, 50, 50);
+}
+
+.footer-ctc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-ctc div {
+    margin: 2rem 0;
+}
+
+.footer-ctc h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    color: #eee;
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-nav a {
+    margin: 1.5rem 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+}
+
+.footer-therms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-therms a {
+    margin: 1.5rem 0;
+}
+
+.footer-firm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-firm div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-firm img {
+    margin-bottom: 1.5rem;
+    width: 6rem;
+}
+
+.footer-firm h2 {
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8rem;
+}
+
+.footer-firm span {
+    display: block;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.footer-firm p {
+    width: 80%;
+    text-align: center;
+    font-size: 2rem;
+    color: rgb(212, 39, 28);
+    letter-spacing: 0.2rem;
+}
+
+.footer-sm {
+    align-self: center;
+    margin: 5rem 0;
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.footer-sm svg {
+    width: 3rem;
+}
+
+.content {
+    fill: rgb(212, 39, 28) !important;
+}
+
+.footer-root small {
+    display: block;
+    margin: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+}

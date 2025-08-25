@@ -1,0 +1,66 @@
+@font-face {
+  font-family: Work-Sans;
+  src: url('./assets/font/WorkSans-VariableFont_wght.ttf');
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: Work-Sans;
+  src: url('./assets/font/WorkSans-Italic-VariableFont_wght.ttf');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Yeseva;
+  src: url('./assets/font/YesevaOne-Regular.ttf')
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url('./assets/font/Montserrat-VariableFont_wght.ttf')
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-synthesis: none;
+  font-size: 10px;
+  font-family: Work-Sans;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --primary-color: #D21;
+  --secundary-color: #640404;
+  --color4: #985454;
+  --color5: #c06c6c;
+  color: #eee;
+}
+
+.head-bg {
+  background-image: linear-gradient(to right, #000b 10%, #6008), url("/src/assets/img/head-bg.jpg");
+  background-position: bottom;
+  background-size: 100vw;
+  background-attachment: fixed;
+}
+
+* {
+  line-height: 150%;
+  text-wrap: pretty;
+}
+
+/*@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}*/

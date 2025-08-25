@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="buycar" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15">
+  <path class="content" d="M6,13.5c0,.83-.67,1.5-1.5,1.5s-1.5-.67-1.5-1.5.67-1.5,1.5-1.5,1.5.67,1.5,1.5Z"/>
+  <path class="content" d="M16,13.5c0,.83-.67,1.5-1.5,1.5s-1.5-.67-1.5-1.5.67-1.5,1.5-1.5,1.5.67,1.5,1.5Z"/>
+  <path class="content" d="M16,7V1H4c0-.55-.45-1-1-1H0v1h2l.75,6.44c-.46.37-.75.93-.75,1.56,0,1.1.9,2,2,2h12v-1H4c-.55,0-1-.45-1-1h0s13-2,13-2Z"/>
+</svg>
