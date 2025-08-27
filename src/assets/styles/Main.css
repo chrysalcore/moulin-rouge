@@ -1,0 +1,16 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, #0002, #0005, #0005, #0002);
+    backdrop-filter: blur(5px);
+}
+
+button {
+    color: #eee;
+}
+
+@media screen and (min-width: 600px) {
+    .main {
+        background: linear-gradient(to right, #000, #0005, #0005, #000);
+    }
+}

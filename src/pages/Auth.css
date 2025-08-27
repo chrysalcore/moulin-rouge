@@ -7,7 +7,7 @@
     background-size: 100vw;
 }
 
-.blur {
+/* .blur {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,7 +15,7 @@
     height: 100%;
     background: linear-gradient(to right, #000c, #6005, #6005, #000c);
     backdrop-filter: blur(2rem);
-}
+} */
 
 #auth-win {
     display: grid;

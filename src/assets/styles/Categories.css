@@ -1,0 +1,93 @@
+.categories {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(transparent, #050505 70%);
+}
+
+.categories .section-header {
+    display: none;
+}
+
+.categories__title {
+    margin-top: 4rem;
+    width: 60%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 180%;
+}
+
+.categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.category {
+    flex: 0 0 min(100%, 10rem);
+    max-width: 10rem;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem black;
+}
+
+.category__link {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+    height: 100%;
+}
+
+.category:nth-child(1)  {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/meat.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category:nth-child(2) {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/rice.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category:nth-child(3) {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/salad.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category:nth-child(4) {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/fries.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category:nth-child(5)  {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/italian.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category:nth-child(6) {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/drink.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category:nth-child(7) {
+    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/dessert.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.category__desc {
+    font-size: 1rem;
+}
+
+.category__name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}

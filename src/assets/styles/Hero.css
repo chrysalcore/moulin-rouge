@@ -1,0 +1,96 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem 1rem;
+    min-height: min(100dvh, 50rem);
+    color: #eee;
+    text-align: center;
+}
+
+.hero .firm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: transparent;
+}
+
+.hero .firm-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.hero .firm__logo {
+    display: none;
+    width: 8rem;
+}
+
+.hero .firm__title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    font-family: Montserrat;
+    letter-spacing: 0.1rem;
+    line-height: 0.9em;
+}
+
+.hero .firm__title span {
+    display: block;
+    color: #D21;
+    font-size: 2.25rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.hero .firm-slogan__text {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #ddd;
+}
+
+.hero .firm-slogan__text strong {
+    display: block;
+}
+
+.hero .social-info {
+    display: flex;
+    align-items: end;
+    gap: 2.5rem;
+}
+
+.hero .social-info__link {
+    width: 1.8rem;
+}
+
+.hero .social-info__link .content {
+    fill: #eee;
+}
+
+@media screen and (min-width: 1024px) {
+    .hero {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 15vw;
+        text-align: left;
+    }
+
+    .hero .firm-main {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .hero .firm__logo {
+        display: block;
+    }
+
+    .hero .firm-slogan__text {
+        width: 70%;
+    }
+
+    .hero .social-info {
+        flex-direction: column;
+    }
+}

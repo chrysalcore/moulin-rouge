@@ -1,0 +1,117 @@
+.events {
+    display: flex;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.events-header {
+    flex: 1 0 min(15rem, 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 40rem;
+    text-align: center;
+}
+
+.events__desc-link {
+    display: block;
+    color: #D21;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.events-buttons{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.events__button {
+    padding: 0.3rem 2rem;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.1rem;
+    color: #eee;
+    background-color: transparent;
+    border: 0.5px solid #eee;
+    border-radius: 0.5rem;
+    transition: color .3s, background-color .3s;
+}
+
+.events_button:hover {
+    color: #000;
+    background-color: #eee;
+}
+
+.events-content {
+    flex: 1 0 min(20rem, 100%);
+    display: flex;
+    min-height: 40rem;
+    position: relative;
+}
+
+.events-frame, .events-main {
+    background-position: center center;
+    background-size: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem #000;
+    position: absolute;
+}
+
+.events-frame {
+    min-height: max(12rem, 40%);
+    aspect-ratio: 1;
+    filter: blur(2px);
+    right: 40%;
+    z-index: 10;
+}
+
+.events-frame:first-child {
+    top: 0;
+}
+
+.events-frame:last-child {
+    bottom: 0;
+}
+
+.events-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    min-width: 100%;
+    aspect-ratio: 1;
+    transition: scale .2s;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 0;
+    z-index: 20;
+}
+
+.events-main:hover  {
+    scale: 1.1;
+}
+
+.events-main__title {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.events-main__date{
+    color: #ddd;
+}
+
+.events-main__discount {
+    color: rgb(250, 39, 28);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+@media screen and (min-width: 400px) {
+    .events-main {
+        min-width: auto;
+        min-height: max(15rem, 50%);
+    }
+}

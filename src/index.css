@@ -5,17 +5,6 @@
 }
 
 @font-face {
-  font-family: Work-Sans;
-  src: url('./assets/font/WorkSans-Italic-VariableFont_wght.ttf');
-  font-style: italic;
-}
-
-@font-face {
-  font-family: Yeseva;
-  src: url('./assets/font/YesevaOne-Regular.ttf')
-}
-
-@font-face {
   font-family: Montserrat;
   src: url('./assets/font/Montserrat-VariableFont_wght.ttf')
 }
@@ -24,11 +13,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  line-height: 1.5em;
+  text-wrap: pretty;
 }
 
 :root {
   font-synthesis: none;
-  font-size: 10px;
+  font-size: 18px;
   font-family: Work-Sans;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -37,30 +29,59 @@
   --secundary-color: #640404;
   --color4: #985454;
   --color5: #c06c6c;
-  color: #eee;
 }
 
-.head-bg {
-  background-image: linear-gradient(to right, #000b 10%, #6008), url("/src/assets/img/head-bg.jpg");
+body {
+  background-image: linear-gradient(#000b 50%, #6002), url("/src/assets/img/head-bg.jpg");
   background-position: bottom;
-  background-size: 100vw;
+  background-size: cover;
   background-attachment: fixed;
 }
 
-* {
-  line-height: 150%;
-  text-wrap: pretty;
+ul {
+  list-style: none;
 }
 
-/*@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section {
+  gap: 3rem;
+  padding: 6rem 1rem;
+  color: #eee;
+  background: linear-gradient(#050505, #0002, #050505);
+}
+
+.section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 30rem;
+}
+
+.section__title {
+    font-size: 2.2rem;
+}
+
+.section__desc {
+    color: #ddd;
+    font-size: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .section {
+    padding: 6rem 15vw;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@media screen and (min-width: 1024px) {
+  body {
+    background-image: linear-gradient(to right, #000b 20%, #6002), url("/src/assets/img/head-bg.jpg");
+    background-position: bottom;
+    background-size: cover;
+    background-attachment: fixed;
   }
-  button {
-    background-color: #f9f9f9;
-  }
-}*/
+}

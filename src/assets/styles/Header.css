@@ -1,0 +1,80 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    color: #eee;
+    background-color: #050505;
+    position: fixed;
+    z-index: 100;
+}
+
+.header__logo {
+    height: 1.5rem;
+}
+
+.header .nav {
+    display: none;
+}
+
+.header .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 100%;
+}
+
+.header .nav-list__item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 0.9rem;
+}
+
+.header .nav-list__item:has(.nav-list__link.selected) {
+    color: rgb(250, 50, 50);
+}
+
+.header-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.header__button-log {
+    padding: 0.3rem 2rem;
+    color: #eee;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #D21;
+    border: none;
+    border-radius: 0.3rem;
+}
+
+.header__button-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.header__button-user .user-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.header__button-user .user-icon .content {
+    fill: #eee;
+}
+
+@media screen and (min-width: 900px) {
+    .header {
+        padding: 1rem 4rem;
+    }
+
+    .header .nav {
+        display: flex;
+    }
+}
