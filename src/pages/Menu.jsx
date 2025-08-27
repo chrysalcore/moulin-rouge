@@ -1,90 +1,90 @@
 import { useEffect, useState } from 'react';
 import axios_mod from '../axioss';
 import './Menu.css';
-import Head from "./components/Head";
-import Footer from "./components/Footer";
-import Stars from './components/Stars';
+import Head from "../sections/Head";
+// import Footer from "./components/Footer";
+// import Stars from './components/Stars';
 
 function Menu() {
-    const [courses, setCourses] = useState([]);
-    const [cat, setCat] = useState([])
-    const [next, setNext] = useState("")
-    const [prev, setPrev] = useState("")
-    const [url, setURL] = useState('main/courses/')
+    // const [courses, setCourses] = useState([]);
+    // const [cat, setCat] = useState([])
+    // const [next, setNext] = useState("")
+    // const [prev, setPrev] = useState("")
+    // const [url, setURL] = useState('main/courses/')
 
-    const [id, setId] = useState(0)
-    const [name, setName] = useState("")
-    const [rating, setRating] = useState(0)
-    const [votes, setVotes] = useState(0)
-    const [price, setPrice] = useState(0)
-    const [desc, setDesc] = useState("")
-    const [gram, setGram] = useState(0)
-    const ch = 'main'
+    // const [id, setId] = useState(0)
+    // const [name, setName] = useState("")
+    // const [rating, setRating] = useState(0)
+    // const [votes, setVotes] = useState(0)
+    // const [price, setPrice] = useState(0)
+    // const [desc, setDesc] = useState("")
+    // const [gram, setGram] = useState(0)
+    // const ch = 'main'
 
-    const change = (id) => {
-            setImage(courses[id].img)
-            setName(courses[id].course)
-            setRating(courses[id].rating)
-            setVotes(courses[id].ratings_count)
-            setPrice(courses[id].price + '$')
-            setGram(courses[id].gramage + "g")
-            setDesc(courses[id].description)
-            setId(courses[id].id)
-    }
+    // const change = (id) => {
+    //         setImage(courses[id].img)
+    //         setName(courses[id].course)
+    //         setRating(courses[id].rating)
+    //         setVotes(courses[id].ratings_count)
+    //         setPrice(courses[id].price + '$')
+    //         setGram(courses[id].gramage + "g")
+    //         setDesc(courses[id].description)
+    //         setId(courses[id].id)
+    // }
 
-    const update = async () => {
-        try {
-            const response = await axios_mod.get(url);
-            if(response.status === 200){
-                setCourses(response.data.results)
-                setNext(response.data.next)
-                setPrev(response.data.previous)
+    // const update = async () => {
+    //     try {
+    //         const response = await axios_mod.get(url);
+    //         if(response.status === 200){
+    //             setCourses(response.data.results)
+    //             setNext(response.data.next)
+    //             setPrev(response.data.previous)
 
-                setName(courses[0].course)
-                setRating(courses[0].rating)
-                setVotes(courses[0].ratings_count)
-                setPrice(courses[0].price + '$')
-                setGram(courses[0].gramage + "g")
-                setDesc(courses[0].description)
-            }
-        }catch (e){
-            return (
-                <h1>{e}</h1>
-            )
-        };
-    }
+    //             setName(courses[0].course)
+    //             setRating(courses[0].rating)
+    //             setVotes(courses[0].ratings_count)
+    //             setPrice(courses[0].price + '$')
+    //             setGram(courses[0].gramage + "g")
+    //             setDesc(courses[0].description)
+    //         }
+    //     }catch (e){
+    //         return (
+    //             <h1>{e}</h1>
+    //         )
+    //     };
+    // }
 
-    const load = async () => {
-        try {
-            const response = await axios_mod.get('main/categories/')
-            if(response.status === 200){
-                setCat(response.data.categories)
-                update()
-            }
-        }catch (e){
-            return (
-                <h1>{e}</h1>
-            )
-        };
-    }
+    // const load = async () => {
+    //     try {
+    //         const response = await axios_mod.get('main/categories/')
+    //         if(response.status === 200){
+    //             setCat(response.data.categories)
+    //             update()
+    //         }
+    //     }catch (e){
+    //         return (
+    //             <h1>{e}</h1>
+    //         )
+    //     };
+    // }
 
-    useEffect(() => {
-        load();
-    }, []);
+    // useEffect(() => {
+    //     load();
+    // }, []);
 
-    const nextClick = () => {
-        if (next === null) return
-        let st = next.slice(next.indexOf(ch))
-        setURL(st)
-        update()
-    }
+    // const nextClick = () => {
+    //     if (next === null) return
+    //     let st = next.slice(next.indexOf(ch))
+    //     setURL(st)
+    //     update()
+    // }
 
-    const prevClick = () => {
-        if (prev === null) return
-        let st = prev.slice(next.indexOf(ch))
-        setURL(st)
-        update()
-    }
+    // const prevClick = () => {
+    //     if (prev === null) return
+    //     let st = prev.slice(next.indexOf(ch))
+    //     setURL(st)
+    //     update()
+    // }
 
     return (
         <>
@@ -92,7 +92,7 @@ function Menu() {
                 <Head />
                 <div id="head-foot"></div>
             </div>
-            {courses != []? (
+            {/* {courses != []? (
                 <main id='head-main'>
                     <section id='courses'>
                         { courses[id] &&
@@ -153,7 +153,7 @@ function Menu() {
                     </aside>
                 </main>
             ) : (<h1>Lo siento, no hay platos para mostrar</h1>)}
-            <Footer />
+            <Footer /> */}
         </>
     )
 }
