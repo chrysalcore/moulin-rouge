@@ -16,16 +16,15 @@
     flex: 1 0 min(12rem, 100%);
     max-width: 15rem;
     padding: 1rem;
-    border-top: 2px solid #D21;
+    border-top: 2px solid var(--color-com);
 }
 
-.contact-list h4 {
-    font-weight: 600;
-    color: #D21;
+.contact-list__title {
+    font-size: 1rem;
+    color: var(--color-com);
 }
 
-.contact-list a {
+.contact-list__link {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: #ddd;
+    color: var(--color-lgh);
 }

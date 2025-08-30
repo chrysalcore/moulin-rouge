@@ -26,7 +26,7 @@
     gap: 3rem;
     padding: 3rem 0.5rem;
     width: 100%;
-    background: linear-gradient(#222, #050505);
+    background: linear-gradient(#111, var(--color-dom));
     border-radius: 0 0.5rem 0.5rem 0;
 }
 
@@ -53,23 +53,16 @@
 
 .reservations-content .form-field__input {
     padding: 0.7rem 1rem;
-    color: #eee;
+    color: var(--color-ctr);
     font-size: 1rem;
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-ctr);
 }
 
 .reservations-content .form__btn {
     margin: auto;
     margin-top: 2rem;
-    padding: 0.3rem 3rem;
-    color: #eee;
-    font-size: 1rem;
-    font-weight: 700;
-    background-color: #D21;
-    border: none;
-    border-radius: 0.5rem;
 }
 
 @media screen and (min-width: 1024px) {

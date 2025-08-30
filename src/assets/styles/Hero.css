@@ -6,7 +6,7 @@
     gap: 3rem;
     padding: 3rem 1rem;
     min-height: min(100dvh, 50rem);
-    color: #eee;
+    color: var(--color-ctr);
     text-align: center;
 }
 
@@ -38,7 +38,7 @@
 
 .hero .firm__title span {
     display: block;
-    color: #D21;
+    color: var(--color-com);
     font-size: 2.25rem;
     font-weight: 400;
     letter-spacing: 0;
@@ -48,7 +48,7 @@
 .hero .firm-slogan__text {
     font-size: 1rem;
     font-weight: 400;
-    color: #ddd;
+    color: var(--color-lgh);
 }
 
 .hero .firm-slogan__text strong {
@@ -66,7 +66,7 @@
 }
 
 .hero .social-info__link .content {
-    fill: #eee;
+    fill: var(--color-ctr);
 }
 
 @media screen and (min-width: 1024px) {

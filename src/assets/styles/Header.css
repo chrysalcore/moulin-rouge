@@ -4,8 +4,8 @@
     align-items: center;
     padding: 1rem;
     width: 100%;
-    color: #eee;
-    background-color: #050505;
+    color: var(--color-ctr);
+    background-color: var(--color-dom);
     position: fixed;
     z-index: 100;
 }
@@ -16,6 +16,9 @@
 
 .header .nav {
     display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .header .nav-list {
@@ -41,20 +44,11 @@
     gap: 1rem;
 }
 
-.header__button-log {
-    padding: 0.3rem 2rem;
-    color: #eee;
-    font-size: 1rem;
-    font-weight: 700;
-    background-color: #D21;
-    border: none;
-    border-radius: 0.3rem;
-}
-
 .header__button-user {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -66,7 +60,7 @@
 }
 
 .header__button-user .user-icon .content {
-    fill: #eee;
+    fill: var(--color-ctr);
 }
 
 @media screen and (min-width: 900px) {

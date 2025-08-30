@@ -16,7 +16,7 @@
 }
 
 .dishes__desc-link {
-    color: #D21;
+    color: var(--color-com);
     font-weight: 700;
     text-decoration: underline;
 }
@@ -32,16 +32,16 @@
     font-size: 1rem;
     font-weight: 900;
     letter-spacing: 0.1rem;
-    color: #eee;
+    color: var(--color-ctr);
     background-color: transparent;
-    border: 0.5px solid #eee;
+    border: 0.5px solid var(--color-ctr);
     border-radius: 0.5rem;
     transition: color .3s, background-color .3s;
 }
 
 .dishes_button:hover {
     color: #000;
-    background-color: #eee;
+    background-color: var(--color-ctr);
 }
 
 .dishes-content {
@@ -69,10 +69,12 @@
 
 .dishes-frame:first-child {
     top: 0;
+    background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/fish.jpg');
 }
 
 .dishes-frame:last-child {
     bottom: 0;
+    background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/cost.jpg');
 }
 
 .dishes-main {
@@ -84,6 +86,7 @@
     padding: 2rem;
     min-width: 100%;
     aspect-ratio: 1;
+    background-image: linear-gradient(to top, #000, #000d 20%, transparent), url('../img/head-bg.jpg');
     transition: scale .2s;
     transform: translateY(-50%);
     top: 50%;
@@ -110,7 +113,7 @@
 }
 
 .dishes-main__price {
-    color: #D21;
+    color: var(--color-com);
     font-size: 1.3rem;
     font-weight: 700;
     position: absolute;
@@ -120,12 +123,6 @@
 
 .dishes-main__button {
     margin: 1rem 0;
-    padding: 0.2rem 1rem;
-    font-size: 1rem;
-    font-weight: 600;
-    background-color: #D21;
-    border: none;
-    border-radius: 0.3rem;
 }
 
 @media screen and (min-width: 400px) {

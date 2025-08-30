@@ -1,8 +1,8 @@
 .footer{
     display: flex;
     flex-direction: column;
-    color: #ddd;
-    background-color: #050505;
+    color: var(--color-lgh);
+    background-color: var(--color-dom);
 }
 
 .footer-layout {
@@ -20,7 +20,7 @@
     gap: 1.5rem;
     padding: 1rem 0;
     font-size: 0.9rem;
-    border-top: 1px solid #D21;
+    border-top: 1px solid var(--color-com);
 }
 
 .footer-nav__title {
@@ -81,7 +81,7 @@
 }
 
 .footer .social-info__link .content {
-    fill: #D21;
+    fill: var(--color-com);
 }
 
 .footer-rights {

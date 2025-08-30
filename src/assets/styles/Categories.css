@@ -1,7 +1,7 @@
 .categories {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(transparent, #050505 70%);
+    background: linear-gradient(transparent, var(--color-dom) 70%);
 }
 
 .categories .section-header {
@@ -25,7 +25,7 @@
 }
 
 .category {
-    flex: 0 0 min(100%, 10rem);
+    flex: 0 0 min(100%, 8rem);
     max-width: 10rem;
     aspect-ratio: 1;
     border-radius: 0.5rem;

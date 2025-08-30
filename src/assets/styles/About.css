@@ -28,23 +28,14 @@
 
 .about__text {
     flex: 1 0 min(15rem, 100%);
-    color: #ddd;
+    color: var(--color-lgh);
     font-size: 1rem;
     font-weight: 400;
 }
 
 .about__text strong {
     display: block;
-    color: #eee;
-}
-
-.about__cta {
-    padding: 0.3rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    background-color: #D21;
-    border: none;
-    border-radius: 0.5rem;
+    color: var(--color-ctr);
 }
 
 @media screen and (min-width: 1024px) {

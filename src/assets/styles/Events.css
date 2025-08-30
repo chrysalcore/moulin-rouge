@@ -17,7 +17,7 @@
 
 .events__desc-link {
     display: block;
-    color: #D21;
+    color: var(--color-com);
     font-weight: 700;
     text-decoration: underline;
 }
@@ -29,20 +29,15 @@
 }
 
 .events__button {
-    padding: 0.3rem 2rem;
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: 0.1rem;
-    color: #eee;
+    color: var(--color-ctr);
     background-color: transparent;
-    border: 0.5px solid #eee;
-    border-radius: 0.5rem;
+    border: 0.5px solid var(--color-ctr);
     transition: color .3s, background-color .3s;
 }
 
 .events_button:hover {
     color: #000;
-    background-color: #eee;
+    background-color: var(--color-ctr);
 }
 
 .events-content {
@@ -70,10 +65,12 @@
 
 .events-frame:first-child {
     top: 0;
+    background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/valentin.png');
 }
 
 .events-frame:last-child {
     bottom: 0;
+    background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/halloween.jpg');
 }
 
 .events-main {
@@ -83,6 +80,7 @@
     padding: 2rem;
     min-width: 100%;
     aspect-ratio: 1;
+    background-image: linear-gradient(to top, #000, #000d 20%, transparent), url('../img/christmas.jpg');
     transition: scale .2s;
     transform: translateY(-50%);
     top: 50%;
@@ -100,7 +98,7 @@
 }
 
 .events-main__date{
-    color: #ddd;
+    color: var(--color-lgh);
 }
 
 .events-main__discount {

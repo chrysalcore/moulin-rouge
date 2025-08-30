@@ -85,9 +85,9 @@
 
 #auth-buttons button {
     padding: 1rem 4rem;
-    color: #eee;
+    color: var(--color-ctr);
     background-color: transparent;
-    border: 1px solid #eee;
+    border: 1px solid var(--color-ctr);
     border-radius: 1.5rem;
     font-size: 1.5rem;
     font-weight: 900;
@@ -96,7 +96,7 @@
 }
 
 #auth-buttons button:hover {
-    background-color: #eee;
+    background-color: var(--color-ctr);
     color: #222;
 }
 
@@ -104,7 +104,7 @@
     display: grid;
     grid-template-rows: 1fr 4fr;
     background-color: #111;
-    color: #ddd;
+    color: var(--color-lgh);
     border-radius: 0 1rem 1rem 0;
 }
 
