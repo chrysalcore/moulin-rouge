@@ -30,6 +30,16 @@ function Contact() {
             text: 'moulerouge@gmail.com'
         },
         {
+            name: 'Whatsapp',
+            href: 'https://wa.me/5351505492',
+            text: '+53 51505492'
+        },
+        {
+            name: 'Telegram',
+            href: 'https://t.me/alphablue2027',
+            text: '+53 51505492'
+        },
+        {
             name: 'Location',
             href: '',
             text: 'Republica #170, Camaguey Cuba'
@@ -51,8 +61,8 @@ function Contact() {
             {ctcData.map(item => {
                 return (
                     <li className="contact-list__item" key={item.name}>
-                        <h4 className="contact-list__title">{item.name}</h4>
-                        <a className="contact-list__name" href={item.href}>{item.text}</a>
+                        <h3 className="contact-list__title">{item.name}</h3>
+                        <a className="contact-list__link" href={item.href}>{item.text}</a>
                     </li>
                 )
             })}             

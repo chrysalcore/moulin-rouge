@@ -2,7 +2,7 @@ function Form(props) {
     return (
         <form className="form" action="">
             {props.data.map(item => <Input name={item.name} type={item.type} placeholder={item.placeholder} isInput={item.isInput} key={item.name} />)}
-            <input className="form__btn" type="submit" value='Submit' />
+            <button className="form__btn">Submit</button>
         </form>
     )
 }

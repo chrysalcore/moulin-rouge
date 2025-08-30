@@ -68,7 +68,7 @@ function Footer() {
                     <Nav navDetails={sectNav} />
                 </section>
                 <section className="footer-nav">
-                    <h3 className="footer-nav__title">Services</h3>
+                    <h3 className="footer-nav__title">Contact</h3>
                     <Nav navDetails={ctcNav} />
                 </section>
                 <section className="footer-nav">
@@ -76,7 +76,7 @@ function Footer() {
                     <Nav navDetails={legcNav} />
                 </section>
                 <section className="footer-firm">
-                    <img className="footer-firm__logo" src="/src/assets/icons/big-logo.svg" alt="Main Logo"/>
+                    <img className="footer-firm__logo" src={new URL("../assets/icons/big-logo.svg", import.meta.url)} alt="Main Logo"/>
                     <h2 className="footer-firm__title">Moulin<br />Rouge<span>Restaurant</span></h2>
                 </section>
             </div>

@@ -35,20 +35,20 @@ function Events() {
         <article className='events section' id='event'>
             <header className='events-header'>
                 <h2 className='section__title'>Events</h2>
-                <p className='section__desc'>We transform your dreams into reality, a simple holiday in a incredible experiences. Let us take care of the details: all you have to worry about is getting a place in our grand trip. <a className='events__desc-link'>Check all our events!</a></p>
+                <p className='section__desc'>We transform your dreams into reality, a simple holiday in a incredible experiences. Let us take care of the details: all you have to worry about is getting a place in our grand trip. <a className='events__desc-link' href=''>Check all our events!</a></p>
                 <div className='events-buttons'>
                     <button className='events__button' >Prev</button>
                     <button className='events__button' >Next</button>
                 </div>
             </header>
             <section className='events-content'>
-                <div className='events-frame' style={{backgroundImage: "linear-gradient(to top, #0006, #0003), url('/src/assets/img/valentin.png')"}}></div>
-                <div className='events-main' style={{backgroundImage: "linear-gradient(#0001, #000c 90%), url('/src/assets/img/christmas.jpg')"}}>
+                <div className='events-frame'></div>
+                <div className='events-main'>
                     <h3 className='events-main__title'>San Valentin Day</h3>
                     <strong className='events-main__discount'>10% discount</strong>
                     <time className='events-main__date'>14/2/2025</time>
                 </div>
-                <div className='events-frame' style={{backgroundImage: "linear-gradient(to top, #0006, #0003), url('/src/assets/img/halloween.jpg')"}}></div>
+                <div className='events-frame'></div>
             </section>
         </article>
     )

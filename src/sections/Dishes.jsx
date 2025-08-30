@@ -35,14 +35,14 @@ function Dishes() {
     return (
         <article className='dishes section'>
             <section className='dishes-content'>
-                <div className='dishes-frame' style={{backgroundImage: "linear-gradient(to top, #000, #000a 20%, #0005), url('/src/assets/img/fish.jpg')"}}></div>
-                <div className='dishes-main' style={{backgroundImage: "linear-gradient(to top, #000, #000d 20%, transparent), url('/src/assets/img/head-bg.jpg')"}}>
+                <div className='dishes-frame'></div>
+                <div className='dishes-main'>
                     <Stars rating={4.7}/>
                     <h3 className='dishes-main__title'>Hawaiian Pizza</h3>
                     <strong className='dishes-main__price'>$5.99</strong>
                     <button className='dishes-main__button'>Order Now</button>
                 </div>
-                <div className='dishes-frame' style={{backgroundImage: "linear-gradient(to top, #000, #000a 20%, #0005), url('/src/assets/img/cost.jpg')"}}></div>
+                <div className='dishes-frame'></div>
             </section>
             <header className='dishes-header'>
                 <h2 className='section__title'>Best Dishes</h2>

@@ -2,7 +2,7 @@ function Firm() {
     return (
         <div className="firm">
             <div className="firm-main">
-                <img className="firm__logo" src="/public/big-logo.svg" alt="main logo" />
+                <img className="firm__logo" src={new URL("../assets/icons/big-logo.svg", import.meta.url)} alt="main logo" />
                 <h2 className="firm__title">Moulin<br />Rouge<span>Restaurant</span></h2>
             </div>
             <div className="firm-slogan">
