@@ -1,4 +1,17 @@
-export const contact = [
+type Contact = {
+    name: string,
+    href: string,
+    text: string
+}
+
+type Input = {
+    name: string,
+    type: string,
+    placeholder: string,
+    isInput: boolean
+}
+
+export const contact: Contact[] = [
     {
         name: 'Number',
         href: 'tel:5351505492',
@@ -21,7 +34,7 @@ export const contact = [
     }
 ]
 
-export const inputs = [
+export const inputs: Input[] = [
     {
         name: 'name',
         type: 'text',

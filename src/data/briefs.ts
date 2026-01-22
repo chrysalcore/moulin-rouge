@@ -1,4 +1,8 @@
-const data = [
+type BriefTitle = {
+    [key: string]: string
+}
+
+const data: BriefTitle[] = [
     {
         name: 'events',
         title: 'Events',

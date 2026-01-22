@@ -1,4 +1,12 @@
-const data = [
+type Event = {
+    name: string,
+    desc: string,
+    discount: number,
+    date: string,
+    img: string
+}
+
+const data: Event[] = [
     {
         name: 'San Valentin',
         desc: '',

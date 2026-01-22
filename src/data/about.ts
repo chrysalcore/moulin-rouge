@@ -1,4 +1,11 @@
-const data = [
+type About = {
+    name: string,
+    src: string,
+    strong: string,
+    text: string
+}
+
+const data: About[] = [
     {
         name: 'Recipe Book',
         src: 'au-first.webp',

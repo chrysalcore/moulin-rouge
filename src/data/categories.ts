@@ -1,4 +1,10 @@
-const data = [
+type Category = {
+    name: string,
+    title: string,
+    img: `${string}.jpg`
+}
+
+const data: Category[] = [
     {
         name: 'meats',
         title: 'Meats',

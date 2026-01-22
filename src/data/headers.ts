@@ -1,4 +1,13 @@
-const data = {
+interface Headers {
+    [key: string]: Header
+}
+
+type Header = {
+    title: string,
+    desc: string
+}
+
+const data: Headers = {
     about: {
         title: 'About Us',
         desc: ''
