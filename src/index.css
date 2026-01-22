@@ -1,14 +1,3 @@
-@font-face {
-  font-family: Work-Sans;
-  src: url('./assets/font/WorkSans-VariableFont_wght.ttf');
-  font-style: normal; 
-}
-
-@font-face {
-  font-family: Montserrat;
-  src: url('./assets/font/Montserrat-VariableFont_wght.ttf')
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +14,7 @@
 
   font-synthesis: none;
   font-size: 18px;
-  font-family: Work-Sans;
+  font-family: 'Work Sans';
   line-height: 1.5em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -33,7 +22,7 @@
 }
 
 body {
-  background-image: linear-gradient(#000b 50%, #6002), url("/src/assets/img/head-bg.jpg");
+  background-image: linear-gradient(#000b 50%, #6002), url("./assets/img/head-bg.jpg");
   background-position: bottom;
   background-size: cover;
   background-attachment: fixed;
@@ -46,36 +35,6 @@ ul {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.section {
-  gap: 3rem;
-  padding: 6rem 1rem;
-  color: var(--color-ctr);
-  background: linear-gradient(var(--color-dom), #0002, var(--color-dom));
-}
-
-.section-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    max-width: 30rem;
-}
-
-.section__title {
-    font-size: 2.2rem;
-}
-
-.section__desc {
-    color: var(--color-lgh);
-    font-size: 1rem;
-}
-
-@media screen and (min-width: 768px) {
-  .section {
-    padding: 6rem 15vw;
-  }
 }
 
 @media screen and (min-width: 1024px) {

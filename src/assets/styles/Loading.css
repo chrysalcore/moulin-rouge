@@ -1,0 +1,27 @@
+.loading {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    overflow-x: clip;
+    background: linear-gradient(#0002, var(--color-dom));
+}
+
+.loading__img {
+    width: 3rem;
+    height: 3rem;
+    animation: rotate 3s linear infinite both;
+}
+
+.loading__text {
+    font-size: 1.8rem;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

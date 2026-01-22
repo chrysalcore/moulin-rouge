@@ -1,8 +1,7 @@
-# React + Vite
+# Moulin Rouge Restaurant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Example site based on the legendary Moulin Rouge restaurant. It showcases an incredible contrast in its carefully chosen color palette, elegant and warm typography, and images that create a unique atmosphere—all with the aim of transporting the user to that wonderful dinner they should already book!
 
-Currently, two official plugins are available:
+## This site contains a PolyForm Perimeter License 1.0.0
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+***For more information check the LICENSE file!***

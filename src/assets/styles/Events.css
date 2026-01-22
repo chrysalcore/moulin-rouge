@@ -1,11 +1,10 @@
 .events {
-    display: flex;
-    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.events-header {
+.events .brief-header {
     flex: 1 0 min(15rem, 100%);
     display: flex;
     flex-direction: column;
@@ -15,39 +14,36 @@
     text-align: center;
 }
 
-.events__desc-link {
+.events .brief__desc-link {
     display: block;
     color: var(--color-com);
     font-weight: 700;
     text-decoration: underline;
 }
 
-.events-buttons{
+.events .brief-buttons{
     display: flex;
     align-items: center;
     gap: 1.5rem;
 }
 
-.events__button {
-    color: var(--color-ctr);
-    background-color: transparent;
-    border: 0.5px solid var(--color-ctr);
+.events .brief-buttons .btn {
     transition: color .3s, background-color .3s;
 }
 
-.events_button:hover {
+.events .brief-buttons .btn {
     color: #000;
     background-color: var(--color-ctr);
 }
 
-.events-content {
+.events-list{
     flex: 1 0 min(20rem, 100%);
     display: flex;
     min-height: 40rem;
     position: relative;
 }
 
-.events-frame, .events-main {
+.event {
     background-position: center center;
     background-size: cover;
     border-radius: 0.5rem;
@@ -55,7 +51,7 @@
     position: absolute;
 }
 
-.events-frame {
+.event:nth-child(odd) {
     min-height: max(12rem, 40%);
     aspect-ratio: 1;
     filter: blur(2px);
@@ -63,17 +59,17 @@
     z-index: 10;
 }
 
-.events-frame:first-child {
+.event:first-child {
     top: 0;
     background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/valentin.png');
 }
 
-.events-frame:last-child {
+.event:last-child {
     bottom: 0;
     background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/halloween.jpg');
 }
 
-.events-main {
+.event:nth-child(2) {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -88,27 +84,27 @@
     z-index: 20;
 }
 
-.events-main:hover  {
+.event:nth-child(2):hover  {
     scale: 1.1;
 }
 
-.events-main__title {
+.event__title {
     font-size: 1.6rem;
     font-weight: 600;
 }
 
-.events-main__date{
+.event__date{
     color: var(--color-lgh);
 }
 
-.events-main__discount {
+.event__discount {
     color: rgb(250, 39, 28);
     font-size: 1.2rem;
     font-weight: 700;
 }
 
 @media screen and (min-width: 400px) {
-    .events-main {
+    .event:nth-child(2) {
         min-width: auto;
         min-height: max(15rem, 50%);
     }

@@ -1,23 +1,19 @@
 .about {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
-.about-st, .about-nd {
+.about-sect {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1.5rem;
 }
 
-.about-st {
-    flex-wrap: wrap;
-}
-
-.about-nd {
-    flex-wrap: wrap-reverse;
+.about-sect:first-of-type {
+    flex-direction: row;
 }
 
 .about__img {
@@ -35,7 +31,7 @@
 
 .about__text strong {
     display: block;
-    color: var(--color-ctr);
+    color: var(--color-ctr); 
 }
 
 @media screen and (min-width: 1024px) {
@@ -43,7 +39,11 @@
         text-align: left;
     }
 
-    .about-nd .about__text {
+    .about-sect .about__text {
         text-align: end;
+    }
+
+    .about-sect:first-of-type .about__text {
+        text-align: start;
     }
 }

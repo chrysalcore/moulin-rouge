@@ -1,11 +1,16 @@
 .dishes {
-    display: flex;
-    flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
     justify-content: space-between;
     overflow-x: clip;
 }
 
-.dishes-header {
+.dishes-container {
+    align-items: center;
+    text-align: center;
+}
+
+.dishes .brief-header {
     flex: 1 0 min(15rem, 100%);
     display: flex;
     flex-direction: column;
@@ -15,43 +20,33 @@
     text-align: center;
 }
 
-.dishes__desc-link {
+.dishes .brief__desc-link {
     color: var(--color-com);
     font-weight: 700;
     text-decoration: underline;
 }
 
-.dishes-buttons{
+.dishes .brief-buttons{
     display: flex;
     align-items: center;
     gap: 1.5rem;
 }
 
-.dishes__button {
-    padding: 0.3rem 2rem;
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: 0.1rem;
-    color: var(--color-ctr);
-    background-color: transparent;
-    border: 0.5px solid var(--color-ctr);
-    border-radius: 0.5rem;
-    transition: color .3s, background-color .3s;
-}
-
-.dishes_button:hover {
-    color: #000;
-    background-color: var(--color-ctr);
-}
-
-.dishes-content {
+.dishes-brief {
     flex: 1 0 min(20rem, 100%);
     display: flex;
     min-height: 40rem;
     position: relative;
 }
 
-.dishes-frame, .dishes-main {
+.dishes-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dish {
     background-position: center center;
     background-size: cover;
     border-radius: 0.5rem;
@@ -59,7 +54,7 @@
     position: absolute;
 }
 
-.dishes-frame {
+.dishes-brief .dish:nth-child(odd) {
     min-height: max(12rem, 40%);
     aspect-ratio: 1;
     filter: blur(2px);
@@ -67,17 +62,17 @@
     z-index: 10;
 }
 
-.dishes-frame:first-child {
+.dishes-brief .dish:first-child {
     top: 0;
     background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/fish.jpg');
 }
 
-.dishes-frame:last-child {
+.dishes-brief .dish:last-child {
     bottom: 0;
     background-image: linear-gradient(to top, #000, #000a 20%, #0005), url('../img/cost.jpg');
 }
 
-.dishes-main {
+.dishes-brief .dish:nth-child(2) {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -94,39 +89,58 @@
     z-index: 20;
 }
 
-.dishes-main:hover  {
+.dishes-brief .dish:nth-child(2):hover  {
     scale: 1.1;
 }
 
-.dishes .stars {
+.dishes-list .dish {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 2rem;
+    min-width: min(20rem, 100%);
+    max-width: 20rem;
+    aspect-ratio: 6/7;
+    background-image: linear-gradient(to top, #000, #000d 20%, transparent), url('../img/head-bg.jpg');
+    scroll-snap-align: center;
+    position: relative;
+}
+
+.dish .stars {
     display: flex;
     gap: 1rem;
 }
 
-.dishes .star {
+.dish .star {
     width: 1.5rem;
 }
 
-.dishes-main__title {
+.dish__title {
     font-size: 1.2rem;
     font-weight: 600;
+    text-align: center;
 }
 
-.dishes-main__price {
+.dish__price {
+    padding: 0.5rem 1rem;
     color: var(--color-com);
     font-size: 1.3rem;
     font-weight: 700;
+    background: linear-gradient(to right, #151515, var(--color-dom));
+    border-radius: 0.5rem;
     position: absolute;
     top: 1rem;
     right: 1rem;
 }
 
-.dishes-main__button {
+.dish .btn {
     margin: 1rem 0;
 }
 
 @media screen and (min-width: 400px) {
-    .dishes-main {
+    .dishes-brief .dish:nth-child(2) {
         min-width: auto;
         min-height: max(15rem, 50%);
     }

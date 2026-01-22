@@ -1,8 +1,8 @@
 .reservations {
-    display: flex;
     gap: 0;
     overflow-x: clip;
-    position: relative;
+    position: relative; 
+    background: linear-gradient(transparent, var(--color-dom));
 }  
 
 .reservations__img {
@@ -42,6 +42,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    min-width: 100%;
 }
 
 .reservations-content .form-field__text {
@@ -60,7 +61,11 @@
     border-bottom: 1px solid var(--color-ctr);
 }
 
-.reservations-content .form__btn {
+.reservations-content .cta {
+    align-self: center;
+}
+
+.reservations-content .cta__btn {
     margin: auto;
     margin-top: 2rem;
 }

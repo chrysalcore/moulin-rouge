@@ -24,63 +24,32 @@
     gap: 2rem;
 }
 
+.menu .categories-list {
+    flex-wrap: nowrap;
+}
+
 .category {
-    flex: 0 0 min(100%, 8rem);
+    flex: 0 0 min(100%, 10rem);
     max-width: 10rem;
-    aspect-ratio: 1;
+    background-color: #d218;
     border-radius: 0.5rem;
     box-shadow: 0 0 1rem black;
+    overflow: clip;
+}
+
+.category:has(.category__link.active) {
+    background-color: var(--color-com);
 }
 
 .category__link {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     padding: 1rem;
     height: 100%;
-}
-
-.category:nth-child(1)  {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/meat.jpg");
-    background-position: center center;
-    background-size: cover;
-}
-
-.category:nth-child(2) {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/rice.jpg");
-    background-position: center center;
-    background-size: cover;
-}
-
-.category:nth-child(3) {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/salad.jpg");
-    background-position: center center;
-    background-size: cover;
-}
-
-.category:nth-child(4) {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/fries.jpg");
-    background-position: center center;
-    background-size: cover;
-}
-
-.category:nth-child(5)  {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/italian.jpg");
-    background-position: center center;
-    background-size: cover;
-}
-
-.category:nth-child(6) {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/drink.jpg");
-    background-position: center center;
-    background-size: cover;
-}
-
-.category:nth-child(7) {
-    background: linear-gradient(transparent 30%, #000f), url("/src/assets/img/dessert.jpg");
-    background-position: center center;
-    background-size: cover;
+    text-align: center;
+    text-transform: capitalize;
 }
 
 .category__desc {

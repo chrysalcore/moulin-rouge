@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     width: 100%;
     color: var(--color-ctr);
     background-color: var(--color-dom);
@@ -15,17 +15,29 @@
 }
 
 .header .nav {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 0;
+    height: 100dvh;
+    width: 0;
+    background-color: var(--color-dom);
+    overflow: clip;
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    top: 0;
+    z-index: -20;
+    transition: padding 1s, width 1s;
+}
+
+.header .nav.active {
+    padding: 4rem 1rem;
+    width: 80dvw;
 }
 
 .header .nav-list {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    height: 100%;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .header .nav-list__item {
@@ -44,7 +56,7 @@
     gap: 1rem;
 }
 
-.header__button-user {
+.header__button:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,21 +66,39 @@
     cursor: pointer;
 }
 
-.header__button-user .user-icon {
-    width: 1rem;
-    height: 1rem;
-}
-
-.header__button-user .user-icon .content {
-    fill: var(--color-ctr);
+.header__button-img {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 @media screen and (min-width: 900px) {
     .header {
-        padding: 1rem 4rem;
+        padding: 0.5rem 4rem;
     }
 
     .header .nav {
         display: flex;
+        flex-direction: row;
+        padding: 0;
+        height: initial;
+        width: initial;
+        left: 50%;
+        top: initial;
+        transform: translateX(-50%);
+        z-index: 0;
+    }
+
+    .header .nav.active {
+        padding: 0;
+        width: initial;
+    }
+
+    .header .nav-list {
+        flex-direction: row;
+        gap: 3rem;
+    }
+
+    .header__button:last-child {
+        display: none;
     }
 }

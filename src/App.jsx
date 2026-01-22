@@ -1,16 +1,48 @@
-import { Routes, Route } from 'react-router-dom'
-import Main from './pages/Main.jsx';
-import Menu from "./pages/Menu.jsx";
-import Auth from './pages/Auth.jsx';
+import { Outlet } from 'react-router-dom';
+import { DataProvider } from './context/dataContext'
+import useConnect from './hooks/useConnect';
+import './App.css'
+
+import Head from "./components/sections/head/Head";
+import Header from './components/sections/head/Header'
+import Hero from "./components/sections/head/Hero"
+import Footer from "./components/sections/footer/Footer";
+import FooterContent from "./components/sections/footer/FooterContent";
+import FooterRights from "./components/sections/footer/FooterRights";
+import SocialInfo from './components/others/SocialInfo';
+import Loading from './components/others/Loading'
+
 
 function App() {
+  const [
+    loading,
+    dishes,
+    events,
+    categories,
+    error
+  ] = useConnect()
+  
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        {/* <Route path="/menu" element={<Menu />} />
-        <Route path="/auth" element={<Auth />} /> */}
-      </Routes>
+      <Head>
+        <Header />
+        <Hero />
+      </Head>
+      {(loading)?
+        <Loading />
+        :
+        (error)?
+          <h2>Error 500</h2>
+          :
+          <DataProvider value={{ categories, dishes, events }}>
+            <Outlet />
+          </DataProvider>
+      }
+      <Footer>
+        <FooterContent />
+        <SocialInfo />
+        <FooterRights />
+      </Footer>
     </>
   );
 };
