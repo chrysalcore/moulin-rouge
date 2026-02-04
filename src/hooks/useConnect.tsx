@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import useStatus from './useStatus'
 import load from '../helpers/load'
-import evts from "../data/events"
 
 function useConnect() {
     const [{ data, error, loading }, dispatch] = useStatus()
@@ -16,7 +15,6 @@ function useConnect() {
             load(`https://devsapihub.com/api-fast-food`)
             .then( result => {
                 if(!ignore) {
-                    result.payload = { ...result.payload, events : evts}
                     dispatch(result)
                 }
             })
