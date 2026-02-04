@@ -32,7 +32,7 @@ function App() {
         <Loading />
         :
         (error)?
-          <h2>Error 500</h2>
+          <h2>No se han podido cargar los datos</h2>
           :
           <DataProvider value={{ categories, dishes, events }}>
             <Outlet />
