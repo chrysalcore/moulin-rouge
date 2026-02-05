@@ -1,7 +1,83 @@
-# Moulin Rouge Restaurant
+# Moulin Rouge Front-end
 
-Example site based on the legendary Moulin Rouge restaurant. It showcases an incredible contrast in its carefully chosen color palette, elegant and warm typography, and images that create a unique atmosphere—all with the aim of transporting the user to that wonderful dinner they should already book!
+Template website for Moulin Rouge restaurant with all their dishes, events and business info.
 
-## This site contains a PolyForm Perimeter License 1.0.0
+[![React](https://img.shields.io/badge/React_19.1.1-blue)](https://reactjs.org/)
+[![React Router DOM](https://img.shields.io/badge/React_Router_DOM_7.9.4-blue)](https://reactjs.org/)
+[![Axios](https://img.shields.io/badge/Axios_1.7.9-red)](https://developer.mozilla.org/es/docs/Web/JavaScript/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-yellow)](https://developer.mozilla.org/es/docs/Web/JavaScript/)
+[![Vite](https://img.shields.io/badge/Vite_7.1.2-yellow)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/Polyform_Perimeter_License_1.0.0-red)](LICENSE)
 
-***For more information check the LICENSE file!***
+## Preview
+
+Live Link: [https://chrysalcore.github.io/moulin-rouge/](https://chrysalcore.github.io/moulin-rouge/)
+
+## Description
+
+**Moulin Rouge Front-end** was created to provide a template website for the legendary Moulin Rouge restaurant.
+
+The site has three pages with several sections, displaying a menu full of categories, events, business information and contact details. It showcases an incredible contrast in its carefully chosen color palette, elegant and warm typography, and images that create a unique atmosphere—all with the aim of transporting the user to that wonderful dinner they should already book!
+
+The code was written using React, state management with contexts and reducers; calls were made to a third-party API to read the menu. It also adheres to best practices, responsiveness, accessibility, and other web standards.
+
+## Main Features
+
+- Advanced state management with **context**, **reducers**.
+- API Consumption: Efficient connection with RESTful APIs for read operations.
+- Componentization with JavaScript.
+- Responsive UI/UX: Interface designed with CSS that adapts to all devices.
+- Cyclic animations, Smooth scrolling and a fluid user experience.
+
+## Technologies Used
+
+| Category | Technologies |
+| :--- | :--- |
+| Frontend & Language | React 19, JavaScript, Vite |
+| State Management | useState, useContext, useReducer |
+| HTTP Client | Axios |
+| Routing | --- |
+| Style | CSS |
+| Tools | ESLint |
+| Version Control | Git, GitHub |
+| Deployment | GitHub |
+
+## Local Installation and Use
+
+Follow these steps to run the project on your local machine.
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/es/)
+- [NPM](https://www.npmjs.com)
+
+### Steps
+
+1. Clone the repository
+
+    ```bash
+    git clone https://github.com/chrysalcore/moulin-rouge.git
+    cd moulin-rouge
+    ```
+
+2. Install dependencies
+
+    ```bash
+    npm install
+    ```
+
+3. Run development mode
+
+    ```bash
+    npm run dev
+    ```
+
+## License
+
+This project is licensed under the [PolyForm Perimeter License 1.0.0](LICENSE)
+
+### Key Restrictions
+
+- Free use for **non-commercial projects**.
+- Use **prohibited** in businesses that compete with the owner.
+- **Contact the owner** for a commercial license.

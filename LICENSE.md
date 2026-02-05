@@ -64,8 +64,8 @@ This license is governed by the laws of the State of New York, USA, as applied t
 
 ## **Contacto del titular**
 
-BlueSwirl
+### Chrysal Core
 
-<blueswirldev@gmail.com>
+**Email**: <owner@chrysalcore.com>
 
-<https://blue-swirl.github.io>
+**Website**: <https://chrysalcore.com>
