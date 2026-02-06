@@ -1,10 +1,7 @@
+import type { Header } from '../types';
+
 interface Headers {
     [key: string]: Header
-}
-
-type Header = {
-    title: string,
-    desc: string
 }
 
 const data: Headers = {

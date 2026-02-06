@@ -1,5 +1,5 @@
 import React from "react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, ReactNode } from "react";
 import type { DataContextValue } from "../types";
 
 type Props = {
@@ -15,7 +15,7 @@ const initialValue: DataContextValue = {
 
 const DataContext = createContext(initialValue)
 
-export function DataProvider({ children, value  }: Props): React.ReactNode {
+export function DataProvider({ children, value  }: Props): ReactNode {
     return (
         <DataContext.Provider value={value} >
             {children}
