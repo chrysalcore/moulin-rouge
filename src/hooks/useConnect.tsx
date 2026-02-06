@@ -1,8 +1,17 @@
 import { useEffect } from "react"
 import useStatus from './useStatus'
 import load from '../helpers/load'
+import type { Dish, Event, ErrorPayload, StatusAction } from '../types'
 
-function useConnect() {
+type UseConnectReturn = [
+    loading: boolean,
+    dishes: Dish[] | undefined,
+    events: Event[] | undefined,
+    categories: string[],
+    error: ErrorPayload | null
+]
+
+function useConnect(): UseConnectReturn {
     const [{ data, error, loading }, dispatch] = useStatus()
     const dishes = data?.dishes
     const events = data?.events
@@ -21,7 +30,7 @@ function useConnect() {
         }, 3000)
 
         return () => { ignore = true }
-    }, [])
+    }, [dispatch])
 
     return [
         loading,

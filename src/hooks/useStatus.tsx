@@ -1,31 +1,9 @@
-import { ActionDispatch, useReducer } from "react";
+import { useReducer, Dispatch } from "react";
+import type { StatusState, StatusAction } from "../types";
 
-type Action = {
-    type: 'LOADING',
-    payload: null
-} | {
-    type: 'SUCCESS',
-    payload: {
-        dishes: object[],
-        events: object[]
-    }
-} | {
-    type: 'ERROR',
-    payload: object
-}
+type StatusDispatch = Dispatch<StatusAction>
 
-type Status = {
-    loading: boolean,
-    data: {
-        dishes: object[],
-        events: object[]
-    },
-    error: null | object
-}
-
-type Dispatch = (action: Action) => void
-
-const initialState: Status = {
+const initialState: StatusState = {
     loading: true,
     data: {
         dishes: [],
@@ -34,13 +12,12 @@ const initialState: Status = {
     error: null
 }
 
-function useStatus(): [Status, Dispatch] {
+function useStatus(): [StatusState, StatusDispatch] {
     const [status, dispatch] = useReducer(reducer, initialState)
-
     return [status, dispatch]
 }
 
-function reducer(state: Status, action: Action): Status {
+function reducer(state: StatusState, action: StatusAction): StatusState {
     switch (action.type) {
         case 'LOADING':
             return {

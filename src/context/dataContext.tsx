@@ -1,15 +1,13 @@
-import { createContext, useContext, ReactNode, JSX } from "react";
+import React from "react";
+import { createContext, useContext } from "react";
+import type { DataContextValue } from "../types";
 
 type Props = {
-    children: ReactNode,
-    value: {
-        categories: string[],
-        dishes: object[],
-        events: object[]
-    }
+    children: React.ReactNode
+    value: DataContextValue
 }
 
-const initialValue: Props['value'] = {
+const initialValue: DataContextValue = {
     categories: [],
     dishes: [],
     events: []
@@ -17,7 +15,7 @@ const initialValue: Props['value'] = {
 
 const DataContext = createContext(initialValue)
 
-export function DataProvider({ children, value  }: Props): JSX.Element {
+export function DataProvider({ children, value  }: Props): React.ReactNode {
     return (
         <DataContext.Provider value={value} >
             {children}
@@ -25,6 +23,6 @@ export function DataProvider({ children, value  }: Props): JSX.Element {
     )
 }
 
-export function useData(): Props['value'] {
+export function useData(): DataContextValue {
     return useContext(DataContext)
 }
