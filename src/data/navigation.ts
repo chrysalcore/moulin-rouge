@@ -1,7 +1,4 @@
-type NavLink = {
-    href: `/${string}`,
-    text: string
-}
+import { NavLink } from "../types"
 
 const data: NavLink[] = [
     {

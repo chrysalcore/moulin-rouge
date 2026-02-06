@@ -1,15 +1,4 @@
-type Contact = {
-    name: string,
-    href: string,
-    text: string
-}
-
-type Input = {
-    name: string,
-    type: string,
-    placeholder: string,
-    isInput: boolean
-}
+import type {Contact, Input} from '../types/data'
 
 export const contact: Contact[] = [
     {
