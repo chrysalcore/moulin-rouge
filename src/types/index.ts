@@ -47,3 +47,20 @@ export type ErrorPayload = {
 } 
 
 export type StatusAction = LoadingResponse | SuccessResponse | ErrorResponse
+
+// Tipos para componentes globales
+export type BriefInfo = {
+    name: string
+    title: string
+    desc: string
+    strong: string
+    link: string
+    ref: string
+}
+
+export type Header = {
+    title: string
+    desc: string
+}
+
+export type SectionType = 'about' | 'dishes' | 'contact' | 'reservation'
