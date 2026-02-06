@@ -1,14 +1,15 @@
+import React from "react";
 import { useData } from "../../context/dataContext";
 import Categories from "../sections/categories/Categories";
 import Section from "../global/Section";
-import EventList from '../sections/events/EventList'
+import EventList from '../sections/events/EventList';
 import DishesBrief from '../sections/dishes/DishesBrief';
 import AboutList from "../sections/about/AboutList";
 import ContactList from '../sections/contact/ContactList';
 import CTA from "../others/CTA";
 
-function Home() {
-    const { categories, dishes, events } = useData()
+function Home(): React.JSX.Element {
+    const { categories, dishes, events } = useData();
 
     return (
         <>  
@@ -25,7 +26,7 @@ function Home() {
                 </Section>
             </main>
         </>
-    )
+    );
 }
 
-export default Home
+export default Home;

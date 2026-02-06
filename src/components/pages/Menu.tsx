@@ -1,16 +1,19 @@
-import { useRef, useEffect } from 'react'
+import React from "react";
+import { useRef, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useData } from "../../context/dataContext";
 import '../../assets/styles/Menu.css';
 import Categories from '../sections/categories/Categories';
 
-function Menu() {
-    const { categories } = useData()
-    const ref = useRef()
+function Menu(): React.JSX.Element {
+    const { categories } = useData();
+    const ref = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        ref.current.scrollIntoView()
-    }, [])
+        if (ref.current) {
+            ref.current.scrollIntoView();
+        }
+    }, []);
 
     return (
         <>
@@ -19,7 +22,7 @@ function Menu() {
                 <Outlet />
             </main>
         </>
-    )
+    );
 }
 
 export default Menu;
