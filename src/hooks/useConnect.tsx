@@ -5,17 +5,17 @@ import type { Dish, Event, ErrorPayload } from '../types'
 
 type UseConnectReturn = [
     loading: boolean,
-    dishes: Dish[] | undefined,
-    events: Event[] | undefined,
+    dishes: Dish[],
+    events: Event[],
     categories: string[],
     error: ErrorPayload | null
 ]
 
 function useConnect(): UseConnectReturn {
     const [{ data, error, loading }, dispatch] = useStatus()
-    const dishes = data?.dishes
-    const events = data?.events
-    const categories = [...new Set(dishes?.map(item => item.category))]
+    const dishes = data.dishes
+    const events = data.events
+    const categories = [...new Set(dishes.map(item => item.category))]
 
     useEffect(() => {
         let ignore = false

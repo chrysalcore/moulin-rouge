@@ -2,7 +2,7 @@
 
 Preferencias generales en `~/.claude/CLAUDE.md` (que cubre solo lo transversal a todos los proyectos). Esto es lo propio de este repo.
 
-- `tsconfig.json` tiene `"strict": false` (el único repo del portafolio así) y `target: "es5"` — no lo asumas activado, y no asumas tampoco que es intencional: puede ser deuda de cuando se creó el proyecto. Si vas a tocar la config o agregar tipos nuevos, preguntar si conviene activar `strict` en vez de perpetuar la excepción. Mientras tanto, seguir tipando con precisión (uniones discriminadas, tuplas etiquetadas) — no usar `any` como atajo.
+- `tsconfig.json` tiene `"strict": true` (decisión de Ordnay, 2026-08-08 — ya no es la excepción del portafolio). `target` se subió de `es5` a `es2020` en el mismo trabajo, porque `es5` rompía el typecheck real (iteración de `Set` en `useConnect.tsx`) apenas `tsc` empezó a correr de verdad. Activar `strict` solo destapó dos errores, ambos en `useConnect.tsx`: el tipo de retorno declaraba `Dish[] | undefined`/`Event[] | undefined` cuando `data` nunca es `undefined` en runtime (`useStatus` lo inicializa como `{dishes: [], events: []}` y el reducer nunca lo deja indefinido) — se corrigió la anotación, no la lógica.
 - Arquitectura de estado en capas, no tocar sin entenderla primero:
   - `src/context/dataContext.tsx` → `DataProvider`/`useData`: datos ya cargados (`categories`, `dishes`, `events`).
   - `src/hooks/useStatus.tsx` → reducer local para estado de fetch (`loading`/`data`/`error`), acciones tipadas como unión discriminada en `src/types/state.ts`.
