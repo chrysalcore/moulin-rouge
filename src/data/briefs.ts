@@ -1,8 +1,6 @@
-type BriefTitle = {
-    [key: string]: string
-}
+import type { BriefInfo } from '../types'
 
-const data: BriefTitle[] = [
+const data: BriefInfo[] = [
     {
         name: 'events',
         title: 'Events',
