@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import useStatus from './useStatus'
 import load from '../helpers/load'
-import type { Dish, Event, ErrorPayload, StatusAction } from '../types'
+import type { Dish, Event, ErrorPayload } from '../types'
 
 type UseConnectReturn = [
     loading: boolean,
