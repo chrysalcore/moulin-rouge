@@ -33,4 +33,17 @@ describe('useStatus', () => {
         const [status] = result.current
         expect(status).toEqual({ loading: false, data: payload, error: { message: 'Network Error' } })
     })
+
+    it('clears the data and the error and starts loading again on LOADING', () => {
+        const { result } = renderHook(() => useStatus())
+        const [, dispatch] = result.current
+        const payload = { dishes: buildDishes(), events: buildEvents() }
+
+        act(() => dispatch({ type: 'SUCCESS', payload }))
+        act(() => dispatch({ type: 'ERROR', payload: { message: 'Network Error' } }))
+        act(() => dispatch({ type: 'LOADING', payload: null }))
+
+        const [status] = result.current
+        expect(status).toEqual({ loading: true, data: { dishes: [], events: [] }, error: null })
+    })
 })

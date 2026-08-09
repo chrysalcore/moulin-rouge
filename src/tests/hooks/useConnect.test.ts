@@ -66,4 +66,35 @@ describe('useConnect', () => {
         expect(categories).toEqual([])
         expect(error).toEqual({ message: 'Network Error' })
     })
+
+    it('retries the fetch and recovers after a previous failure', async () => {
+        vi.mocked(load).mockResolvedValueOnce({ type: 'ERROR', payload: { message: 'Network Error' } })
+
+        const { result } = renderHook(() => useConnect())
+
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(3000)
+        })
+
+        expect(result.current[4]).toEqual({ message: 'Network Error' })
+
+        const dishes = buildDishes()
+        vi.mocked(load).mockResolvedValueOnce({ type: 'SUCCESS', payload: { dishes, events: [] } })
+
+        act(() => {
+            result.current[5]()
+        })
+
+        expect(result.current[0]).toBe(true)
+        expect(result.current[4]).toBeNull()
+
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(3000)
+        })
+
+        expect(load).toHaveBeenCalledTimes(2)
+        expect(result.current[0]).toBe(false)
+        expect(result.current[1]).toEqual(dishes)
+        expect(result.current[4]).toBeNull()
+    })
 })
