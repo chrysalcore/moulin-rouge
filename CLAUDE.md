@@ -37,7 +37,7 @@ No es un bug: `Math.random()` en `Dish.tsx` — confirmado por Ordnay (2026-08-0
 
 `ci.yml`/`deploy.yml` copian el patrón de `pokedex-app` (push a `development` → lint+test+build, PR automático a `main`; push a `main` → build + publish a `gh-pages`). **Deben quedar estructuralmente idénticos entre ambos repos**: Ordnay planea extraer un workflow reutilizable compartido (ver memoria de proyecto `project_ci_reusable_workflow_with_pokedex`). Antes de tocar CI en cualquiera de los dos, revisar el otro y alinear (mismos nombres de job/step, mismo texto de PR).
 
-Pendiente manual en GitHub (no lo hace Claude solo): branch protection en `main` con PR obligatorio y el status check de `ci.yml` requerido — recién configurable después de que el workflow corra sobre un push real a `development`.
+Branch protection en `main` configurada (2026-08-09): ruleset "Main Protection" (deletion + non-fast-forward bloqueados, PR obligatorio, status check `Typecheck, lint & test` requerido) — mismo ruleset que `pokedex-app`.
 
 ## Roadmap de estado avanzado (futuro, decisión de Ordnay 2026-08-09)
 
