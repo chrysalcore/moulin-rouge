@@ -3,7 +3,7 @@ run-name: "CI — ${{ github.event.head_commit.message || github.event_name }}"
 
 on:
   push:
-    branches: [develop]
+    branches: [development]
   workflow_dispatch:
 
 permissions:
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   test:
-    name: Typecheck, lint & build
+    name: Typecheck, lint & test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,6 +33,8 @@ jobs:
         run: npm run typecheck
       - name: Lint
         run: npm run lint
+      - name: Run tests
+        run: npm run test:coverage
       - name: Build
         run: npm run build
 
@@ -51,11 +53,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          abiertos=$(gh pr list --base main --head develop --state open --json number --jq 'length')
+          abiertos=$(gh pr list --base main --head development --state open --json number --jq 'length')
           if [ "$abiertos" = "0" ]; then
-            gh pr create --base main --head develop \
-              --title "develop → main" \
-              --body "Lint y build en verde en develop."
+            gh pr create --base main --head development \
+              --title "development → main" \
+              --body "Lint y tests en verde en development."
           else
-            echo "Ya hay un PR abierto de develop a main; el push lo actualiza solo."
+            echo "Ya hay un PR abierto de development a main; el push lo actualiza solo."
           fi
