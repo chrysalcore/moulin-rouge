@@ -22,7 +22,13 @@ async function load(url: string): Promise<StatusAction> {
         }
 
         if (data === null) {
-            data = (await axios.get<Dish[]>(url)).data
+            const response = (await axios.get<Dish[]>(url)).data
+
+            if (!Array.isArray(response)) {
+                return { type: 'ERROR', payload: { message: 'Unexpected response shape' } }
+            }
+
+            data = response
             const entry: CacheEntry = { data, cachedAt: Date.now() }
             localStorage.setItem(url, JSON.stringify(entry))
         }

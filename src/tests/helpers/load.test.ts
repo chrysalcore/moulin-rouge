@@ -41,6 +41,14 @@ describe('load', () => {
         expect(action).toEqual({ type: 'ERROR', payload: error })
     })
 
+    it('returns an ERROR action when the api responds with a non-array body', async () => {
+        vi.mocked(axios.get).mockResolvedValue({ data: { redirected: true } })
+
+        const action = await load(MENU_URL)
+
+        expect(action.type).toBe('ERROR')
+    })
+
     describe('cache expiry (gap found in the professionalism audit, 2026-08-08)', () => {
         afterEach(() => {
             vi.useRealTimers()
