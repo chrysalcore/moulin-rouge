@@ -6,7 +6,7 @@ import Reservations from "../components/pages/Reservations";
 import Menu from "../components/pages/Menu";
 import DishesList from "../components/sections/dishes/DishesList";
 
-const routes: RouteObject[] = [
+export const routes: RouteObject[] = [
     {
         path: '',
         element: <App />,
