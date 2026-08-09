@@ -10,6 +10,7 @@ export default defineConfig({
         environment: 'jsdom',
         setupFiles: './src/tests/vitest.setup.ts',
         restoreMocks: true,
+        mockReset: true,
         unstubGlobals: true,
         coverage: {
             include: ['src/**'],
