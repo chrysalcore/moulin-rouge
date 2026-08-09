@@ -2,40 +2,43 @@
 
 Preferencias generales en `~/.claude/CLAUDE.md` (que cubre solo lo transversal a todos los proyectos). Esto es lo propio de este repo.
 
-- `tsconfig.json` tiene `"strict": false` (el único repo del portafolio así) y `target: "es5"` — no lo asumas activado, y no asumas tampoco que es intencional: puede ser deuda de cuando se creó el proyecto. Si vas a tocar la config o agregar tipos nuevos, preguntar si conviene activar `strict` en vez de perpetuar la excepción. Mientras tanto, seguir tipando con precisión (uniones discriminadas, tuplas etiquetadas) — no usar `any` como atajo.
+- `tsconfig.json` tiene `"strict": true` (decisión de Ordnay, 2026-08-08 — ya no es la excepción del portafolio). `target` es `es2020` (subido desde `es5`, que rompía la iteración de `Set` en `useConnect.tsx`).
 - Arquitectura de estado en capas, no tocar sin entenderla primero:
   - `src/context/dataContext.tsx` → `DataProvider`/`useData`: datos ya cargados (`categories`, `dishes`, `events`).
   - `src/hooks/useStatus.tsx` → reducer local para estado de fetch (`loading`/`data`/`error`), acciones tipadas como unión discriminada en `src/types/state.ts`.
-  - `src/hooks/useConnect.tsx` → compone `useStatus` + efecto de fetch, devuelve tupla etiquetada.
+  - `src/hooks/useConnect.tsx` → compone `useStatus` + efecto de fetch, devuelve tupla etiquetada (`[loading, dishes, events, categories, error, handleRetry]`).
+  - `src/App.tsx` (layout estático: `Head`/`Header`/`Hero`/`Footer`) vs `src/components/Main.tsx` (llama a `useConnect()` y decide loading/error/`DataProvider`+`Outlet`) están separados a propósito, para poder testear esos estados sin montar todo el layout. `Main.tsx` no puede ir en `src/Main.tsx` (al lado de `App.tsx`) por colisión de mayúsc/minúsc con `src/main.tsx`, el entry point (`TS1261`).
   - Todo hook custom que combine estado sigue el patrón de tupla (`[loading, data, error]`), no objeto.
 - Tipos centralizados en `src/types/*.ts`, re-exportados por el barrel `src/types/index.ts` — importar siempre desde `'../types'`, nunca del archivo específico directo.
-- Único repo con comentarios en el código: un banner de una línea en español al inicio de cada archivo de `src/types/` (ej. `// Tipos para el estado y reducer`). Mantener ese patrón si se agregan archivos de tipos nuevos; no extenderlo al resto del código.
-- Único repo que adoptó Conventional Commits (`feat(scope): …`, `chore(scope): …`), pero solo a partir de la migración a TS; commits previos son descriptivos sin prefijo, igual que el resto del portafolio. No está confirmado si fue una decisión deliberada de mantener solo aquí o si en realidad debería volverse el estándar en todos los repos (o revertirse a la convención general). Antes del próximo commit en este repo, preguntar cuál de las dos.
+- Único repo con comentarios en el código: un banner de una línea en español al inicio de cada archivo de `src/types/`. Mantener ese patrón si se agregan archivos de tipos nuevos; no extenderlo al resto del código.
+- Único repo que adoptó Conventional Commits (`feat(scope): …`, `chore(scope): …`), pero solo a partir de la migración a TS; commits previos son descriptivos sin prefijo, igual que el resto del portafolio. Confirmado por Ordnay (2026-08-09): se mantiene solo en este repo.
 - CSS global por sección en `src/assets/styles/*.css`, BEM (`form-field__input`), sin CSS Modules.
 
-## Plan de testing (Vitest + Testing Library) — en progreso
+## Testing (Vitest + Testing Library) — plan cerrado (2026-08-09)
 
-Sin infraestructura de testing al iniciar este plan (sin Vitest, sin CI). Orden acordado con Ordnay (2026-08-06): ejecutar las fases en orden, CI recién después de cerrar la Fase 3.
+Setup: Vitest + Testing Library + jsdom (pinneado `^27`, no `^30` — exige Node `^22.22.2`) + `@vitest/coverage-v8`, mismo patrón que `pokedex-app`. Tests en `src/tests/` espejando `src/`. Scripts: `test` (watch), `test:run`, `test:coverage`. Thresholds en `vite.config.ts` recalibrados a la cobertura real tras cerrar el plan (91/76/88/91): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado) y ramas defensivas puntuales en varios componentes.
 
-**Fase 0 — Setup:** `vitest`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`, `jsdom`, `@vitest/coverage-v8`. Config con `environment: 'jsdom'`. Scripts `test`/`test:watch`/`coverage`. Tests en `src/tests/` espejando `src/`, por la convención general del portafolio.
+Gotchas de testing a tener en cuenta en este repo:
+- `window.HTMLElement.prototype.scrollIntoView` stubbeado en `src/tests/vitest.setup.ts` — jsdom no lo implementa y `Menu.tsx`/`Reservations.tsx` lo llaman al montar.
+- El click de retry en `Main.test.tsx` usa `fireEvent.click`, no `userEvent`: con `vi.useFakeTimers()` activo (necesario porque el retry vuelve a disparar el `setTimeout` de 3s de `useConnect`), `userEvent.click()` cuelga esperando su simulación interna de delays contra un reloj congelado.
+- Guard `ignore` del efecto en `useConnect` (`if (!ignore) dispatch(result)`) no está testeado a propósito: el efecto corre una sola vez por montaje real y siempre pega a la misma URL, así que forzar dos fetches superpuestos con datos "stale"/"fresh" divergentes sería artificial, no un bug real de hoy. Revisar si conviene testearlo si el efecto llega a re-dispararse con algún parámetro (ej. filtro/búsqueda, como en `pokedex-app`).
+- `src/router/AppRouter.tsx` exporta `routes` (además del default `AppRouter`) porque el `router` real es un singleton creado con `createBrowserRouter` que lee `window.location` una sola vez al importar el módulo — no reseteable entre tests. `routes` + `createMemoryRouter` sí permite testear la config real de rutas.
 
-**Fase 1 — Unit, lógica pura:**
-- `useStatus` (`src/hooks/useStatus.tsx`): reducer, acciones `LOADING`/`SUCCESS`/`ERROR`; `default: return state` se excluye de cobertura como rama defensiva.
-- `helpers/load.ts`: cache-hit en `localStorage` (no llama a axios), cache-miss (llama a axios y cachea), error de axios → acción `ERROR`. Mock de `axios` con factory explícita, no automock.
-- `useCurrent` (`src/hooks/useCurrent.tsx`): wraparound en los límites (`MAX_INDEX = 4`).
+Bugs reales encontrados y corregidos vía TDD durante el plan:
+- `load.ts` no expiraba nunca la caché de `localStorage` — TTL de 5 minutos agregado (`{ data, cachedAt }`).
+- `load.ts` no validaba que la respuesta de `axios.get` fuera un array — si la API devolvía otra forma (ej. un redirect seguido a una página HTML), `useConnect` explotaba con `dishes.map is not a function` en el próximo render. Ahora valida con `Array.isArray` y trata la forma inesperada como `ERROR`.
+- `AppRouter.tsx`: `<Navigate to={''} replace />` en la ruta catchall `*` nunca redirigía (un `to` relativo vacío desde una ruta *splat* no navega) — cambiado a `to={'/'}` (absoluto).
+- No existía ningún Error Boundary — un error de *render* (no de fetch) tiraba toda la app a pantalla blanca. Implementado con `errorElement` de React Router (data router) en una ruta intermedia sin `path` que agrupa `Home`/`Reservations`/`Menu`, dejando `Head`/`Header`/`Hero`/`Footer` intactos. El fallback (`RouteError.tsx`) NO tiene botón Reload — un error de render suele ser determinístico, reintentar el mismo render vuelve a explotar igual; en cambio lleva un mensaje + link a Home.
+- `Home.tsx` mostraba "Sobre nosotros" en la sección de contacto (`Section type={'about'}` en vez de `'contact'`) — corregido.
 
-**Fase 2 — Unit hooks con DOM (`renderHook`):**
-- `useConnect`: mock de `load`, `vi.useFakeTimers()` para el `setTimeout` de 3s, verificar transición de `loading` y llamada a `dispatch`.
-- `DataProvider`/`useData`: el valor pasado se refleja en el context.
+No es un bug: `Math.random()` en `Dish.tsx` — confirmado por Ordnay (2026-08-09), es placeholder intencional de rating porque la API no devuelve ratings.
 
-**Fase 3 — Integration (router + context):**
-- `DishesList` con `MemoryRouter` + `:category` + `DataProvider` mock: solo lista los platos de la categoría de la URL.
-- `Menu` + `Categories`: click en categoría navega y se ve el listado correcto (router real, no mock de `useParams`).
-- `AppRouter`/`App`: loading state, error state (mock de `load` rechazando), redirects (`*` → `/`, `/menu` índice → `/menu/pizza`).
+## CI/CD
 
-**Gap real encontrado (tratamiento TDD — test primero, fix después):** no existe ningún Error Boundary en el repo (`grep` de `ErrorBoundary`/`componentDidCatch` no devuelve nada). Hoy solo se maneja el error de *fetch* (`App.tsx`, vía `useStatus`); un error de *render* (ej. la API devuelve `dishes` con forma inesperada y algo revienta en `DishesList`) tira toda la app a pantalla blanca. Alineado con la nota general de `~/.claude/CLAUDE.md` sobre proponer al menos un error boundary genérico cuando el proyecto crece más allá de una landing simple.
-- Fix correcto para este repo: **no** una clase `ErrorBoundary` envolviendo `<Outlet/>` en `App.tsx` — el proyecto ya usa `createBrowserRouter` (React Router v7, data router), que trae `errorElement` para esto. Poner `errorElement` en la ruta raíz reemplazaría todo `App` (incluyendo `Header`/`Hero`/`Footer`) ante cualquier error de un hijo; en cambio, meter una ruta intermedia sin `path` que agrupe `Home`/`Reservations`/`Menu` con su propio `errorElement` mantiene el layout (`Head`, `Header`, `Hero`, `Footer`) intacto y solo reemplaza el contenido de `Outlet`, igual que el comportamiento actual del error de fetch.
-- Test primero (debe fallar contra el código actual): montar el árbol de rutas, forzar un throw de render en un hijo, verificar que el layout persiste y se ve un fallback solo en el área de `Outlet`. Implementación después: la ruta intermedia + `errorElement` en `AppRouter.tsx`, hasta que el test pase.
-- Si aparecen gaps similares en Fases 1-2, mismo criterio: test rojo primero, fix después, aviso en el momento.
+`ci.yml`/`deploy.yml` copian el patrón de `pokedex-app` (push a `development` → lint+test+build, PR automático a `main`; push a `main` → build + publish a `gh-pages`). **Deben quedar estructuralmente idénticos entre ambos repos**: Ordnay planea extraer un workflow reutilizable compartido (ver memoria de proyecto `project_ci_reusable_workflow_with_pokedex`). Antes de tocar CI en cualquiera de los dos, revisar el otro y alinear (mismos nombres de job/step, mismo texto de PR).
 
-**Después de Fase 3:** armar CI (dos workflows, patrón de `pokedex-app` — ver `~/.claude/CLAUDE.md`).
+Pendiente manual en GitHub (no lo hace Claude solo): branch protection en `main` con PR obligatorio y el status check de `ci.yml` requerido — recién configurable después de que el workflow corra sobre un push real a `development`.
+
+## Roadmap de estado avanzado (futuro, decisión de Ordnay 2026-08-09)
+
+`molino_rojo` va a ser el repo pionero del portafolio en adoptar **TanStack Query** (estado de servidor: reemplazaría el fetch manual + caché en `localStorage` de `useConnect`/`load.ts`) y **Redux** (estado de cliente más avanzado) — todavía no arrancado. Actualiza para este repo la convención general de `~/.claude/CLAUDE.md` ("Redux solo si el proyecto ya lo trae"): acá se va a introducir a propósito. Antes de empezar esa migración, releer la arquitectura de estado en capas documentada arriba (`dataContext`/`useStatus`/`useConnect`) para decidir qué reemplaza a qué en vez de superponer patrones.

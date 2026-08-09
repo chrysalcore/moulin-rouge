@@ -1,0 +1,63 @@
+name: CI
+run-name: "CI — ${{ github.event.head_commit.message || github.event_name }}"
+
+on:
+  push:
+    branches: [development]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Typecheck, lint & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Run tests
+        run: npm run test:coverage
+      - name: Build
+        run: npm run build
+
+  open-pr:
+    name: Open PR to main
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Abrir PR a main si no hay uno abierto
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          abiertos=$(gh pr list --base main --head development --state open --json number --jq 'length')
+          if [ "$abiertos" = "0" ]; then
+            gh pr create --base main --head development \
+              --title "development → main" \
+              --body "Lint y tests en verde en development."
+          else
+            echo "Ya hay un PR abierto de development a main; el push lo actualiza solo."
+          fi

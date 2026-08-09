@@ -21,7 +21,7 @@ function Home(): React.JSX.Element {
                     <CTA>Show More</CTA>
                 </Section>
                 <DishesBrief data={dishes.slice(0, 5)} />
-                <Section type={'about'}>
+                <Section type={'contact'}>
                     <ContactList />
                 </Section>
             </main>

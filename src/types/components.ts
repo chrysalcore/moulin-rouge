@@ -9,3 +9,12 @@ export type Header = {
 }
 
 export type SectionType = 'about' | 'dishes' | 'contact' | 'reservation'
+
+export type BriefInfo = {
+    name: string
+    title: string
+    desc: string
+    strong: string
+    link: string
+    ref: string
+}
