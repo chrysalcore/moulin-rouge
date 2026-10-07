@@ -1,5 +1,7 @@
 import React from "react";
-import { useData } from "../../context/dataContext";
+import useDishes from "../../hooks/useDishes";
+import useEvents from "../../hooks/useEvents";
+import AsyncContent from "../others/AsyncContent";
 import Categories from "../sections/categories/Categories";
 import Section from "../global/Section";
 import EventList from '../sections/events/EventList';
@@ -9,18 +11,23 @@ import ContactList from '../sections/contact/ContactList';
 import CTA from "../others/CTA";
 
 function Home(): React.JSX.Element {
-    const { categories, dishes, events } = useData();
+    const dishes = useDishes();
+    const events = useEvents();
 
     return (
-        <>  
-            <Categories data={categories} />
+        <>
+            <Categories data={dishes.categories} />
             <main className='main'>
-                <EventList data={events.slice(0, 5)} /> 
+                <AsyncContent status={events}>
+                    <EventList data={events.data.slice(0, 5)} />
+                </AsyncContent>
                 <Section type={'about'}>
                     <AboutList />
                     <CTA>Show More</CTA>
                 </Section>
-                <DishesBrief data={dishes.slice(0, 5)} />
+                <AsyncContent status={dishes}>
+                    <DishesBrief data={dishes.data.slice(0, 5)} />
+                </AsyncContent>
                 <Section type={'contact'}>
                     <ContactList />
                 </Section>

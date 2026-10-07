@@ -1,10 +1,4 @@
-type Event = {
-    name: string,
-    desc: string,
-    discount: number,
-    date: string,
-    img: string
-}
+import type { Event } from '../types'
 
 const data: Event[] = [
     {
