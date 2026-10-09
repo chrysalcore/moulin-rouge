@@ -6,7 +6,7 @@ import Home from '../../../components/pages/Home'
 import fetchDishes from '../../../helpers/fetchDishes'
 import fetchEvents from '../../../helpers/fetchEvents'
 import { buildDishes, buildEvents } from '../../fixtures/menu'
-import { createQueryWrapper } from '../../utils/queryWrapper'
+import { createProvidersWrapper } from '../../utils/providersWrapper'
 
 vi.mock('../../../helpers/fetchDishes', () => ({
     default: vi.fn(),
@@ -21,7 +21,7 @@ function renderHome() {
         <MemoryRouter>
             <Home />
         </MemoryRouter>,
-        { wrapper: createQueryWrapper() }
+        { wrapper: createProvidersWrapper() }
     )
 }
 

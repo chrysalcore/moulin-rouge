@@ -4,6 +4,7 @@ import App from "../App";
 import Home from "../components/pages/Home";
 import Reservations from "../components/pages/Reservations";
 import Menu from "../components/pages/Menu";
+import Order from "../components/pages/Order";
 import DishesList from "../components/sections/dishes/DishesList";
 import RouteError from "../components/others/RouteError";
 
@@ -22,6 +23,10 @@ export const routes: RouteObject[] = [
                     {
                         path: 'reservation',
                         element: <Reservations />,
+                    },
+                    {
+                        path: 'order',
+                        element: <Order />,
                     },
                     {
                         path: 'menu',

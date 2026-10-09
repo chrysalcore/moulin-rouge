@@ -145,3 +145,14 @@
         min-height: max(15rem, 50%);
     }
 }
+
+.dish .cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.dish__icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}

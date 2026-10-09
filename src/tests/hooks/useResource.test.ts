@@ -1,10 +1,10 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import useResource from '../../hooks/useResource'
-import { createQueryWrapper } from '../utils/queryWrapper'
+import { createProvidersWrapper } from '../utils/providersWrapper'
 
 function renderUseResource(queryFn: () => Promise<string[]>) {
-    return renderHook(() => useResource(['items'], queryFn), { wrapper: createQueryWrapper() })
+    return renderHook(() => useResource(['items'], queryFn), { wrapper: createProvidersWrapper() })
 }
 
 describe('useResource', () => {

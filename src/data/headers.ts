@@ -17,6 +17,10 @@ const data: Headers = {
         title: 'Contact Us',
         desc: "We have a table waiting for you and us messager ready. Do you prefer a Reservation or a Delivery. Don't spend your time, hurry up!"
     },
+    order: {
+        title: 'Your Order',
+        desc: "Review your dishes before confirming"
+    },
     reservation: {
         title: 'Reservation',
         desc: "Fill the the following fields"

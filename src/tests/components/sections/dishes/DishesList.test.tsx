@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import DishesList from '../../../../components/sections/dishes/DishesList'
 import fetchDishes from '../../../../helpers/fetchDishes'
 import { buildDish } from '../../../fixtures/menu'
-import { createQueryWrapper } from '../../../utils/queryWrapper'
+import { createProvidersWrapper } from '../../../utils/providersWrapper'
 
 vi.mock('../../../../helpers/fetchDishes', () => ({
     default: vi.fn(),
@@ -17,7 +17,7 @@ function renderDishesList(category: string) {
                 <Route path="/menu/:category" element={<DishesList />} />
             </Routes>
         </MemoryRouter>,
-        { wrapper: createQueryWrapper() }
+        { wrapper: createProvidersWrapper() }
     )
 }
 

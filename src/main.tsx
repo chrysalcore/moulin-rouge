@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
 import './index.css';
 import AppRouter from './router/AppRouter';
+import makeStore from './store/store';
 
 const rootElement = document.getElementById('root');
 
@@ -18,10 +20,14 @@ const queryClient = new QueryClient({
     },
 });
 
+const store = makeStore();
+
 createRoot(rootElement).render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <AppRouter />
-        </QueryClientProvider>
+        <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+                <AppRouter />
+            </QueryClientProvider>
+        </Provider>
     </React.StrictMode>
 );

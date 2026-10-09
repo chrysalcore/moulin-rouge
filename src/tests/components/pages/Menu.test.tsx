@@ -6,7 +6,7 @@ import Menu from '../../../components/pages/Menu'
 import DishesList from '../../../components/sections/dishes/DishesList'
 import fetchDishes from '../../../helpers/fetchDishes'
 import { MENU_URL, buildDish } from '../../fixtures/menu'
-import { createQueryWrapper } from '../../utils/queryWrapper'
+import { createProvidersWrapper } from '../../utils/providersWrapper'
 
 vi.mock('../../../helpers/fetchDishes', () => ({
     default: vi.fn(),
@@ -27,7 +27,7 @@ function renderMenu() {
                 </Route>
             </Routes>
         </MemoryRouter>,
-        { wrapper: createQueryWrapper() }
+        { wrapper: createProvidersWrapper() }
     )
 }
 

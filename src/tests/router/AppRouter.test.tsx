@@ -5,7 +5,7 @@ import { routes } from '../../router/AppRouter'
 import fetchDishes from '../../helpers/fetchDishes'
 import fetchEvents from '../../helpers/fetchEvents'
 import { buildDishes, buildEvents } from '../fixtures/menu'
-import { createQueryWrapper } from '../utils/queryWrapper'
+import { createProvidersWrapper } from '../utils/providersWrapper'
 
 vi.mock('../../helpers/fetchDishes', () => ({
     default: vi.fn(),
@@ -17,7 +17,7 @@ vi.mock('../../helpers/fetchEvents', () => ({
 
 function renderAt(initialEntry: string) {
     const router = createMemoryRouter(routes, { initialEntries: [initialEntry] })
-    render(<RouterProvider router={router} />, { wrapper: createQueryWrapper() })
+    render(<RouterProvider router={router} />, { wrapper: createProvidersWrapper() })
     return router
 }
 
