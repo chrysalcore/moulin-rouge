@@ -19,7 +19,7 @@ function DishesList(): React.JSX.Element {
                 <SectionHeader {...header.dishes} />
                 <section className='dishes-list'>
                     {data.map(item => (
-                        <Dish {...item} key={item.name} main />
+                        <Dish {...item} key={item.id} main />
                     ))}
                 </section>
             </article>

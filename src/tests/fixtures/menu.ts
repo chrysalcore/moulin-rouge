@@ -4,6 +4,7 @@ export const MENU_URL = 'https://devsapihub.com/api-fast-food'
 
 export function buildDish(overrides: Partial<Dish> = {}): Dish {
     return {
+        id: 1,
         name: 'Margherita',
         price: 12.5,
         image: 'pizza.jpg',
@@ -15,7 +16,7 @@ export function buildDish(overrides: Partial<Dish> = {}): Dish {
 export function buildDishes(): Dish[] {
     return [
         buildDish({ name: 'Margherita', category: 'pizza' }),
-        buildDish({ name: 'Cheeseburger', category: 'hamburguesa', price: 8.5, image: 'burger.jpg' }),
+        buildDish({ id: 2, name: 'Cheeseburger', category: 'hamburguesa', price: 8.5, image: 'burger.jpg' }),
     ]
 }
 

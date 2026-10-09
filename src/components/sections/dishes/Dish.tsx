@@ -3,9 +3,7 @@ import CTA from '../../others/CTA';
 import Stars from '../../others/Stars';
 import type { Dish as DishType } from '../../../types';
 
-function Dish({ name, price, image, main }: DishType & { main?: boolean }): React.JSX.Element {
-    const rating = Number((Math.random() * 2 + 3).toFixed(2));
-
+function Dish({ name, price, image, rating, main }: DishType & { main?: boolean }): React.JSX.Element {
     const style: React.CSSProperties = {
         backgroundImage: `linear-gradient(to top, #000, #000d 20%, transparent), url(${new URL(image, import.meta.url).href})`,
     };
@@ -16,7 +14,7 @@ function Dish({ name, price, image, main }: DishType & { main?: boolean }): Reac
                 !!main 
                 &&
                 <>
-                    <Stars rating={rating}/>
+                    {rating !== undefined && <Stars rating={rating}/>}
                     <h3 className='dish__title'>{name}</h3>
                     <strong className='dish__price'>${price}</strong>
                     <CTA>Order Now</CTA>
