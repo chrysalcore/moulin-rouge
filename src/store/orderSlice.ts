@@ -1,7 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { OrderItems } from '../schemas/orderSchema'
 
 type OrderState = {
-    items: Record<number, number>
+    items: OrderItems
 }
 
 const initialState: OrderState = {

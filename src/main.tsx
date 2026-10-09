@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import AppRouter from './router/AppRouter';
 import makeStore from './store/store';
+import { loadOrder, persistOrder } from './store/orderStorage';
 
 const rootElement = document.getElementById('root');
 
@@ -20,7 +21,8 @@ const queryClient = new QueryClient({
     },
 });
 
-const store = makeStore();
+const store = makeStore({ order: { items: loadOrder() } });
+persistOrder(store);
 
 createRoot(rootElement).render(
     <React.StrictMode>
