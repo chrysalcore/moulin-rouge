@@ -24,6 +24,20 @@ Consecuencias a tener en cuenta antes de tocar esto:
 - Loading/error son por recurso: `Home.tsx` monta dishes y events en paralelo y una sección puede fallar sin tumbar la otra. No reintroducir un gate global tipo el viejo `Main.tsx`.
 - `App.tsx` quedó como layout estático (`Head`/`Header`/`Hero`/`Footer`). El viejo `src/components/Main.tsx` ya no existe — si alguna vez vuelve a hacer falta un componente `Main`, no puede ir en `src/Main.tsx` por colisión de mayúsc/minúsc con `src/main.tsx`, el entry point (`TS1261`).
 
+## Estado de cliente (Redux Toolkit, desde 2026-10-09)
+
+Un solo slice, `order` (el carrito): es el caso que justifica Redux en esta app — lo escriben `Dish.tsx` ("Order Now") y `Order.tsx` (+/−/quitar/vaciar), y lo leen `Header.tsx` (badge) y `Order.tsx`, componentes lejanos entre sí, y tiene que sobrevivir a la navegación.
+
+- `src/store/orderSlice.ts` → `createSlice` con `items: OrderItems` (mapa `id de plato → cantidad`), acciones nombradas en pasado como eventos (`dishAdded`, `dishDecremented`, `dishRemoved`, `orderCleared`) y selectores colocados en el slice (`selectors: { selectItems, selectItemCount }`). Guarda **solo ids y cantidades**, nunca el `Dish` completo: nombre y precio salen de la caché de TanStack en `Order.tsx`. Duplicar datos de servidor en Redux crearía dos fuentes de verdad.
+- `src/store/store.ts` → `makeStore(preloadedState?)`, una **fábrica**, no un singleton: `main.tsx` crea el store real y cada test crea uno nuevo. Tipos `RootState`/`AppStore`/`AppDispatch` derivados con `ReturnType`, no declarados a mano.
+- `src/store/hooks.ts` → `useAppDispatch`/`useAppSelector` con `.withTypes<>()`. Usar siempre estos, no `useDispatch`/`useSelector` crudos.
+- `src/store/orderStorage.ts` → persistencia en `localStorage` (clave `moulin-rouge:order`) **fuera del reducer**: `loadOrder()` arma el `preloadedState` y `persistOrder(store)` se suscribe con `store.subscribe` y escribe solo si cambió la referencia de `items`. `loadOrder` valida con `orderItemsSchema` (`src/schemas/orderSchema.ts`, Zod; el tipo `OrderItems` sale de `z.infer`) y ante JSON roto, forma inválida o `localStorage` inaccesible devuelve un carrito vacío. No meter `localStorage` dentro del reducer: tiene que seguir siendo una función pura.
+- `Order` es una ruta más dentro del grupo con `errorElement` de `AppRouter.tsx`.
+
+Consecuencias:
+- Un plato que está en el carrito pero ya no viene en la API se filtra al renderizar `Order.tsx` (no se muestra ni suma al subtotal), pero su id queda en el store y sí cuenta en el badge del header. Inconsistencia conocida, sin resolver.
+- El filtro de categorías de `Menu.tsx` vive en la URL (`:category`) y el índice del carrusel en `useCurrent`. Son locales y no van a Redux.
+
 ### Retorno de hooks custom (convención confirmada por Ordnay, 2026-10-07)
 
 - **Tupla** cuando son **hasta 3 valores de uso común**: todos los consumidores usan los mismos y los nombran a gusto, estilo `useState`. Ej. `useCurrent` → `[current, handleNext, handlePrev]`.
@@ -33,23 +47,23 @@ Consecuencias a tener en cuenta antes de tocar esto:
 
 Setup: Vitest + Testing Library + jsdom (pinneado `^27`, no `^30` — exige Node `^22.22.2`) + `@vitest/coverage-v8`, mismo patrón que `pokedex-app`. Tests en `src/tests/` espejando `src/`. Scripts: `test` (watch), `test:run`, `test:coverage`.
 
-Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). **El margen quedó al filo** tras la migración (90.32 / 76.19 / 88.05 / 89.83) — décimas de sobra en las cuatro métricas, así que el próximo archivo sin test rompe CI por threshold, no por un test roto. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), `src/router` y ramas defensivas puntuales.
+Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-11): 91.71 / 79.66 / 89.77 / 91.76. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
 
 Gotchas de testing a tener en cuenta en este repo:
 - `window.HTMLElement.prototype.scrollIntoView` stubbeado en `src/tests/vitest.setup.ts` — jsdom no lo implementa y `Menu.tsx`/`Reservations.tsx` lo llaman al montar.
 - `asyncUtilTimeout: 5000` configurado en `vitest.setup.ts` (2026-10-07). El default de 1000ms de Testing Library alcanzaba aislado pero fallaba ~1 de 3 corridas de `test:coverage`, que es justo lo que corre CI: 9 archivos en paralelo + instrumentación v8 dejan al worker sin CPU y `findByRole` agota su presupuesto antes de que resuelva la query. Síntoma diagnóstico: el DOM del fallo muestra el estado **sin resolver** (listas vacías), no un render incorrecto. Subir el techo no hace más lentos los tests que pasan — `waitFor` resuelve apenas se cumple la condición.
-- Tests que montan hooks de TanStack necesitan `createQueryWrapper()` de `src/tests/utils/queryWrapper.tsx` — crea un `QueryClient` nuevo por render con `retry: false` (sin eso, un test de error espera los reintentos por default y timeoutea).
+- Tests que montan componentes o hooks con TanStack o Redux usan `createProvidersWrapper(store?)` de `src/tests/utils/providersWrapper.tsx` (reemplazó a `createQueryWrapper` el 2026-10-09). Crea un `QueryClient` nuevo con `retry: false`; sin eso, un test de error espera los reintentos por default y timeoutea. También crea un store con `makeStore()`, o usa el que se le pase, para precargar un carrito o inspeccionar el estado después de interactuar.
 - `mockReset: true` además de `restoreMocks: true` en `vite.config.ts`: desde Vitest 4, `restoreMocks` ya no toca los `vi.fn()` de factories de `vi.mock`, y su conteo de llamadas se acumula en silencio entre tests del mismo archivo.
 - `src/router/AppRouter.tsx` exporta `routes` (además del default `AppRouter`) porque el `router` real es un singleton creado con `createBrowserRouter` que lee `window.location` una sola vez al importar el módulo — no reseteable entre tests. `routes` + `createMemoryRouter` sí permite testear la config real de rutas.
 
 Bugs reales encontrados y corregidos vía TDD (plan de testing, 2026-08-09):
 - La caché de `localStorage` no expiraba nunca — se le agregó un TTL de 5 minutos. Hoy esa responsabilidad es del `staleTime` del `QueryClient`.
-- No se validaba que la respuesta de `axios.get` fuera un array — si la API devolvía otra forma (ej. un redirect seguido a una página HTML), explotaba con `dishes.map is not a function` en el próximo render. La validación con `Array.isArray` sobrevivió a la migración y hoy vive en `src/helpers/fetchDishes.ts`, lanzando para que TanStack lo trate como error. Siguiente paso natural: Zod con `z.infer`, para que el tipo se derive del schema que sí valida en runtime en vez de declararse en paralelo.
+- No se validaba que la respuesta de `axios.get` fuera un array — si la API devolvía otra forma (ej. un redirect seguido a una página HTML), explotaba con `dishes.map is not a function` en el próximo render. La validación con `Array.isArray` sobrevivió a la migración y hoy vive en `src/helpers/fetchDishes.ts`, lanzando para que TanStack lo trate como error. Siguiente paso natural: validar ahí también con Zod, como ya hace `orderSchema.ts` con el carrito, para que `Dish` se derive del schema con `z.infer` en vez de declararse en paralelo.
 - `AppRouter.tsx`: `<Navigate to={''} replace />` en la ruta catchall `*` nunca redirigía (un `to` relativo vacío desde una ruta *splat* no navega) — cambiado a `to={'/'}` (absoluto).
 - No existía ningún Error Boundary — un error de *render* (no de fetch) tiraba toda la app a pantalla blanca. Implementado con `errorElement` de React Router (data router) en una ruta intermedia sin `path` que agrupa `Home`/`Reservations`/`Menu`, dejando `Head`/`Header`/`Hero`/`Footer` intactos. El fallback (`RouteError.tsx`) NO tiene botón Reload — un error de render suele ser determinístico, reintentar el mismo render vuelve a explotar igual; en cambio lleva un mensaje + link a Home.
 - `Home.tsx` mostraba "Sobre nosotros" en la sección de contacto (`Section type={'about'}` en vez de `'contact'`) — corregido.
 
-No es un bug: `Math.random()` en `Dish.tsx` — confirmado por Ordnay (2026-08-09), es placeholder intencional de rating porque la API no devuelve ratings.
+Rating de los platos: el `Math.random()` que hacía de placeholder (confirmado como intencional por Ordnay el 2026-08-09) se quitó en `a5f7624`, porque cambiaba el rating en cada render. Hoy `Dish.rating` es opcional y `Dish.tsx` monta `Stars` solo si viene definido. La API (`devsapihub.com/api-fast-food`) no lo manda, así que **en producción las estrellas no se ven**. `Stars` se mantuvo con su test (decisión de Ordnay, 2026-10-11) para cuando haya un rating real. Expone la puntuación a tecnología asistiva con `role="img"` + `aria-label` y usa un `useId` por instancia para el gradiente de la media estrella.
 
 Pendiente de verificar: `isLoading` en TanStack v5 es `isPending && isFetching`, o sea solo el primer fetch sin datos. Falta un test que confirme qué muestra `AsyncContent` **durante** el `handleRetry` tras un error — si `isLoading` queda en `false` ahí, el usuario sigue viendo el error mientras refetchea en vez de un loading.
 
@@ -64,4 +78,7 @@ Branch protection en `main` configurada (2026-08-09): ruleset "Main Protection" 
 ## Roadmap de estado avanzado
 
 - **TanStack Query** — hecho (2026-10-07, commit `904ccca`). Ver la sección de arquitectura de estado arriba.
-- **Redux** (estado de cliente más avanzado) — todavía no arrancado. Actualiza para este repo la convención general de `~/.claude/CLAUDE.md` ("Redux solo si el proyecto ya lo trae"): acá se va a introducir a propósito. Antes de arrancar, definir qué estado de *cliente* justifica Redux hoy — la app no tiene ninguno fuera de `useCurrent` (índice del carrusel) y el filtro de categorías de `Menu.tsx`; sin un caso real, Redux acá sería andamiaje sin problema que resolver.
+- **Redux Toolkit** — hecho (2026-10-09, commits `a39c5fe`, `a747765`, `ed68766`). Ver la sección de estado de cliente arriba.
+  - Historia de la decisión: el 2026-10-07 se postergó porque la app no tenía estado de cliente que lo justificara. El criterio que se fijó entonces fue **varios escritores, lectores lejanos y vida más larga que cualquier componente** (un carrito, un equipo armado por el usuario, undo/redo). Por eso se introdujo junto con la feature de pedido, que cumple ese criterio, y no antes.
+  - Disparadores que **no** alcanzan por sí solos (router, idioma, tema): la URL ya es un store compartido vía `useSearchParams`, las librerías de i18n traen su propio provider, y el tema se resuelve con `data-theme` + CSS custom properties + un Context chico. Meter cualquiera de los tres en Redux crea dos fuentes de verdad.
+  - En `pokedex-app` sigue postergado: ahí no hay un caso equivalente.
