@@ -1,12 +1,12 @@
 import React from "react";
 import { useRef, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useData } from "../../context/dataContext";
+import useDishes from "../../hooks/useDishes";
 import '../../assets/styles/Menu.css';
 import Categories from '../sections/categories/Categories';
 
 function Menu(): React.JSX.Element {
-    const { categories } = useData();
+    const { categories } = useDishes();
     const ref = useRef<HTMLElement>(null);
 
     useEffect(() => {

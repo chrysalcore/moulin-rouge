@@ -1,13 +1,8 @@
 import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { routes } from '../../router/AppRouter'
-import useConnect from '../../hooks/useConnect'
-import { buildDishes, buildEvents } from '../fixtures/menu'
-
-vi.mock('../../hooks/useConnect', () => ({
-    default: vi.fn(),
-}))
+import { createProvidersWrapper } from '../utils/providersWrapper'
 
 vi.mock('../../components/pages/Home', () => ({
     default: () => {
@@ -16,20 +11,9 @@ vi.mock('../../components/pages/Home', () => ({
 }))
 
 describe('AppRouter error boundary', () => {
-    beforeEach(() => {
-        vi.mocked(useConnect).mockReturnValue([
-            false,
-            buildDishes(),
-            buildEvents(),
-            ['pizza', 'hamburguesa'],
-            null,
-            vi.fn(),
-        ])
-    })
-
     it('keeps the layout and shows a fallback with a link home when a routed page throws', () => {
         const router = createMemoryRouter(routes, { initialEntries: ['/'] })
-        render(<RouterProvider router={router} />)
+        render(<RouterProvider router={router} />, { wrapper: createProvidersWrapper() })
 
         expect(screen.getByRole('button', { name: 'Reserv' })).toBeInTheDocument()
         expect(screen.getByRole('link', { name: 'Go to Home' })).toBeInTheDocument()

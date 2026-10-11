@@ -1,43 +1,47 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { DataProvider } from '../../../../context/dataContext'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import DishesList from '../../../../components/sections/dishes/DishesList'
-import { buildDish, buildEvents } from '../../../fixtures/menu'
+import fetchDishes from '../../../../helpers/fetchDishes'
+import { buildDish } from '../../../fixtures/menu'
+import { createProvidersWrapper } from '../../../utils/providersWrapper'
+
+vi.mock('../../../../helpers/fetchDishes', () => ({
+    default: vi.fn(),
+}))
 
 function renderDishesList(category: string) {
-    const value = {
-        categories: ['pizza', 'hamburguesa'],
-        dishes: [
-            buildDish({ name: 'Margherita', category: 'pizza' }),
-            buildDish({ name: 'Marinara', category: 'pizza' }),
-            buildDish({ name: 'Cheeseburger', category: 'hamburguesa' }),
-        ],
-        events: buildEvents(),
-    }
-
     return render(
-        <DataProvider value={value}>
-            <MemoryRouter initialEntries={[`/menu/${category}`]}>
-                <Routes>
-                    <Route path="/menu/:category" element={<DishesList />} />
-                </Routes>
-            </MemoryRouter>
-        </DataProvider>
+        <MemoryRouter initialEntries={[`/menu/${category}`]}>
+            <Routes>
+                <Route path="/menu/:category" element={<DishesList />} />
+            </Routes>
+        </MemoryRouter>,
+        { wrapper: createProvidersWrapper() }
     )
 }
 
 describe('DishesList', () => {
-    it('lists only the dishes belonging to the category in the URL', () => {
+    beforeEach(() => {
+        vi.mocked(fetchDishes).mockResolvedValue([
+            buildDish({ name: 'Margherita', category: 'pizza' }),
+            buildDish({ name: 'Marinara', category: 'pizza' }),
+            buildDish({ name: 'Cheeseburger', category: 'hamburguesa' }),
+        ])
+    })
+
+    it('lists only the dishes belonging to the category in the URL', async () => {
         renderDishesList('pizza')
 
-        expect(screen.getByRole('heading', { name: 'Margherita' })).toBeInTheDocument()
+        expect(await screen.findByRole('heading', { name: 'Margherita' })).toBeInTheDocument()
         expect(screen.getByRole('heading', { name: 'Marinara' })).toBeInTheDocument()
         expect(screen.queryByRole('heading', { name: 'Cheeseburger' })).not.toBeInTheDocument()
     })
 
-    it('shows no dishes when the category has none', () => {
+    it('shows no dishes when the category has none', async () => {
         renderDishesList('pastel')
+
+        await screen.findByRole('heading', { name: 'Our Menu' })
 
         expect(screen.queryAllByRole('heading', { level: 3 })).toHaveLength(0)
     })

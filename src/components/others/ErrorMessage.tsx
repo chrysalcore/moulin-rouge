@@ -2,7 +2,7 @@ import React from "react";
 import '../../assets/styles/Error.css';
 import CTA from "./CTA";
 
-function Error({ onRetry }: { onRetry: () => void }): React.JSX.Element {
+function ErrorMessage({ onRetry }: { onRetry: () => void }): React.JSX.Element {
     return (
         <div className="error section">
             <div className="error__text">
@@ -14,4 +14,4 @@ function Error({ onRetry }: { onRetry: () => void }): React.JSX.Element {
     );
 }
 
-export default Error;
+export default ErrorMessage;

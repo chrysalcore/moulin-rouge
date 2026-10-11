@@ -56,6 +56,35 @@
     gap: 1rem;
 }
 
+.header__order {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-ctr);
+    text-decoration: none;
+    position: relative;
+}
+
+.header__order-icon {
+    width: 1.7rem;
+    height: 1.7rem;
+}
+
+.header__order-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background-color: var(--color-com);
+    border-radius: 50%;
+    position: absolute;
+    right: -0.5rem;
+    bottom: 0;
+}
+
 .header__button:last-child {
     display: flex;
     align-items: center;

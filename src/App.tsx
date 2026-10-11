@@ -7,7 +7,7 @@ import Footer from "./components/sections/footer/Footer";
 import FooterContent from "./components/sections/footer/FooterContent";
 import FooterRights from "./components/sections/footer/FooterRights";
 import SocialInfo from './components/others/SocialInfo';
-import Main from './components/Main';
+import { Outlet } from 'react-router-dom';
 
 function App(): React.JSX.Element {
     return (
@@ -16,7 +16,7 @@ function App(): React.JSX.Element {
                 <Header />
                 <Hero />
             </Head>
-            <Main />
+            <Outlet />
             <Footer>
                 <FooterContent />
                 <SocialInfo />
