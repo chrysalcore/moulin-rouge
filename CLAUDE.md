@@ -6,8 +6,33 @@ Preferencias generales en `~/.claude/CLAUDE.md` (que cubre solo lo transversal a
 - Tipos centralizados en `src/types/*.ts`, re-exportados por el barrel `src/types/index.ts` — importar siempre desde `'../types'`, nunca del archivo específico directo.
 - Único repo con comentarios en el código: un banner de una línea en español al inicio de cada archivo de `src/types/`. Mantener ese patrón si se agregan archivos de tipos nuevos; no extenderlo al resto del código.
 - Único repo que adoptó Conventional Commits (`feat(scope): …`, `chore(scope): …`), pero solo a partir de la migración a TS; commits previos son descriptivos sin prefijo, igual que el resto del portafolio. Confirmado por Ordnay (2026-08-09): se mantiene solo en este repo.
-- CSS global por sección en `src/assets/styles/*.css`, BEM (`form-field__input`), sin CSS Modules.
+- Estilos: **en migración de CSS global BEM a Tailwind v4** (decisión de Ordnay, 2026-10-14). Lo nuevo o migrado va con utilidades de Tailwind en el JSX; lo que todavía no se migró sigue en `src/assets/styles/*.css` con BEM. Ver la sección "Migración a Tailwind".
 - Punto y coma: el repo está mezclado (archivos de la migración a TanStack van sin, el resto con) y ESLint no lo enforcea. Ordnay es indiferente (2026-10-07) — no uniformar ni volver a preguntar.
+
+## Migración a Tailwind (en curso, desde 2026-10-14)
+
+Objetivo: reutilización y coherencia visual en todo el sitio. Tailwind 4 con `@tailwindcss/vite`; la config vive en `src/index.css` (`@theme static`), no hay `tailwind.config.js`.
+
+- **Escalas estándar de Tailwind** para tipografía, espaciado, radios y breakpoints (decisión de Ordnay, 2026-10-14): no se redefinen. Al migrar, cada valor viejo va al paso más cercano de la escala (ej. `1.3rem` → `text-xl`, `0.3rem` de radio → `rounded-sm`). Un arbitrario (`[...]`) es la excepción y se justifica.
+- **Paleta cerrada:** `--color-*: initial` deja solo los colores del sitio (`dom`/`com`/`ctr`/`lgh`/`surface` + `black`/`white`). Es identidad de marca, no tiene estándar contra el cual normalizar. Fuentes también cerradas: `font-sans` (Work Sans) y `font-display` (Montserrat).
+- **Raíz en 16px** (default del navegador; antes era `18px` fijo): con eso las utilidades caen en la grilla de 8pt (`p-2` = 8px, `size-6` = 24px). Con 18px todo quedaba desplazado 12.5%. Respeta además el tamaño de letra que configura el usuario (WCAG 1.4.4).
+- **Áreas táctiles de 44px** (`size-11`) en botones de ícono, con el ícono en 24px (`size-6`): Apple HIG/Material, por encima del mínimo de 24px de WCAG 2.2 AA.
+- **`@theme static`** emite en `:root` las variables de ese bloque (colores y fuentes) aunque ninguna utilidad las use, porque el CSS BEM sin migrar todavía lee `var(--color-dom)` etc. Las escalas por defecto de Tailwind siguen con tree-shaking: solo se emiten las que se usan.
+- **Reutilización por componente, no por `@apply`** (ej. `IconButton`). Sin `clsx`/`cva`: condicionales con template literals.
+- **Criterio de la migración (pedido de Ordnay):** al migrar cada sección, revisar los valores que no siguen estándares de la industria (márgenes, tipografía, breakpoints, áreas táctiles, interlineado, ancho de lectura) y llevarlos al estándar **si el cambio visual es chico y se gana coherencia**. Si en una sección el cambio se nota mucho, mostrárselo antes de seguir.
+
+Gotchas mientras convivan BEM y Tailwind:
+- **Sin preflight** (`@import "tailwindcss/theme.css"` + `utilities.css`, no `"tailwindcss"` entero) hasta migrar la última sección: el reset de Tailwind cambiaría el aspecto de lo no migrado. Consecuencia: los `<button>` no heredan tipografía ni fondo, hay que darles `text-base` y `bg-transparent`/`border-none` explícitos.
+- **El CSS sin layer le gana a cualquier `@layer`**, por eso las reglas globales de `index.css` están en `@layer base`. Los `.css` BEM siguen sin layer: **no mezclar una clase BEM y utilidades de Tailwind en el mismo elemento** (la BEM pisa a la utilidad sin importar la especificidad).
+- `:root` todavía tiene `line-height: 1.5em`: el `em` hereda el valor calculado (24px) y no el factor, por eso hay overrides a mano en `Hero.css`/`Footer.css`. Se cambia a `1.5` sin unidad en el paso final, junto con el preflight. Las utilidades `text-*` ya traen su propio interlineado.
+
+Pasos (un commit por paso):
+- [x] Setup + tokens + raíz 16px + `Order` (+ `IconButton`).
+- [ ] Base compartida de `App.css`: `.section`/`Section`, `SectionHeader`, `BriefHeader`, `.btn`/`CTA` (que pueda renderizar como `Link`), `.main`.
+- [ ] Header (`<section>` → `<header>`, "Reserv" como `Link`).
+- [ ] Hero (`Title`/`Slogan`/`Firm`/`SocialInfo`): `<h1>` en el título, slogan como `<p>`, título responsive con la escala (`text-5xl md:text-7xl` o similar).
+- [ ] Categories, Dishes (`formatPrice`), Events, About, Contact, Reservations/Form, Footer, Loading/Error.
+- [ ] Final: borrar `src/assets/styles/` y `App.css`, activar preflight, `line-height: 1.5` en `:root`. Los breakpoints sueltos (400/600/900px) se llevan a los de Tailwind (`sm` 640 / `md` 768 / `lg` 1024) sección por sección al migrar.
 
 ## Arquitectura de estado (TanStack Query, desde 2026-10-07)
 
