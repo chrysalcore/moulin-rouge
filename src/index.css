@@ -1,47 +1,62 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  text-wrap: pretty;
-}
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
-:root {
+@theme static {
+  --color-*: initial;
   --color-dom: #050505;
   --color-com: #d21;
   --color-ctr: #eee;
   --color-lgh: #ddd;
+  --color-surface: #111;
+  --color-black: #000;
+  --color-white: #fff;
 
-  font-synthesis: none;
-  font-size: 18px;
-  font-family: 'Work Sans';
-  line-height: 1.5em;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-*: initial;
+  --font-sans: 'Work Sans', sans-serif;
+  --font-display: Montserrat, sans-serif;
 }
 
-body {
-  background-image: linear-gradient(#000b 50%, #6002), url("./assets/img/head-bg.jpg");
-  background-position: bottom;
-  background-size: cover;
-  background-attachment: fixed;
-}
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    text-wrap: pretty;
+  }
 
-ul {
-  list-style: none;
-}
+  :root {
+    font-synthesis: none;
+    font-family: var(--font-sans);
+    line-height: 1.5em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media screen and (min-width: 1024px) {
   body {
-    background-image: linear-gradient(to right, #000b 20%, #6002), url("/src/assets/img/head-bg.jpg");
+    background-image: linear-gradient(#000b 50%, #6002), url("./assets/img/head-bg.jpg");
     background-position: bottom;
     background-size: cover;
     background-attachment: fixed;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    body {
+      background-image: linear-gradient(to right, #000b 20%, #6002), url("/src/assets/img/head-bg.jpg");
+      background-position: bottom;
+      background-size: cover;
+      background-attachment: fixed;
+    }
   }
 }
