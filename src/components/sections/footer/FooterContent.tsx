@@ -26,7 +26,7 @@ function FooterContent(): React.JSX.Element {
         <div className="footer-layout">
             <section className="footer-nav">
                 <h3 className="footer-nav__title">Pages</h3>
-                <Nav data={navData} />
+                <Nav data={navData} variant='footer' />
             </section>
             <section className="footer-nav">
                 <h3 className="footer-nav__title">Contact</h3>
