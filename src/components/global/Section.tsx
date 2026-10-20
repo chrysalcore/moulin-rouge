@@ -16,7 +16,7 @@ type SectionProps = {
     ref?: React.Ref<HTMLElement>;
 }
 
-function Section({ children, header, as: Tag = 'section', background = 'fade', ref }: SectionProps): React.JSX.Element {
+function Section({ children, header, as: Tag = 'section', background = 'band', ref }: SectionProps): React.JSX.Element {
     return (
         <Tag ref={ref} className={`px-4 py-24 text-ctr ${backgrounds[background]}`}>
             <div className='mx-auto flex w-full max-w-5xl flex-col items-center gap-20'>

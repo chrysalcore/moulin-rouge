@@ -25,7 +25,7 @@ function Order(): React.JSX.Element {
     const subtotal = lines.reduce((sum, line) => sum + line.total, 0);
 
     return (
-        <Section as='main' header={header.order}>
+        <Section as='main' header={header.order} background='fade'>
             <AsyncContent status={dishes}>
                 {lines.length === 0 ?
                     <p className='text-lgh'>
