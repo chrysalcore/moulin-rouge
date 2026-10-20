@@ -8,6 +8,7 @@ import IconButton from '../others/IconButton';
 import Section from '../global/Section';
 import Button from '../others/Button';
 import header from '../../data/headers';
+import formatPrice from '../../helpers/formatPrice';
 
 const lessIcon = new URL('../../assets/icons/less.svg', import.meta.url).href;
 const moreIcon = new URL('../../assets/icons/more.svg', import.meta.url).href;
@@ -38,13 +39,13 @@ function Order(): React.JSX.Element {
                                     <img className='row-span-2 size-20 rounded-lg object-cover' src={new URL(dish.image, import.meta.url).href} alt='' />
                                     <div className='flex min-w-0 flex-col gap-1'>
                                         <span className='font-bold'>{dish.name}</span>
-                                        <span className='text-sm text-lgh/70'>${dish.price.toFixed(2)} each</span>
+                                        <span className='text-sm text-lgh/70'>{formatPrice(dish.price)} each</span>
                                     </div>
                                     <div className='self-start'>
                                         <IconButton icon={cancelIcon} label={`Remove ${dish.name} from order`} onClick={() => dispatch(dishRemoved(dish.id))} />
                                     </div>
                                     <div className='col-span-2 flex items-center justify-between self-end'>
-                                        <span className='font-bold'>${total.toFixed(2)}</span>
+                                        <span className='font-bold'>{formatPrice(total)}</span>
                                         <div className='flex items-center gap-1'>
                                             <IconButton icon={lessIcon} label={`Remove one ${dish.name}`} onClick={() => dispatch(dishDecremented(dish.id))} />
                                             <span className='w-8 text-center'>{quantity}</span>
@@ -55,7 +56,7 @@ function Order(): React.JSX.Element {
                             ))}
                         </ul>
                         <div className='flex items-center justify-between gap-4'>
-                            <strong>Subtotal: ${subtotal.toFixed(2)}</strong>
+                            <strong>Subtotal: {formatPrice(subtotal)}</strong>
                             <Button variant='outline' onClick={() => dispatch(orderCleared())}>Clear order</Button>
                         </div>
                     </div>

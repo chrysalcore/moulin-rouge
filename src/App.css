@@ -7,25 +7,6 @@
     background: linear-gradient(var(--color-dom), #0002, var(--color-dom));
 }
 
-.section__title {
-    font-size: 2.2rem;
-}
-
-.section__desc {
-    color: var(--color-lgh);
-    font-size: 1rem;
-}
-
-.btn {
-    padding: 0.5rem 2rem;
-    color: #000;
-    font-size: 1rem;
-    font-weight: 700;
-    background-color: var(--color-ctr);
-    border: none;
-    border-radius: 0.3rem;
-}
-
 @media screen and (min-width: 768px) {
     .section {
         padding: 6rem 15vw;

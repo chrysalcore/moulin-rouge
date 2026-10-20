@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from "../others/Button";
 import type { BriefInfo } from "../../types";
 
 type BriefHeaderProps = {
@@ -10,24 +11,18 @@ type BriefHeaderProps = {
 
 function BriefHeader({ info, handleNext, handlePrev }: BriefHeaderProps): React.JSX.Element {
     return (
-        <header className='brief-header'>
-            <h2 className='section__title'>{info.title}</h2>
-            <p className='section__desc'>
-                {info.desc} 
-                <strong className='brief__desc-str'>
-                    {info.strong} 
-                    <Link className='brief__desc-link' to={info.ref}>
-                        {info.link}
-                    </Link>
+        <header className='flex min-h-160 grow basis-60 flex-col items-center justify-evenly gap-8 text-center'>
+            <h2 className='text-3xl font-bold md:text-4xl'>{info.title}</h2>
+            <p className='text-lgh'>
+                {info.desc}{' '}
+                <strong>
+                    {info.strong}
+                    <Link className='text-com underline' to={info.ref}>{info.link}</Link>
                 </strong>
             </p>
-            <div className='brief-buttons'>
-                <button className='brief__button btn' onClick={handlePrev}>
-                    Prev
-                </button>
-                <button className='brief__button btn' onClick={handleNext}>
-                    Next
-                </button>
+            <div className='flex items-center gap-6'>
+                <Button variant='secondary' onClick={handlePrev}>Prev</Button>
+                <Button variant='secondary' onClick={handleNext}>Next</Button>
             </div>
         </header>
     );
