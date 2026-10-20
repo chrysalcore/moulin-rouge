@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Button from "./Button";
 import '../../assets/styles/Error.css';
 
 function RouteError(): React.JSX.Element {
@@ -9,7 +9,7 @@ function RouteError(): React.JSX.Element {
                 <h2 className="error__title">Something went wrong</h2>
                 <p className="error__desc">Please go back to the home page and try again</p>
             </div>
-            <Link to={''} className="cta__btn btn">Go to Home</Link>
+            <Button to={'/'}>Go to Home</Button>
         </div>
     );
 }

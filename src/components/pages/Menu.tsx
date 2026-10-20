@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import useDishes from "../../hooks/useDishes";
 import '../../assets/styles/Menu.css';
 import Categories from '../sections/categories/Categories';
+import Main from '../global/Main';
 
 function Menu(): React.JSX.Element {
     const { categories } = useDishes();
@@ -18,9 +19,9 @@ function Menu(): React.JSX.Element {
     return (
         <>
             <Categories data={categories} />
-            <main ref={ref} className='main'>
+            <Main ref={ref}>
                 <Outlet />
-            </main>
+            </Main>
         </>
     );
 }

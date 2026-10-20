@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { dishAdded, dishDecremented, dishRemoved, orderCleared, selectItems } from '../../store/orderSlice';
 import AsyncContent from '../others/AsyncContent';
 import IconButton from '../others/IconButton';
-import SectionHeader from '../global/SectionHeader';
+import Section from '../global/Section';
+import Button from '../others/Button';
 import header from '../../data/headers';
 
 const lessIcon = new URL('../../assets/icons/less.svg', import.meta.url).href;
@@ -24,8 +25,7 @@ function Order(): React.JSX.Element {
     const subtotal = lines.reduce((sum, line) => sum + line.total, 0);
 
     return (
-        <main className='flex flex-col items-center gap-8 bg-linear-to-b from-dom via-black/15 to-dom px-4 py-24 text-ctr'>
-            <SectionHeader {...header.order} />
+        <Section as='main' header={header.order}>
             <AsyncContent status={dishes}>
                 {lines.length === 0 ?
                     <p className='text-lgh'>
@@ -56,12 +56,12 @@ function Order(): React.JSX.Element {
                         </ul>
                         <div className='flex items-center justify-between gap-4'>
                             <strong>Subtotal: ${subtotal.toFixed(2)}</strong>
-                            <button className='cursor-pointer rounded-sm border border-com bg-transparent px-4 py-2 text-base font-bold text-ctr' onClick={() => dispatch(orderCleared())}>Clear order</button>
+                            <Button variant='outline' onClick={() => dispatch(orderCleared())}>Clear order</Button>
                         </div>
                     </div>
                 }
             </AsyncContent>
-        </main>
+        </Section>
     );
 }
 

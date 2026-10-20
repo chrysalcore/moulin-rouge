@@ -1,19 +1,18 @@
 import React from "react";
-import "../../../assets/styles/About.css";
 import data from "../../../data/about";
 
 function AboutList(): React.JSX.Element {
     return (
         <>
-            {data.map(item => (
-                <div className="about-sect" key={item.name}>
-                    <img 
-                        className='about__img' 
-                        src={new URL(`../../../assets/img/${item.src}`, import.meta.url).href} 
-                        alt={item.name} 
+            {data.map((item, index) => (
+                <div className={`flex w-full flex-wrap items-center justify-center gap-6 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`} key={item.name}>
+                    <img
+                        className='w-full max-w-80 rounded-2xl md:w-80'
+                        src={new URL(`../../../assets/img/${item.src}`, import.meta.url).href}
+                        alt={item.name}
                     />
-                    <p className="about__text">
-                        <strong>{item.strong}</strong>
+                    <p className={`min-w-60 flex-1 text-center text-lgh ${index % 2 === 0 ? 'lg:text-start' : 'lg:text-end'}`}>
+                        <strong className='block text-ctr'>{item.strong}</strong>
                         {item.text}
                     </p>
                 </div>

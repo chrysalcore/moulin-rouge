@@ -1,24 +1,19 @@
 import React from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import '../../../assets/styles/Header.css';
 import Nav from '../../others/Nav';
 import data from '../../../data/navigation';
-import CTA from '../../others/CTA';
+import Button from '../../others/Button';
 import { useAppSelector } from '../../../store/hooks';
 import { selectItemCount } from '../../../store/orderSlice';
 
 function Header(): React.JSX.Element {
     const [active, setActive] = useState<boolean>(false);
-    const nav = useNavigate();
     const itemCount = useAppSelector(selectItemCount);
 
     const handleMenu = (): void => {
         setActive(!active);
-    };
-
-    const handleReserv = (): void => {
-        nav('reservation');
     };
 
     return (
@@ -40,7 +35,7 @@ function Header(): React.JSX.Element {
                     />
                     <span className='header__order-count'>{itemCount}</span>
                 </Link>
-                <CTA onClick={handleReserv} >Reserv</CTA>
+                <Button to={'/reservation'}>Reserv</Button>
                 <button className='header__button btn' onClick={handleMenu} >
                     <img 
                         className='header__button-img' 

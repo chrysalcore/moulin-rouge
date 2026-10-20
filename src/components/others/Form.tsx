@@ -1,5 +1,5 @@
 import React from "react";
-import CTA from "./CTA";
+import Button from "./Button";
 import type { Input } from "../../types/data";
 
 function Input({ name, type, placeholder, isInput }: Input): React.JSX.Element {
@@ -40,7 +40,7 @@ function Form({ data }: {data: Input[]} ): React.JSX.Element {
                     key={item.name} 
                 />
             ))}
-            <CTA>Submit</CTA>
+            <Button type='submit'>Submit</Button>
         </form>
     );
 }

@@ -7,14 +7,6 @@
     background: linear-gradient(var(--color-dom), #0002, var(--color-dom));
 }
 
-.section-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    max-width: 30rem;
-}
-
 .section__title {
     font-size: 2.2rem;
 }
@@ -22,13 +14,6 @@
 .section__desc {
     color: var(--color-lgh);
     font-size: 1rem;
-}
-
-.main {
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(to right, #0002, #0005, #0005, #0002);
-    backdrop-filter: blur(5px);
 }
 
 .btn {
@@ -39,18 +24,6 @@
     background-color: var(--color-ctr);
     border: none;
     border-radius: 0.3rem;
-}
-
-.cta__btn {
-    color: #fff;
-    background-color: var(--color-com);
-    border: none;
-}
-
-@media screen and (min-width: 600px) {
-    .main {
-        background: linear-gradient(to right, #000, #0005, #0005, #000);
-    }
 }
 
 @media screen and (min-width: 768px) {

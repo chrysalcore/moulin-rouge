@@ -1,6 +1,6 @@
 import React from "react";
 import '../../assets/styles/Error.css';
-import CTA from "./CTA";
+import Button from "./Button";
 
 function ErrorMessage({ onRetry }: { onRetry: () => void }): React.JSX.Element {
     return (
@@ -9,7 +9,7 @@ function ErrorMessage({ onRetry }: { onRetry: () => void }): React.JSX.Element {
                 <h2 className="error__title">We couldn&apos;t load the data</h2>
                 <p className="error__desc">Please connect to a network and try again</p>
             </div>
-            <CTA onClick={onRetry}>Reload</CTA>
+            <Button onClick={onRetry}>Reload</Button>
         </div>
     );
 }

@@ -3,9 +3,9 @@ import type { Header } from "../../types";
 
 function SectionHeader({ title, desc }: Header): React.JSX.Element {
     return (
-        <header className='section-header'>
-            <h2 className='section-header__title'>{title}</h2>
-            <p className='section-header__desc'>{desc}</p>
+        <header className='flex max-w-xl flex-col items-center gap-4 text-center'>
+            <h2 className='text-3xl font-bold md:text-4xl'>{title}</h2>
+            {desc && <p className='text-lgh'>{desc}</p>}
         </header>
     );
 }
