@@ -19,7 +19,7 @@ function App(): React.JSX.Element {
             <Outlet />
             <Footer>
                 <FooterContent />
-                <SocialInfo />
+                <SocialInfo variant='footer' />
                 <FooterRights />
             </Footer>
         </>

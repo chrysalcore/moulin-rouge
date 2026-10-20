@@ -33,7 +33,7 @@ function FooterContent(): React.JSX.Element {
                 <FooterList data={ctcData} />
             </section>
             <section className="footer-firm">
-                <Title />
+                <Title variant='footer' />
             </section>
         </div>
     );
