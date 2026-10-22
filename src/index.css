@@ -107,7 +107,7 @@
   }
 
   body {
-    background-image: linear-gradient(#000b 50%, #6002), url("./assets/img/head-bg.jpg");
+    background-image: linear-gradient(#000b 50%, #6002), url("./assets/img/head-bg.webp");
     background-position: bottom;
     background-size: cover;
     background-attachment: fixed;
@@ -115,7 +115,7 @@
 
   @media screen and (min-width: 1024px) {
     body {
-      background-image: linear-gradient(to right, #000b 20%, #6002), url("./assets/img/head-bg.jpg");
+      background-image: linear-gradient(to right, #000b 20%, #6002), url("./assets/img/head-bg.webp");
     }
   }
 }

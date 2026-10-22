@@ -46,6 +46,7 @@ Reservation (rediseñada el 2026-10-21): sin foto. Formulario con campos explíc
 Gotchas:
 - El preflight resetea `h1`–`h6` a tamaño y peso heredados: todo heading necesita sus clases de tamaño y peso explícitas.
 - El preflight deja los `<button>` con `cursor: default` (desde Tailwind v4): `cursor-pointer` explícito.
+- `Event` y `AboutList` resuelven la imagen con una plantilla (`` new URL(`../assets/img/${img}`, import.meta.url) ``): Vite no puede saber cuál se usa y **empaqueta todas las imágenes de `src/assets/img/`**. No dejar ahí imágenes sin uso. Fotos nuevas: WebP, redimensionadas a lo que se muestra (las del 2026-10-21 bajaron de ~3.4MB a ~524KB en total: `head-bg` 1920px, `au-first` 960px, `valentin` WebP).
 - `* { scroll-behavior: smooth }` en `@layer base`: para medir o capturar en tests de navegador, usar `window.scrollTo({ behavior: 'instant' })`.
 
 Pendientes resueltos el 2026-10-21 (después de la migración):

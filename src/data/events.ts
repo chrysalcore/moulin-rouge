@@ -6,7 +6,7 @@ const data: Event[] = [
         desc: '',
         discount: 15,
         date: '14/2',
-        img: 'valentin.png'
+        img: 'valentin.webp'
     },
     {
         name: 'Halloween',
