@@ -3,7 +3,7 @@ import Button from "./Button";
 import type { Input } from "../../types/data";
 
 function Input({ name, type, placeholder, isInput }: Input): React.JSX.Element {
-    const field = 'border-0 border-b border-solid border-ctr bg-transparent px-4 py-3 font-sans text-base text-ctr';
+    const field = 'border-b border-ctr px-4 py-3 text-ctr';
 
     return (
         <label className="flex flex-col gap-2" htmlFor={name}>
