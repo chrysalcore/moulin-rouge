@@ -16,13 +16,33 @@
 
   --shadow-card: 0 0 1rem var(--color-black);
 
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
   --animate-spin-slow: spin 3s linear infinite;
+  --animate-bump: bump 300ms var(--ease-smooth);
+
+  @keyframes bump {
+    50% {
+      scale: 1.3;
+    }
+  }
 }
 
 @layer base {
   * {
     scroll-behavior: smooth;
     text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ctr);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      scroll-behavior: auto;
+    }
   }
 
   :root {

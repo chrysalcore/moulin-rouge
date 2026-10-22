@@ -10,7 +10,7 @@ function FooterList({ data }: { data: Contact[] }): React.JSX.Element {
         <ul className="flex flex-col items-center gap-2 text-center">
             {data.map(item => (
                 <li key={item.text}>
-                    {item.href ? <a href={item.href}>{item.text}</a> : item.text}
+                    {item.href ? <a className="transition-colors duration-200 hover:text-com" href={item.href}>{item.text}</a> : item.text}
                 </li>
             ))}
         </ul>

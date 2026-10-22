@@ -28,8 +28,8 @@ function Header(): React.JSX.Element {
             <Nav data={data} variant='header' active={active} handleMenu={handleMenu} />
             <div className='flex items-center gap-4'>
                 <Link className='relative flex items-center' to={'/order'} aria-label={`Order, ${itemCount} items`}>
-                    <img className='size-7' src={cartIcon} alt='' />
-                    <span className='absolute -right-2 bottom-0 flex size-4 items-center justify-center rounded-full bg-com text-xs font-semibold'>{itemCount}</span>
+                    <img className='size-7 transition-transform duration-200 ease-smooth hover:scale-110' src={cartIcon} alt='' />
+                    <span key={itemCount} className='absolute -right-2 bottom-0 flex size-4 items-center justify-center rounded-full bg-com text-xs font-semibold motion-safe:animate-bump'>{itemCount}</span>
                 </Link>
                 <Button to={'/reservation'}>Reserv</Button>
                 <div className='lg:hidden'>

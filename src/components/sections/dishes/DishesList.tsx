@@ -17,7 +17,7 @@ function DishesList(): React.JSX.Element {
             <Section as='article' header={header.dishes}>
                 <div className='flex flex-wrap justify-center gap-4'>
                     {data.map(item => (
-                        <Dish {...item} key={item.id} main className='relative aspect-6/7 w-80 max-w-full' />
+                        <Dish {...item} key={item.id} main className='relative aspect-6/7 w-80 max-w-full transition-transform duration-300 ease-smooth hover:-translate-y-2' />
                     ))}
                 </div>
             </Section>

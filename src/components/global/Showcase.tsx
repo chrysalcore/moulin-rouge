@@ -35,7 +35,7 @@ function Showcase<T>({ info, items, side, renderItem }: ShowcaseProps<T>): React
     const { layout, edge, inset } = sides[side];
 
     const roles: Record<Role, string> = {
-        main: `top-1/2 z-20 h-1/2 min-h-60 -translate-y-1/2 hover:scale-110 ${edge}`,
+        main: `top-1/2 z-20 h-1/2 min-h-60 -translate-y-1/2 hover:scale-105 ${edge}`,
         prev: `top-0 z-10 h-2/5 min-h-48 blur-xs ${inset}`,
         next: `top-full z-10 h-2/5 min-h-48 -translate-y-full blur-xs ${inset}`,
         before: `pointer-events-none top-0 z-0 h-2/5 min-h-48 -translate-y-full opacity-0 blur-xs ${inset}`,
@@ -52,7 +52,7 @@ function Showcase<T>({ info, items, side, renderItem }: ShowcaseProps<T>): React
 
                         return (
                             <React.Fragment key={index}>
-                                {renderItem(item, role === 'main', `absolute aspect-square max-w-full transition-all duration-500 motion-reduce:transition-none ${roles[role]}`)}
+                                {renderItem(item, role === 'main', `absolute aspect-square max-w-full transition-all duration-500 ease-smooth motion-reduce:transition-none ${roles[role]}`)}
                             </React.Fragment>
                         );
                     })}
