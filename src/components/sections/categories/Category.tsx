@@ -7,6 +7,7 @@ function Category({ name }: { name: string }): React.JSX.Element {
             <NavLink
                 className={({ isActive }) => `flex h-full flex-col items-center justify-center p-4 text-center capitalize transition-colors duration-300 ${isActive ? 'bg-com' : 'bg-com/50 hover:bg-com/75'}`}
                 to={`/menu/${name}`}
+                viewTransition
             >
                 <strong className='text-lg font-semibold'>{name}</strong>
             </NavLink>

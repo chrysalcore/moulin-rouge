@@ -34,6 +34,7 @@ function Nav({ data, variant, active, handleMenu }: NavProps): React.JSX.Element
                     <li key={item.text}>
                         <NavLink
                             to={item.href}
+                            viewTransition
                             className={({ isActive }) => `${variants[variant].link} ${isActive ? variants[variant].active : ''}`}
                             end={index === 0}
                             onClick={handleMenu}

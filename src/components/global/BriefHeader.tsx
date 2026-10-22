@@ -17,7 +17,7 @@ function BriefHeader({ info, handleNext, handlePrev }: BriefHeaderProps): React.
                 {info.desc}{' '}
                 <strong>
                     {info.strong}
-                    <Link className='text-com underline underline-offset-4 transition-colors duration-200 hover:text-ctr' to={info.ref}>{info.link}</Link>
+                    <Link className='text-com underline underline-offset-4 transition-colors duration-200 hover:text-ctr' to={info.ref} viewTransition>{info.link}</Link>
                 </strong>
             </p>
             <div className='flex items-center gap-6'>

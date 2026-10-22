@@ -19,7 +19,7 @@ function Button({ children, variant = 'primary', to, type = 'button', onClick }:
     const className = `inline-flex cursor-pointer items-center justify-center gap-2 rounded-sm px-8 py-2 font-bold transition duration-200 ease-smooth active:scale-95 ${variants[variant]}`;
 
     if (to !== undefined) {
-        return <Link className={className} to={to}>{children}</Link>;
+        return <Link className={className} to={to} viewTransition>{children}</Link>;
     }
 
     return <button className={className} type={type} onClick={onClick}>{children}</button>;

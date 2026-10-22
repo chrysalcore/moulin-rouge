@@ -30,7 +30,7 @@ function Order(): React.JSX.Element {
             <AsyncContent status={dishes}>
                 {lines.length === 0 ?
                     <p className='text-lgh'>
-                        Your order is empty. <Link className='text-com' to={'/menu'}>Browse the menu</Link>
+                        Your order is empty. <Link className='text-com' to={'/menu'} viewTransition>Browse the menu</Link>
                     </p> :
                     <div className='flex w-full max-w-2xl flex-col gap-8'>
                         <ul className='flex flex-col gap-3'>
