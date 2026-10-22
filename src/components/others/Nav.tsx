@@ -24,7 +24,7 @@ type NavProps = {
 
 function Nav({ data, variant, active, handleMenu }: NavProps): React.JSX.Element {
     const drawer = variant === 'header'
-        ? `absolute top-0 left-0 -z-20 h-dvh overflow-clip bg-dom lg:overflow-visible py-16 transition-all duration-1000 lg:top-auto lg:left-1/2 lg:z-0 lg:h-auto lg:w-auto lg:-translate-x-1/2 lg:p-0 ${active ? 'w-4/5 px-4' : 'w-0'}`
+        ? `absolute top-0 left-0 -z-20 h-dvh w-4/5 bg-dom px-4 py-16 transition-[translate,visibility] duration-300 ease-smooth lg:visible lg:top-auto lg:left-1/2 lg:z-0 lg:h-auto lg:w-auto lg:-translate-x-1/2 lg:p-0 ${active ? 'translate-x-0' : 'invisible -translate-x-full'}`
         : '';
 
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 
 const variants = {
-    hero: { list: 'flex items-end gap-10 fill-ctr lg:flex-col', link: 'w-7' },
+    hero: { list: 'flex items-end gap-10 fill-ctr enter-delay-450 animate-enter lg:flex-col', link: 'w-7' },
     footer: { list: 'flex items-center gap-8 self-center fill-com', link: 'w-6' },
 };
 

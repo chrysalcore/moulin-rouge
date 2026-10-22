@@ -6,8 +6,8 @@ const variants = {
     hero: {
         Tag: 'h1',
         layout: 'flex flex-col gap-10 lg:flex-row lg:items-end',
-        logo: 'hidden w-32 animate__animated animate__fadeInUp lg:block',
-        text: 'text-6xl text-ctr sm:text-7xl animate__animated animate__fadeInUp',
+        logo: 'hidden w-32 animate-enter lg:block',
+        text: 'text-6xl text-ctr enter-delay-150 animate-enter sm:text-7xl',
         subtitle: 'text-4xl',
     },
     footer: {

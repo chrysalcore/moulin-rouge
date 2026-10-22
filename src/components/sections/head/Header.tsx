@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Nav from '../../others/Nav';
 import data from '../../../data/navigation';
 import Button from '../../others/Button';
@@ -20,12 +20,32 @@ function Header(): React.JSX.Element {
         setActive(!active);
     };
 
+    const handleClose = (): void => {
+        setActive(false);
+    };
+
+    useEffect(() => {
+        if (!active) return;
+
+        const handleKeyDown = (event: KeyboardEvent): void => {
+            if (event.key === 'Escape') setActive(false);
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [active]);
+
     return (
         <header className='fixed z-50 flex w-full items-center justify-between bg-dom px-4 py-2 text-ctr lg:px-16'>
             <Link to={'/'}>
                 <img className='h-6' src={logo} alt="Moulin Rouge home" />
             </Link>
-            <Nav data={data} variant='header' active={active} handleMenu={handleMenu} />
+            <div
+                className={`fixed inset-0 -z-30 bg-black/60 transition-opacity duration-300 lg:hidden ${active ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+                aria-hidden="true"
+                onClick={handleClose}
+            />
+            <Nav data={data} variant='header' active={active} handleMenu={handleClose} />
             <div className='flex items-center gap-4'>
                 <Link className='relative flex items-center' to={'/order'} aria-label={`Order, ${itemCount} items`}>
                     <img className='size-7 transition-transform duration-200 ease-smooth hover:scale-110' src={cartIcon} alt='' />
