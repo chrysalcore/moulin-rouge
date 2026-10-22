@@ -53,7 +53,7 @@ function Header(): React.JSX.Element {
                 </Link>
                 <Button to={'/reservation'}>Reserv</Button>
                 <div className='lg:hidden'>
-                    <IconButton icon={menuIcon} label='Toggle menu' onClick={handleMenu} />
+                    <IconButton icon={menuIcon} label='Toggle menu' expanded={active} onClick={handleMenu} />
                 </div>
             </div>
         </header>

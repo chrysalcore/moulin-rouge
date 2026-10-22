@@ -16,7 +16,7 @@ function useReveal<T extends HTMLElement>(): React.RefObject<T | null> {
         const container = ref.current
         if (!container) return
 
-        if (!('IntersectionObserver' in window)) {
+        if (typeof IntersectionObserver === 'undefined') {
             Array.from(container.children).forEach(reveal)
             return
         }
