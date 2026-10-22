@@ -8,8 +8,6 @@ export type Header = {
     desc: string
 }
 
-export type SectionType = 'about' | 'dishes' | 'contact' | 'reservation'
-
 export type BriefInfo = {
     name: string
     title: string

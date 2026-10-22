@@ -2,9 +2,8 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import useDishes from "../../../hooks/useDishes";
 import AsyncContent from "../../others/AsyncContent";
-import '../../../assets/styles/Dishes.css';
 import Dish from './Dish';
-import SectionHeader from '../../global/SectionHeader';
+import Section from '../../global/Section';
 import header from '../../../data/headers';
 
 function DishesList(): React.JSX.Element {
@@ -15,14 +14,13 @@ function DishesList(): React.JSX.Element {
 
     return (
         <AsyncContent status={dishes}>
-            <article className='dishes-container section'>
-                <SectionHeader {...header.dishes} />
-                <section className='dishes-list'>
+            <Section as='article' header={header.dishes}>
+                <div className='flex flex-wrap justify-center gap-4'>
                     {data.map(item => (
-                        <Dish {...item} key={item.id} main />
+                        <Dish {...item} key={item.id} main className='relative aspect-6/7 w-80 max-w-full transition-transform duration-300 ease-smooth hover:-translate-y-2' />
                     ))}
-                </section>
-            </article>
+                </div>
+            </Section>
         </AsyncContent>
     );
 }

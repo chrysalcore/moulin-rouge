@@ -15,7 +15,7 @@ describe('AppRouter error boundary', () => {
         const router = createMemoryRouter(routes, { initialEntries: ['/'] })
         render(<RouterProvider router={router} />, { wrapper: createProvidersWrapper() })
 
-        expect(screen.getByRole('button', { name: 'Reserv' })).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: 'Reserv' })).toBeInTheDocument()
         expect(screen.getByRole('link', { name: 'Go to Home' })).toBeInTheDocument()
     })
 })

@@ -4,13 +4,13 @@ import useCurrent from '../../hooks/useCurrent'
 
 describe('useCurrent', () => {
     it('starts at 0', () => {
-        const { result } = renderHook(() => useCurrent())
+        const { result } = renderHook(() => useCurrent(5))
 
         expect(result.current[0]).toBe(0)
     })
 
     it('advances by one on handleNext', () => {
-        const { result } = renderHook(() => useCurrent())
+        const { result } = renderHook(() => useCurrent(5))
 
         act(() => result.current[1]())
 
@@ -18,7 +18,7 @@ describe('useCurrent', () => {
     })
 
     it('wraps from the last index back to 0 on handleNext', () => {
-        const { result } = renderHook(() => useCurrent())
+        const { result } = renderHook(() => useCurrent(5))
 
         act(() => result.current[1]())
         act(() => result.current[1]())
@@ -31,7 +31,7 @@ describe('useCurrent', () => {
     })
 
     it('wraps from 0 back to the last index on handlePrev', () => {
-        const { result } = renderHook(() => useCurrent())
+        const { result } = renderHook(() => useCurrent(5))
 
         act(() => result.current[2]())
 
@@ -39,12 +39,24 @@ describe('useCurrent', () => {
     })
 
     it('goes back by one on handlePrev when not at 0', () => {
-        const { result } = renderHook(() => useCurrent())
+        const { result } = renderHook(() => useCurrent(5))
 
         act(() => result.current[1]())
         act(() => result.current[1]())
         act(() => result.current[2]())
 
         expect(result.current[0]).toBe(1)
+    })
+
+    it('wraps at the length it receives instead of a fixed number of items', () => {
+        const { result } = renderHook(() => useCurrent(3))
+
+        act(() => result.current[1]())
+        act(() => result.current[1]())
+        act(() => result.current[1]())
+        expect(result.current[0]).toBe(0)
+
+        act(() => result.current[2]())
+        expect(result.current[0]).toBe(2)
     })
 })

@@ -5,14 +5,14 @@ function Stars({ rating }: {rating: number}): React.JSX.Element {
     const gradientId = useId();
 
     return (
-        <div className="stars" role="img" aria-label={`Rated ${rating} out of 5`}>
+        <div className="flex gap-4" role="img" aria-label={`Rated ${rating} out of 5`}>
             {Array.from({ length: 5 }).map((_, index) => {
                 const starValue = index + 1;
                 const isFull = rating >= starValue;
                 const isHalf = rating >= starValue - 0.5;
 
                 return (
-                    <svg key={index} className="star" viewBox="0 0 24 24" stroke="#ffc107" strokeWidth="1" aria-hidden="true" >
+                    <svg key={index} className="w-6" viewBox="0 0 24 24" stroke="#ffc107" strokeWidth="1" aria-hidden="true" >
                         {isHalf && !isFull && (
                             <defs>
                                 <linearGradient id={gradientId}>

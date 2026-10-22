@@ -1,23 +1,17 @@
 import React from "react";
-import '../../../assets/styles/Events.css';
-import useCurrent from '../../../hooks/useCurrent';
 import Event from './Event';
-import BriefHeader from '../../global/BriefHeader';
+import Showcase from '../../global/Showcase';
 import info from '../../../data/briefs';
 import type { Event as EventType } from '../../../types';
 
 function EventList({ data }: { data: EventType[] }): React.JSX.Element {
-    const [current, handleNext, handlePrev] = useCurrent();
-
     return (
-        <article className='events section'>
-            <BriefHeader {...{ info: info[0], handleNext, handlePrev }} />
-            <section className='events-list'> 
-                { (current === 0)? <Event {...data[data.length - 1]}/> : <Event {...data[current - 1]}/>}
-                <Event {...data[current]} main />
-                { (data.length - 1 === current)? <Event {...data[0]}/> : <Event {...data[current + 1]}/>}
-            </section>
-        </article>
+        <Showcase
+            info={info[0]}
+            items={data}
+            side='right'
+            renderItem={(event, main, className) => <Event {...event} main={main} className={className} />}
+        />
     );
 }
 

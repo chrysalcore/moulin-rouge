@@ -23,7 +23,7 @@ const data: Headers = {
     },
     reservation: {
         title: 'Reservation',
-        desc: "Fill the the following fields"
+        desc: "Pick a date, tell us how many you are and we'll have your table ready."
     }
 }
 

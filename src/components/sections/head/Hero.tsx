@@ -1,13 +1,12 @@
 import React from "react";
-import Firm from '../../others/Firm';
+import Firm from './Firm';
 import SocialInfo from '../../others/SocialInfo';
-import '../../../assets/styles/Hero.css';
 
 function Hero(): React.JSX.Element {
     return (
-        <section className='hero' id='hero'>
+        <section className='mx-auto flex min-h-[min(100dvh,50rem)] w-full max-w-5xl flex-col items-center justify-evenly gap-12 px-4 py-12 text-center text-ctr lg:flex-row lg:justify-between lg:py-0 lg:text-left' id='hero'>
             <Firm />
-            <SocialInfo />
+            <SocialInfo variant='hero' />
         </section>
     );
 }

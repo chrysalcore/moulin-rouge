@@ -6,8 +6,60 @@ Preferencias generales en `~/.claude/CLAUDE.md` (que cubre solo lo transversal a
 - Tipos centralizados en `src/types/*.ts`, re-exportados por el barrel `src/types/index.ts` — importar siempre desde `'../types'`, nunca del archivo específico directo.
 - Único repo con comentarios en el código: un banner de una línea en español al inicio de cada archivo de `src/types/`. Mantener ese patrón si se agregan archivos de tipos nuevos; no extenderlo al resto del código.
 - Único repo que adoptó Conventional Commits (`feat(scope): …`, `chore(scope): …`), pero solo a partir de la migración a TS; commits previos son descriptivos sin prefijo, igual que el resto del portafolio. Confirmado por Ordnay (2026-08-09): se mantiene solo en este repo.
-- CSS global por sección en `src/assets/styles/*.css`, BEM (`form-field__input`), sin CSS Modules.
+- Estilos: **Tailwind v4**, utilidades directas en el JSX (migrado desde CSS global BEM entre el 2026-10-14 y el 2026-10-21, decisión de Ordnay). No queda ningún `.css` por sección. Ver la sección "Estilos (Tailwind v4)".
 - Punto y coma: el repo está mezclado (archivos de la migración a TanStack van sin, el resto con) y ESLint no lo enforcea. Ordnay es indiferente (2026-10-07) — no uniformar ni volver a preguntar.
+
+## Estilos (Tailwind v4)
+
+Objetivo de la migración: reutilización y coherencia visual. Tailwind 4 con `@tailwindcss/vite`; toda la config vive en `src/index.css` (`@import "tailwindcss"` + `@theme static` + `@layer base`), no hay `tailwind.config.js`.
+
+Convenciones (decididas por Ordnay durante la migración, 2026-10-14 a 2026-10-21):
+- **Escalas estándar de Tailwind** para tipografía, espaciado, radios y breakpoints: no se redefinen. Un valor nuevo va al paso más cercano de la escala; un arbitrario (`[...]`) es la excepción y se justifica (hoy: `min-h-[min(100dvh,50rem)]` del Hero y `grid-cols-[auto_1fr_auto]` de las tarjetas de Order).
+- **Criterio:** si un valor no sigue estándares de la industria (márgenes, tipografía, breakpoints, áreas táctiles, interlineado, ancho de lectura), llevarlo al estándar si el cambio visual es chico y se gana coherencia. Si se nota mucho, mostrárselo a Ordnay antes.
+- **Tokens propios solo para lo que es de marca o se repite:** paleta cerrada (`--color-*: initial` → `dom`/`com`/`ctr`/`lgh`/`surface` + `black`/`white`), fuentes cerradas (`font-sans` Work Sans, `font-display` Montserrat), `shadow-card` (tarjetas) y `animate-spin-slow` (molino de Loading). `static` emite sus variables en `:root` aunque ninguna utilidad las use.
+- **Raíz en 16px** (default del navegador): las utilidades caen en la grilla de 8pt y se respeta el tamaño de letra del usuario (WCAG 1.4.4).
+- **Áreas táctiles de 44px** (`size-11`) en botones de ícono, ícono en 24px (`size-6`).
+- **Contenedor:** `max-w-5xl` centrado dentro de `Section` (reemplazó el `padding: 15vw`).
+- **Reutilización por componente, no por `@apply`.** Variantes como objetos `{ nombre: 'clases' }` indexados por una prop (`Button`, `Section`, `Nav`, `Title`, `SocialInfo`, roles de `Showcase`). Sin `clsx`/`cva`/`tailwind-merge`: condicionales con template literals.
+- **Nunca un `className` libre que pueda chocar con las clases base del componente:** sin `tailwind-merge`, dos utilidades en conflicto (`from-dom` y `from-transparent`) no se resuelven por orden de escritura sino por el orden en que Tailwind las genera. Por eso `Section` recibe `background` como variante con nombre. Excepción deliberada: `Dish`/`Event` reciben `className` de `Showcase`/`DishesList`, pero solo con posición y tamaño, que la tarjeta no define.
+
+Componentes compartidos (`components/global/` y `components/others/`):
+- `Section`: fondo de ancho completo + contenedor `max-w-5xl`. Props `header`, `as` (`section`/`article`/`main`/`footer`), `background` (`band` por defecto; `fade` **solo** en Order, Reservations y Categories, las que siguen al Hero; `solid` en el Footer) y `ref` (prop común en React 19).
+- `SectionHeader`: el único estilo de h2 de sección (`text-3xl md:text-4xl`). `BriefHeader` repite esas clases en su h2.
+- `Button`: variantes `primary`/`secondary`/`outline`; con `to` renderiza `Link`. `type` por defecto `'button'`.
+- `IconButton`, `Main`, `ErrorNotice` (base de `ErrorMessage` y `RouteError`).
+- `Showcase<T>`: carrusel genérico de Events y Dishes con render prop `renderItem(item, main, className)`. Renderiza todos los ítems con `key` estable y asigna un rol por offset circular con signo (`getOffset` + `getRole`), así las tarjetas se animan a su nueva posición con `transition-all duration-500` (`motion-reduce:transition-none`).
+- `formatPrice` (`src/helpers/`): `Intl.NumberFormat` en USD. Usarlo para todo precio.
+
+Movimiento (agregado el 2026-10-21, intensidad "sutil" elegida por Ordnay):
+- **Dos curvas en `@theme`:** `ease-smooth` (`cubic-bezier(0.22, 1, 0.36, 1)`, arranque rápido) para **interacciones** (hover, active, menú, carrusel), y `ease-soft` (`cubic-bezier(0.33, 1, 0.68, 1)`, más moderada) para **apariciones**. Con `ease-smooth`, la aparición al hacer scroll se veía "de golpe" (0.75 de opacidad a los 200ms): no usarla para entradas.
+- **Aparición al hacer scroll:** `useReveal` (IntersectionObserver con `rootMargin` −15% abajo + MutationObserver para hijos que llegan después, como el contenido que reemplaza al Loading) marca `data-revealed`. La utilidad `*:reveal` del contenedor de `Section` hace la transición: opacidad 800ms `ease-out` y 40px de recorrido en 1000ms `ease-soft`. Primero se probó con CSS atado al scroll (`animation-timeline: view()`) y se descartó: el fundido terminaba en los últimos píxeles de la parte de abajo de la pantalla, donde nadie mira, y el Footer nunca llegaba a aparecer del todo.
+- **Hero:** utilidades propias `animate-enter` + `enter-delay-*`. El `animation` va dentro de una `@utility`, no en un token del `@theme`: una custom property que usa `var()` se resuelve donde se define (`:root`), así que un `var(--enter-delay)` dentro de un token llegaba siempre vacío. Tampoco sirve una utilidad de `animation-delay` aparte, porque el shorthand `animation` la resetea.
+- **Menú móvil:** `translate-x` (no `width`) en 300ms, `invisible` cuando está cerrado (sus links no reciben foco con Tab), fondo `bg-black/60` que cierra al tocarlo, Escape, y los links cierran en vez de alternar. El botón expone `aria-expanded`.
+- **Transiciones entre páginas:** prop `viewTransition` en todos los `Link`/`NavLink` internos (React Router 7 → `document.startViewTransition`), fundido de 300ms. Sin soporte, navega normal.
+- **Microinteracciones:** `active:scale-95` y hover por variante en `Button`, subrayado que crece en el nav del header, elevación en categorías y tarjetas del menú, rebote del contador del carrito (`key={itemCount}` vuelve a montar el `<span>` y reinicia la animación).
+- **Todo respeta `prefers-reduced-motion`** (`motion-safe:`/`motion-reduce:` o `@media` dentro de las utilidades). Foco con teclado: `:focus-visible` global con contorno `ctr`.
+- Se quitó animate.css (CDN de ~70KB que bloqueaba el render + dependencia sin usar).
+
+Reservation (rediseñada el 2026-10-21): sin foto. Formulario con campos explícitos (`Form` + `Field`) y un ticket en vivo (`sections/reservations/ReservationTicket`) que se llena mientras se escribe y recibe un sello "Confirmed" al enviar. Validación con Zod (`schemas/reservationSchema.ts`: fecha futura, 1–20 comensales) en `useReservationForm`: valida al enviar y, después del primer intento, en vivo. No hay backend: la confirmación (`ReservationConfirmation`) es el flujo de UI, listo para conectar a una API. Los errores van **fuera** del `<label>` (dentro pasaban a formar parte del nombre accesible del campo), conectados con `aria-describedby`. `color-scheme: dark` en `:root` para que los controles nativos (calendario, autocompletado) se dibujen para fondo oscuro.
+
+Gotchas:
+- El preflight resetea `h1`–`h6` a tamaño y peso heredados: todo heading necesita sus clases de tamaño y peso explícitas.
+- El preflight deja los `<button>` con `cursor: default` (desde Tailwind v4): `cursor-pointer` explícito.
+- `Event` y `AboutList` resuelven la imagen con una plantilla (`` new URL(`../assets/img/${img}`, import.meta.url) ``): Vite no puede saber cuál se usa y **empaqueta todas las imágenes de `src/assets/img/`**. No dejar ahí imágenes sin uso. Fotos nuevas: WebP, redimensionadas a lo que se muestra (las del 2026-10-21 bajaron de ~3.4MB a ~524KB en total: `head-bg` 1920px, `au-first` 960px, `valentin` WebP).
+- `* { scroll-behavior: smooth }` en `@layer base`: para medir o capturar en tests de navegador, usar `window.scrollTo({ behavior: 'instant' })`.
+
+Pendientes resueltos el 2026-10-21 (después de la migración):
+- `Order` ahora baja hasta su contenido al montar, como Menu y Reservations. El patrón repetido en las tres páginas se extrajo a `useScrollIntoView<T>()`, que devuelve el `ref`.
+- Imagen de Open Graph: `public/og-image.jpg` (1200×630, ~120KB, recorte de `head-bg.jpg`) con URL absoluta del sitio publicado, `og:image:width`/`height`/`alt` y `twitter:card`. Antes apuntaba a `/src/assets/imgs/back-hero.webp`, que no existe en producción.
+
+Pendientes de la migración, resueltos el 2026-10-21:
+- `useCurrent(length)` da la vuelta según la cantidad de ítems (antes `MAX_INDEX = 4` fijo); `Showcase` le pasa `items.length`. Lo cubre `'wraps at the length it receives…'` en `useCurrent.test.ts`, que se vio en rojo antes del arreglo.
+- `Showcase` usa offset con signo (`getOffset` → `-2…2`): las tarjetas ocultas esperan arriba (`before`) o abajo (`after`) y entran desde su lado con fundido.
+- "Check all our events!" → "Book your event!" a `/reservation` (la ruta `events` no existía). Los `ref` de `data/briefs.ts` son absolutos.
+- Íconos sociales sin `<a>` (el restaurante es ficticio, no hay URLs): lista decorativa con `aria-hidden`.
+- `Contact.href` es opcional: sin `href` (Location, Hours) se renderiza texto, no un `<a href="">` que recarga la página.
+- Se quitó "Show More" de About (botón sin acción).
 
 ## Arquitectura de estado (TanStack Query, desde 2026-10-07)
 
@@ -47,7 +99,7 @@ Consecuencias:
 
 Setup: Vitest + Testing Library + jsdom (pinneado `^27`, no `^30` — exige Node `^22.22.2`) + `@vitest/coverage-v8`, mismo patrón que `pokedex-app`. Tests en `src/tests/` espejando `src/`. Scripts: `test` (watch), `test:run`, `test:coverage`.
 
-Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-11): 91.71 / 79.66 / 89.77 / 91.76. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
+Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-21, tras animaciones y Reservation): 96.34 / 86.72 / 98.37 / 97.84. Ojo: los commits de animación `b077a75` y `eb0a70b` la habían dejado en 88.74% de statements (CI en rojo) porque se corrió `test:run` y no `test:coverage`; la recuperaron tests de comportamiento real de `useReveal` y del menú del Header (`77c9a54`). Antes de cada commit con código nuevo, correr `test:coverage`, no solo `test:run`. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
 
 Gotchas de testing a tener en cuenta en este repo:
 - `window.HTMLElement.prototype.scrollIntoView` stubbeado en `src/tests/vitest.setup.ts` — jsdom no lo implementa y `Menu.tsx`/`Reservations.tsx` lo llaman al montar.

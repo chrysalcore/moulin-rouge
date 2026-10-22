@@ -1,16 +1,16 @@
 import React from "react";
-import '../../../assets/styles/Categories.css';
 import Category from './Category';
+import Section from '../../global/Section';
 
 function Categories({ data }: { data: string[] }): React.JSX.Element {
     return (
-        <section className="categories section" id='categories'>
-            <ul className="categories-list">
+        <Section background='fade'>
+            <ul className="flex flex-wrap justify-center gap-8">
                 {data.map(item => (
                     <Category name={item} key={item} />
                 ))}
             </ul>
-        </section>
+        </Section>
     );
 }
 
