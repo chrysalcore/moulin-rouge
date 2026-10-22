@@ -3,44 +3,34 @@ import Button from "./Button";
 import type { Input } from "../../types/data";
 
 function Input({ name, type, placeholder, isInput }: Input): React.JSX.Element {
+    const field = 'border-0 border-b border-solid border-ctr bg-transparent px-4 py-3 font-sans text-base text-ctr';
+
     return (
-        <label className="form-field" htmlFor={name}>
-            <span className="form-field__text">{name}</span>
-            {isInput? 
-                <input 
-                    className="form-field__input" 
-                    type={type} 
-                    name={name} 
-                    id={name} 
-                    placeholder={placeholder} 
-                    required 
-                /> :
-                <textarea 
-                    className="form-field__input" 
-                    name={name} 
-                    id={name} 
-                    placeholder={placeholder} 
-                    rows={6} 
-                    required
-                />
+        <label className="flex flex-col gap-2" htmlFor={name}>
+            <span className="text-sm font-semibold text-lgh/70 capitalize">{name}</span>
+            {isInput ?
+                <input className={field} type={type} name={name} id={name} placeholder={placeholder} required /> :
+                <textarea className={field} name={name} id={name} placeholder={placeholder} rows={6} required />
             }
         </label>
     );
 }
 
-function Form({ data }: {data: Input[]} ): React.JSX.Element {
+function Form({ data }: { data: Input[] }): React.JSX.Element {
     return (
-        <form className="form" action="">
+        <form className="flex w-full max-w-sm flex-col gap-2" action="">
             {data.map(item => (
-                <Input 
-                    name={item.name} 
-                    type={item.type} 
-                    placeholder={item.placeholder} 
-                    isInput={item.isInput} 
-                    key={item.name} 
+                <Input
+                    name={item.name}
+                    type={item.type}
+                    placeholder={item.placeholder}
+                    isInput={item.isInput}
+                    key={item.name}
                 />
             ))}
-            <Button type='submit'>Submit</Button>
+            <div className="mt-8 self-center">
+                <Button type='submit'>Submit</Button>
+            </div>
         </form>
     );
 }
