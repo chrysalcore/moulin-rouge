@@ -35,7 +35,8 @@ The codebase is written in **React + TypeScript**. Server state (dishes and even
 - Route-level error boundary for render errors, with a fallback that keeps the layout in place.
 - Componentization with React + TypeScript.
 - Responsive UI styled with **Tailwind CSS v4**: brand tokens (closed color palette, fonts) on top of Tailwind's standard type, spacing and breakpoint scales, with shared components (`Section`, `Button`, a generic `Showcase` carousel) instead of per-section stylesheets.
-- Cyclic animations, Smooth scrolling and a fluid user experience.
+- Reservation form validated with **Zod** (future date, 1–20 guests) with accessible per-field errors, a live reservation summary that fills in as you type, and a confirmation state.
+- Motion with a shared easing scale: content revealed on scroll with `IntersectionObserver`, an animated carousel, page cross-fades with the View Transitions API, and hover/press/focus states. Everything respects `prefers-reduced-motion`.
 - Unit and integration tests (Vitest + Testing Library) covering hooks, the store and its persistence, the order flow, routing and error/retry states.
 
 ## Technologies Used
