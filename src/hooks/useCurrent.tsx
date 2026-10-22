@@ -6,25 +6,15 @@ type UseCurrentReturn = [
     handlePrev: () => void
 ]
 
-const MAX_INDEX = 4
-
-function useCurrent(): UseCurrentReturn {
+function useCurrent(length: number): UseCurrentReturn {
     const [current, setCurrent] = useState<number>(0)
 
     const handleNext = (): void => {
-        if (current === MAX_INDEX) {
-            setCurrent(0)
-        } else {
-            setCurrent(c => c + 1)
-        }
+        setCurrent(c => (c + 1) % length)
     }
 
     const handlePrev = (): void => {
-        if (current === 0) {
-            setCurrent(MAX_INDEX)
-        } else {
-            setCurrent(c => c - 1)
-        }
+        setCurrent(c => (c - 1 + length) % length)
     }
 
     return [
