@@ -1,15 +1,15 @@
 import React from "react";
 import { useRef, useEffect } from 'react';
 import Section from '../global/Section';
-import SectionHeader from '../global/SectionHeader';
 import Form from '../others/Form';
+import ReservationTicket from '../sections/reservations/ReservationTicket';
+import ReservationConfirmation from '../sections/reservations/ReservationConfirmation';
+import useReservationForm from '../../hooks/useReservationForm';
 import header from '../../data/headers';
-import { inputs as data } from '../../data/contact';
-
-const image = new URL('../../assets/img/reserv.webp', import.meta.url).href;
 
 function Reservations(): React.JSX.Element {
     const ref = useRef<HTMLElement>(null);
+    const { values, errors, reservation, handleChange, handleSubmit, handleReset } = useReservationForm();
 
     useEffect(() => {
         if (ref.current) {
@@ -18,13 +18,15 @@ function Reservations(): React.JSX.Element {
     }, []);
 
     return (
-        <Section as='main' background='fade' ref={ref}>
-            <div className='relative isolate flex w-full justify-end'>
-                <img className='absolute top-1/2 left-0 -z-10 hidden h-3/5 w-7/10 -translate-y-1/2 rounded-lg object-cover lg:block' src={image} alt='' />
-                <section className='flex w-full flex-col items-center gap-12 rounded-r-lg bg-linear-to-b from-surface to-dom px-4 py-12 lg:w-2/5 lg:min-w-100'>
-                    <SectionHeader {...header.reservation} />
-                    <Form data={data} />
-                </section>
+        <Section as='main' header={header.reservation} background='fade' ref={ref}>
+            <div className='grid w-full items-start gap-8 lg:grid-cols-2'>
+                <div className='rounded-2xl bg-surface p-6 sm:p-8'>
+                    {reservation ?
+                        <ReservationConfirmation reservation={reservation} onReset={handleReset} /> :
+                        <Form values={values} errors={errors} onChange={handleChange} onSubmit={handleSubmit} />
+                    }
+                </div>
+                <ReservationTicket values={values} confirmed={reservation !== null} />
             </div>
         </Section>
     );

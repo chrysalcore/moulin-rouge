@@ -1,4 +1,4 @@
-import type {Contact, Input} from '../types/data'
+import type { Contact } from '../types'
 
 export const contact: Contact[] = [
     {
@@ -18,32 +18,5 @@ export const contact: Contact[] = [
     {
         name: 'Hours',
         text: 'Tuesday - Saturday, 10:00a.m - 8:00p.m'
-    }
-]
-
-export const inputs: Input[] = [
-    {
-        name: 'name',
-        type: 'text',
-        placeholder: 'John Doe',
-        isInput: true
-    },
-    {
-        name: 'date',
-        type: 'datetime-local',
-        placeholder: '',
-        isInput: true
-    },
-    {
-        name: 'email',
-        type: 'email',
-        placeholder: 'johndoe@gmail.com',
-        isInput: true
-    },
-    {
-        name: 'capacity',
-        type: 'number',
-        placeholder: '6',
-        isInput: true
     }
 ]

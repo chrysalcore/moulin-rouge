@@ -21,6 +21,14 @@
 
   --animate-spin-slow: spin 3s linear infinite;
   --animate-bump: bump 300ms var(--ease-smooth);
+  --animate-stamp: stamp 400ms var(--ease-smooth) both;
+
+  @keyframes stamp {
+    from {
+      opacity: 0;
+      scale: 1.8;
+    }
+  }
 
   @keyframes bump {
     50% {
@@ -91,6 +99,7 @@
   }
 
   :root {
+    color-scheme: dark;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
