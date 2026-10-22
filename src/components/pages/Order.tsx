@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import useDishes from "../../hooks/useDishes";
+import useScrollIntoView from "../../hooks/useScrollIntoView";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { dishAdded, dishDecremented, dishRemoved, orderCleared, selectItems } from '../../store/orderSlice';
 import AsyncContent from '../others/AsyncContent';
@@ -15,6 +16,7 @@ const moreIcon = new URL('../../assets/icons/more.svg', import.meta.url).href;
 const cancelIcon = new URL('../../assets/icons/cancel.svg', import.meta.url).href;
 
 function Order(): React.JSX.Element {
+    const ref = useScrollIntoView<HTMLElement>();
     const dispatch = useAppDispatch();
     const items = useAppSelector(selectItems);
     const dishes = useDishes();
@@ -26,7 +28,7 @@ function Order(): React.JSX.Element {
     const subtotal = lines.reduce((sum, line) => sum + line.total, 0);
 
     return (
-        <Section as='main' header={header.order} background='fade'>
+        <Section as='main' header={header.order} background='fade' ref={ref}>
             <AsyncContent status={dishes}>
                 {lines.length === 0 ?
                     <p className='text-lgh'>

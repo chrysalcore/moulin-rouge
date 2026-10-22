@@ -1,21 +1,15 @@
 import React from "react";
-import { useRef, useEffect } from 'react';
 import Section from '../global/Section';
 import Form from '../others/Form';
 import ReservationTicket from '../sections/reservations/ReservationTicket';
 import ReservationConfirmation from '../sections/reservations/ReservationConfirmation';
 import useReservationForm from '../../hooks/useReservationForm';
+import useScrollIntoView from '../../hooks/useScrollIntoView';
 import header from '../../data/headers';
 
 function Reservations(): React.JSX.Element {
-    const ref = useRef<HTMLElement>(null);
+    const ref = useScrollIntoView<HTMLElement>();
     const { values, errors, reservation, handleChange, handleSubmit, handleReset } = useReservationForm();
-
-    useEffect(() => {
-        if (ref.current) {
-            ref.current.scrollIntoView();
-        }
-    }, []);
 
     return (
         <Section as='main' header={header.reservation} background='fade' ref={ref}>
