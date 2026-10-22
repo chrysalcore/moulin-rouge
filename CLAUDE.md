@@ -31,10 +31,26 @@ Componentes compartidos (`components/global/` y `components/others/`):
 - `Showcase<T>`: carrusel genérico de Events y Dishes con render prop `renderItem(item, main, className)`. Renderiza todos los ítems con `key` estable y asigna un rol por offset circular con signo (`getOffset` + `getRole`), así las tarjetas se animan a su nueva posición con `transition-all duration-500` (`motion-reduce:transition-none`).
 - `formatPrice` (`src/helpers/`): `Intl.NumberFormat` en USD. Usarlo para todo precio.
 
+Movimiento (agregado el 2026-10-21, intensidad "sutil" elegida por Ordnay):
+- **Dos curvas en `@theme`:** `ease-smooth` (`cubic-bezier(0.22, 1, 0.36, 1)`, arranque rápido) para **interacciones** (hover, active, menú, carrusel), y `ease-soft` (`cubic-bezier(0.33, 1, 0.68, 1)`, más moderada) para **apariciones**. Con `ease-smooth`, la aparición al hacer scroll se veía "de golpe" (0.75 de opacidad a los 200ms): no usarla para entradas.
+- **Aparición al hacer scroll:** `useReveal` (IntersectionObserver con `rootMargin` −15% abajo + MutationObserver para hijos que llegan después, como el contenido que reemplaza al Loading) marca `data-revealed`. La utilidad `*:reveal` del contenedor de `Section` hace la transición: opacidad 800ms `ease-out` y 40px de recorrido en 1000ms `ease-soft`. Primero se probó con CSS atado al scroll (`animation-timeline: view()`) y se descartó: el fundido terminaba en los últimos píxeles de la parte de abajo de la pantalla, donde nadie mira, y el Footer nunca llegaba a aparecer del todo.
+- **Hero:** utilidades propias `animate-enter` + `enter-delay-*`. El `animation` va dentro de una `@utility`, no en un token del `@theme`: una custom property que usa `var()` se resuelve donde se define (`:root`), así que un `var(--enter-delay)` dentro de un token llegaba siempre vacío. Tampoco sirve una utilidad de `animation-delay` aparte, porque el shorthand `animation` la resetea.
+- **Menú móvil:** `translate-x` (no `width`) en 300ms, `invisible` cuando está cerrado (sus links no reciben foco con Tab), fondo `bg-black/60` que cierra al tocarlo, Escape, y los links cierran en vez de alternar. El botón expone `aria-expanded`.
+- **Transiciones entre páginas:** prop `viewTransition` en todos los `Link`/`NavLink` internos (React Router 7 → `document.startViewTransition`), fundido de 300ms. Sin soporte, navega normal.
+- **Microinteracciones:** `active:scale-95` y hover por variante en `Button`, subrayado que crece en el nav del header, elevación en categorías y tarjetas del menú, rebote del contador del carrito (`key={itemCount}` vuelve a montar el `<span>` y reinicia la animación).
+- **Todo respeta `prefers-reduced-motion`** (`motion-safe:`/`motion-reduce:` o `@media` dentro de las utilidades). Foco con teclado: `:focus-visible` global con contorno `ctr`.
+- Se quitó animate.css (CDN de ~70KB que bloqueaba el render + dependencia sin usar).
+
+Reservation (rediseñada el 2026-10-21): sin foto. Formulario con campos explícitos (`Form` + `Field`) y un ticket en vivo (`sections/reservations/ReservationTicket`) que se llena mientras se escribe y recibe un sello "Confirmed" al enviar. Validación con Zod (`schemas/reservationSchema.ts`: fecha futura, 1–20 comensales) en `useReservationForm`: valida al enviar y, después del primer intento, en vivo. No hay backend: la confirmación (`ReservationConfirmation`) es el flujo de UI, listo para conectar a una API. Los errores van **fuera** del `<label>` (dentro pasaban a formar parte del nombre accesible del campo), conectados con `aria-describedby`. `color-scheme: dark` en `:root` para que los controles nativos (calendario, autocompletado) se dibujen para fondo oscuro.
+
 Gotchas:
 - El preflight resetea `h1`–`h6` a tamaño y peso heredados: todo heading necesita sus clases de tamaño y peso explícitas.
 - El preflight deja los `<button>` con `cursor: default` (desde Tailwind v4): `cursor-pointer` explícito.
 - `* { scroll-behavior: smooth }` en `@layer base`: para medir o capturar en tests de navegador, usar `window.scrollTo({ behavior: 'instant' })`.
+
+Pendientes resueltos el 2026-10-21 (después de la migración):
+- `Order` ahora baja hasta su contenido al montar, como Menu y Reservations. El patrón repetido en las tres páginas se extrajo a `useScrollIntoView<T>()`, que devuelve el `ref`.
+- Imagen de Open Graph: `public/og-image.jpg` (1200×630, ~120KB, recorte de `head-bg.jpg`) con URL absoluta del sitio publicado, `og:image:width`/`height`/`alt` y `twitter:card`. Antes apuntaba a `/src/assets/imgs/back-hero.webp`, que no existe en producción.
 
 Pendientes de la migración, resueltos el 2026-10-21:
 - `useCurrent(length)` da la vuelta según la cantidad de ítems (antes `MAX_INDEX = 4` fijo); `Showcase` le pasa `items.length`. Lo cubre `'wraps at the length it receives…'` en `useCurrent.test.ts`, que se vio en rojo antes del arreglo.
@@ -82,7 +98,7 @@ Consecuencias:
 
 Setup: Vitest + Testing Library + jsdom (pinneado `^27`, no `^30` — exige Node `^22.22.2`) + `@vitest/coverage-v8`, mismo patrón que `pokedex-app`. Tests en `src/tests/` espejando `src/`. Scripts: `test` (watch), `test:run`, `test:coverage`.
 
-Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-21, tras la migración a Tailwind y sus pendientes): 91.62 / 80.82 / 91.83 / 92.03. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
+Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-21, tras animaciones y Reservation): 96.34 / 86.72 / 98.37 / 97.84. Ojo: los commits de animación `b077a75` y `eb0a70b` la habían dejado en 88.74% de statements (CI en rojo) porque se corrió `test:run` y no `test:coverage`; la recuperaron tests de comportamiento real de `useReveal` y del menú del Header (`77c9a54`). Antes de cada commit con código nuevo, correr `test:coverage`, no solo `test:run`. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
 
 Gotchas de testing a tener en cuenta en este repo:
 - `window.HTMLElement.prototype.scrollIntoView` stubbeado en `src/tests/vitest.setup.ts` — jsdom no lo implementa y `Menu.tsx`/`Reservations.tsx` lo llaman al montar.
