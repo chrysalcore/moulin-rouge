@@ -13,12 +13,10 @@ export const contact: Contact[] = [
     },
     {
         name: 'Location',
-        href: '',
         text: 'Republica #170, Camaguey Cuba'
     },
     {
         name: 'Hours',
-        href: '',
         text: 'Tuesday - Saturday, 10:00a.m - 8:00p.m'
     }
 ]

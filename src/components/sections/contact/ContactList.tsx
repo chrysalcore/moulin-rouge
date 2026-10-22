@@ -6,7 +6,7 @@ function ContactItem({ name, href, text }: Contact): React.JSX.Element {
     return (
         <li className="w-full max-w-60 justify-self-center border-t-2 border-com p-4 text-center">
             <h3 className="text-base font-bold text-com">{name}</h3>
-            <a className="text-sm text-lgh" href={href}>{text}</a>
+            {href ? <a className="text-sm text-lgh" href={href}>{text}</a> : <p className="text-sm text-lgh">{text}</p>}
         </li>
     );
 }

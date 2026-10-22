@@ -7,7 +7,7 @@ export type About = {
 
 export type Contact = {
     name: string,
-    href: string,
+    href?: string,
     text: string
 }
 
