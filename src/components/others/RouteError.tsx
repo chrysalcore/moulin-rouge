@@ -1,16 +1,12 @@
 import React from "react";
 import Button from "./Button";
-import '../../assets/styles/Error.css';
+import ErrorNotice from "./ErrorNotice";
 
 function RouteError(): React.JSX.Element {
     return (
-        <div className="error section">
-            <div className="error__text">
-                <h2 className="error__title">Something went wrong</h2>
-                <p className="error__desc">Please go back to the home page and try again</p>
-            </div>
+        <ErrorNotice title="Something went wrong" desc="Please go back to the home page and try again">
             <Button to={'/'}>Go to Home</Button>
-        </div>
+        </ErrorNotice>
     );
 }
 

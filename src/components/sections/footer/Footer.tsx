@@ -1,11 +1,11 @@
 import React from "react";
-import "../../../assets/styles/Footer.css";
+import Section from "../../global/Section";
 
 function Footer({ children }: { children: React.ReactNode }): React.JSX.Element {
     return (
-        <footer className="footer section">
+        <Section as='footer' background='solid'>
             {children}
-        </footer>
+        </Section>
     );
 }
 

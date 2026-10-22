@@ -1,16 +1,16 @@
 import React from "react";
-import '../../assets/styles/Loading.css';
+import Section from "../global/Section";
+
+const mill = new URL("../../assets/icons/mill.svg", import.meta.url).href;
 
 function Loading(): React.JSX.Element {
     return (
-        <div className="loading section">
-            <img 
-                className="loading__img" 
-                src={new URL("../../assets/icons/mill.svg", import.meta.url).href} 
-                alt="mill icon" 
-            />
-            <h2 className="loading__text">Loading...</h2>
-        </div>
+        <Section>
+            <div className="flex items-center gap-4" role="status">
+                <img className="size-12 animate-spin-slow motion-reduce:animate-none" src={mill} alt="" />
+                <p className="text-3xl font-bold">Loading...</p>
+            </div>
+        </Section>
     );
 }
 

@@ -17,6 +17,8 @@
   --font-display: Montserrat, sans-serif;
 
   --shadow-card: 0 0 1rem var(--color-black);
+
+  --animate-spin-slow: spin 3s linear infinite;
 }
 
 @layer base {
