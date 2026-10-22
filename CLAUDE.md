@@ -28,7 +28,7 @@ Componentes compartidos (`components/global/` y `components/others/`):
 - `SectionHeader`: el único estilo de h2 de sección (`text-3xl md:text-4xl`). `BriefHeader` repite esas clases en su h2.
 - `Button`: variantes `primary`/`secondary`/`outline`; con `to` renderiza `Link`. `type` por defecto `'button'`.
 - `IconButton`, `Main`, `ErrorNotice` (base de `ErrorMessage` y `RouteError`).
-- `Showcase<T>`: carrusel genérico de Events y Dishes con render prop `renderItem(item, main, className)`. Renderiza todos los ítems con `key` estable y asigna un rol por offset circular (`getRole`), así las tarjetas se animan a su nueva posición con `transition-all duration-500` (`motion-reduce:transition-none`).
+- `Showcase<T>`: carrusel genérico de Events y Dishes con render prop `renderItem(item, main, className)`. Renderiza todos los ítems con `key` estable y asigna un rol por offset circular con signo (`getOffset` + `getRole`), así las tarjetas se animan a su nueva posición con `transition-all duration-500` (`motion-reduce:transition-none`).
 - `formatPrice` (`src/helpers/`): `Intl.NumberFormat` en USD. Usarlo para todo precio.
 
 Gotchas:
@@ -36,12 +36,13 @@ Gotchas:
 - El preflight deja los `<button>` con `cursor: default` (desde Tailwind v4): `cursor-pointer` explícito.
 - `* { scroll-behavior: smooth }` en `@layer base`: para medir o capturar en tests de navegador, usar `window.scrollTo({ behavior: 'instant' })`.
 
-Pendientes detectados durante la migración (sin resolver):
-- `useCurrent` tiene `MAX_INDEX = 4` fijo: asume que todo `Showcase` recibe exactamente 5 ítems. Con menos, `current` puede apuntar a un índice inexistente. Arreglo natural: `useCurrent(items.length)`.
-- El enlace "Check all our events!" (`data/briefs.ts`, `ref: 'events'`) apunta a una ruta que no existe: la ruta catchall `*` lo manda al inicio. Decidir si se quita o adónde apunta.
-- Opcional en `Showcase`: offset con signo en `getRole` (`-2…2` en vez de `0…4`) para que las tarjetas ocultas esperen de su lado y entren desde abajo/arriba en lugar de desde el centro.
-- Los links sociales tienen `href=""` (sin URLs reales).
-- "Show More" de About es un botón sin acción.
+Pendientes de la migración, resueltos el 2026-10-21:
+- `useCurrent(length)` da la vuelta según la cantidad de ítems (antes `MAX_INDEX = 4` fijo); `Showcase` le pasa `items.length`. Lo cubre `'wraps at the length it receives…'` en `useCurrent.test.ts`, que se vio en rojo antes del arreglo.
+- `Showcase` usa offset con signo (`getOffset` → `-2…2`): las tarjetas ocultas esperan arriba (`before`) o abajo (`after`) y entran desde su lado con fundido.
+- "Check all our events!" → "Book your event!" a `/reservation` (la ruta `events` no existía). Los `ref` de `data/briefs.ts` son absolutos.
+- Íconos sociales sin `<a>` (el restaurante es ficticio, no hay URLs): lista decorativa con `aria-hidden`.
+- `Contact.href` es opcional: sin `href` (Location, Hours) se renderiza texto, no un `<a href="">` que recarga la página.
+- Se quitó "Show More" de About (botón sin acción).
 
 ## Arquitectura de estado (TanStack Query, desde 2026-10-07)
 
@@ -81,7 +82,7 @@ Consecuencias:
 
 Setup: Vitest + Testing Library + jsdom (pinneado `^27`, no `^30` — exige Node `^22.22.2`) + `@vitest/coverage-v8`, mismo patrón que `pokedex-app`. Tests en `src/tests/` espejando `src/`. Scripts: `test` (watch), `test:run`, `test:coverage`.
 
-Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-21, tras la migración a Tailwind): 91.74 / 84.93 / 91.75 / 92.15. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
+Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-21, tras la migración a Tailwind y sus pendientes): 91.62 / 80.82 / 91.83 / 92.03. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
 
 Gotchas de testing a tener en cuenta en este repo:
 - `window.HTMLElement.prototype.scrollIntoView` stubbeado en `src/tests/vitest.setup.ts` — jsdom no lo implementa y `Menu.tsx`/`Reservations.tsx` lo llaman al montar.
