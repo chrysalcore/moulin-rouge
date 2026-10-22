@@ -6,33 +6,42 @@ Preferencias generales en `~/.claude/CLAUDE.md` (que cubre solo lo transversal a
 - Tipos centralizados en `src/types/*.ts`, re-exportados por el barrel `src/types/index.ts` — importar siempre desde `'../types'`, nunca del archivo específico directo.
 - Único repo con comentarios en el código: un banner de una línea en español al inicio de cada archivo de `src/types/`. Mantener ese patrón si se agregan archivos de tipos nuevos; no extenderlo al resto del código.
 - Único repo que adoptó Conventional Commits (`feat(scope): …`, `chore(scope): …`), pero solo a partir de la migración a TS; commits previos son descriptivos sin prefijo, igual que el resto del portafolio. Confirmado por Ordnay (2026-08-09): se mantiene solo en este repo.
-- Estilos: **en migración de CSS global BEM a Tailwind v4** (decisión de Ordnay, 2026-10-14). Lo nuevo o migrado va con utilidades de Tailwind en el JSX; lo que todavía no se migró sigue en `src/assets/styles/*.css` con BEM. Ver la sección "Migración a Tailwind".
+- Estilos: **Tailwind v4**, utilidades directas en el JSX (migrado desde CSS global BEM entre el 2026-10-14 y el 2026-10-21, decisión de Ordnay). No queda ningún `.css` por sección. Ver la sección "Estilos (Tailwind v4)".
 - Punto y coma: el repo está mezclado (archivos de la migración a TanStack van sin, el resto con) y ESLint no lo enforcea. Ordnay es indiferente (2026-10-07) — no uniformar ni volver a preguntar.
 
-## Migración a Tailwind (en curso, desde 2026-10-14)
+## Estilos (Tailwind v4)
 
-Objetivo: reutilización y coherencia visual en todo el sitio. Tailwind 4 con `@tailwindcss/vite`; la config vive en `src/index.css` (`@theme static`), no hay `tailwind.config.js`.
+Objetivo de la migración: reutilización y coherencia visual. Tailwind 4 con `@tailwindcss/vite`; toda la config vive en `src/index.css` (`@import "tailwindcss"` + `@theme static` + `@layer base`), no hay `tailwind.config.js`.
 
-- **Escalas estándar de Tailwind** para tipografía, espaciado, radios y breakpoints (decisión de Ordnay, 2026-10-14): no se redefinen. Al migrar, cada valor viejo va al paso más cercano de la escala (ej. `1.3rem` → `text-xl`, `0.3rem` de radio → `rounded-sm`). Un arbitrario (`[...]`) es la excepción y se justifica.
-- **Paleta cerrada:** `--color-*: initial` deja solo los colores del sitio (`dom`/`com`/`ctr`/`lgh`/`surface` + `black`/`white`). Es identidad de marca, no tiene estándar contra el cual normalizar. Fuentes también cerradas: `font-sans` (Work Sans) y `font-display` (Montserrat).
-- **Raíz en 16px** (default del navegador; antes era `18px` fijo): con eso las utilidades caen en la grilla de 8pt (`p-2` = 8px, `size-6` = 24px). Con 18px todo quedaba desplazado 12.5%. Respeta además el tamaño de letra que configura el usuario (WCAG 1.4.4).
-- **Áreas táctiles de 44px** (`size-11`) en botones de ícono, con el ícono en 24px (`size-6`): Apple HIG/Material, por encima del mínimo de 24px de WCAG 2.2 AA.
-- **`@theme static`** emite en `:root` las variables de ese bloque (colores y fuentes) aunque ninguna utilidad las use, porque el CSS BEM sin migrar todavía lee `var(--color-dom)` etc. Las escalas por defecto de Tailwind siguen con tree-shaking: solo se emiten las que se usan.
-- **Reutilización por componente, no por `@apply`** (ej. `IconButton`). Sin `clsx`/`cva`: condicionales con template literals.
-- **Criterio de la migración (pedido de Ordnay):** al migrar cada sección, revisar los valores que no siguen estándares de la industria (márgenes, tipografía, breakpoints, áreas táctiles, interlineado, ancho de lectura) y llevarlos al estándar **si el cambio visual es chico y se gana coherencia**. Si en una sección el cambio se nota mucho, mostrárselo antes de seguir.
+Convenciones (decididas por Ordnay durante la migración, 2026-10-14 a 2026-10-21):
+- **Escalas estándar de Tailwind** para tipografía, espaciado, radios y breakpoints: no se redefinen. Un valor nuevo va al paso más cercano de la escala; un arbitrario (`[...]`) es la excepción y se justifica (hoy: `min-h-[min(100dvh,50rem)]` del Hero y `grid-cols-[auto_1fr_auto]` de las tarjetas de Order).
+- **Criterio:** si un valor no sigue estándares de la industria (márgenes, tipografía, breakpoints, áreas táctiles, interlineado, ancho de lectura), llevarlo al estándar si el cambio visual es chico y se gana coherencia. Si se nota mucho, mostrárselo a Ordnay antes.
+- **Tokens propios solo para lo que es de marca o se repite:** paleta cerrada (`--color-*: initial` → `dom`/`com`/`ctr`/`lgh`/`surface` + `black`/`white`), fuentes cerradas (`font-sans` Work Sans, `font-display` Montserrat), `shadow-card` (tarjetas) y `animate-spin-slow` (molino de Loading). `static` emite sus variables en `:root` aunque ninguna utilidad las use.
+- **Raíz en 16px** (default del navegador): las utilidades caen en la grilla de 8pt y se respeta el tamaño de letra del usuario (WCAG 1.4.4).
+- **Áreas táctiles de 44px** (`size-11`) en botones de ícono, ícono en 24px (`size-6`).
+- **Contenedor:** `max-w-5xl` centrado dentro de `Section` (reemplazó el `padding: 15vw`).
+- **Reutilización por componente, no por `@apply`.** Variantes como objetos `{ nombre: 'clases' }` indexados por una prop (`Button`, `Section`, `Nav`, `Title`, `SocialInfo`, roles de `Showcase`). Sin `clsx`/`cva`/`tailwind-merge`: condicionales con template literals.
+- **Nunca un `className` libre que pueda chocar con las clases base del componente:** sin `tailwind-merge`, dos utilidades en conflicto (`from-dom` y `from-transparent`) no se resuelven por orden de escritura sino por el orden en que Tailwind las genera. Por eso `Section` recibe `background` como variante con nombre. Excepción deliberada: `Dish`/`Event` reciben `className` de `Showcase`/`DishesList`, pero solo con posición y tamaño, que la tarjeta no define.
 
-Gotchas mientras convivan BEM y Tailwind:
-- **Sin preflight** (`@import "tailwindcss/theme.css"` + `utilities.css`, no `"tailwindcss"` entero) hasta migrar la última sección: el reset de Tailwind cambiaría el aspecto de lo no migrado. Consecuencia: los `<button>` no heredan tipografía ni fondo, hay que darles `text-base` y `bg-transparent`/`border-none` explícitos.
-- **El CSS sin layer le gana a cualquier `@layer`**, por eso las reglas globales de `index.css` están en `@layer base`. Los `.css` BEM siguen sin layer: **no mezclar una clase BEM y utilidades de Tailwind en el mismo elemento** (la BEM pisa a la utilidad sin importar la especificidad).
-- `:root` todavía tiene `line-height: 1.5em`: el `em` hereda el valor calculado (24px) y no el factor, por eso hay overrides a mano en `Hero.css`/`Footer.css`. Se cambia a `1.5` sin unidad en el paso final, junto con el preflight. Las utilidades `text-*` ya traen su propio interlineado.
+Componentes compartidos (`components/global/` y `components/others/`):
+- `Section`: fondo de ancho completo + contenedor `max-w-5xl`. Props `header`, `as` (`section`/`article`/`main`/`footer`), `background` (`band` por defecto; `fade` **solo** en Order, Reservations y Categories, las que siguen al Hero; `solid` en el Footer) y `ref` (prop común en React 19).
+- `SectionHeader`: el único estilo de h2 de sección (`text-3xl md:text-4xl`). `BriefHeader` repite esas clases en su h2.
+- `Button`: variantes `primary`/`secondary`/`outline`; con `to` renderiza `Link`. `type` por defecto `'button'`.
+- `IconButton`, `Main`, `ErrorNotice` (base de `ErrorMessage` y `RouteError`).
+- `Showcase<T>`: carrusel genérico de Events y Dishes con render prop `renderItem(item, main, className)`. Renderiza todos los ítems con `key` estable y asigna un rol por offset circular (`getRole`), así las tarjetas se animan a su nueva posición con `transition-all duration-500` (`motion-reduce:transition-none`).
+- `formatPrice` (`src/helpers/`): `Intl.NumberFormat` en USD. Usarlo para todo precio.
 
-Pasos (un commit por paso):
-- [x] Setup + tokens + raíz 16px + `Order` (+ `IconButton`).
-- [ ] Base compartida de `App.css`: `.section`/`Section`, `SectionHeader`, `BriefHeader`, `.btn`/`CTA` (que pueda renderizar como `Link`), `.main`.
-- [ ] Header (`<section>` → `<header>`, "Reserv" como `Link`).
-- [ ] Hero (`Title`/`Slogan`/`Firm`/`SocialInfo`): `<h1>` en el título, slogan como `<p>`, título responsive con la escala (`text-5xl md:text-7xl` o similar).
-- [ ] Categories, Dishes (`formatPrice`), Events, About, Contact, Reservations/Form, Footer, Loading/Error.
-- [ ] Final: borrar `src/assets/styles/` y `App.css`, activar preflight, `line-height: 1.5` en `:root`. Los breakpoints sueltos (400/600/900px) se llevan a los de Tailwind (`sm` 640 / `md` 768 / `lg` 1024) sección por sección al migrar.
+Gotchas:
+- El preflight resetea `h1`–`h6` a tamaño y peso heredados: todo heading necesita sus clases de tamaño y peso explícitas.
+- El preflight deja los `<button>` con `cursor: default` (desde Tailwind v4): `cursor-pointer` explícito.
+- `* { scroll-behavior: smooth }` en `@layer base`: para medir o capturar en tests de navegador, usar `window.scrollTo({ behavior: 'instant' })`.
+
+Pendientes detectados durante la migración (sin resolver):
+- `useCurrent` tiene `MAX_INDEX = 4` fijo: asume que todo `Showcase` recibe exactamente 5 ítems. Con menos, `current` puede apuntar a un índice inexistente. Arreglo natural: `useCurrent(items.length)`.
+- El enlace "Check all our events!" (`data/briefs.ts`, `ref: 'events'`) apunta a una ruta que no existe: la ruta catchall `*` lo manda al inicio. Decidir si se quita o adónde apunta.
+- Opcional en `Showcase`: offset con signo en `getRole` (`-2…2` en vez de `0…4`) para que las tarjetas ocultas esperen de su lado y entren desde abajo/arriba en lugar de desde el centro.
+- Los links sociales tienen `href=""` (sin URLs reales).
+- "Show More" de About es un botón sin acción.
 
 ## Arquitectura de estado (TanStack Query, desde 2026-10-07)
 
@@ -72,7 +81,7 @@ Consecuencias:
 
 Setup: Vitest + Testing Library + jsdom (pinneado `^27`, no `^30` — exige Node `^22.22.2`) + `@vitest/coverage-v8`, mismo patrón que `pokedex-app`. Tests en `src/tests/` espejando `src/`. Scripts: `test` (watch), `test:run`, `test:coverage`.
 
-Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-11): 91.71 / 79.66 / 89.77 / 91.76. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
+Thresholds en `vite.config.ts` calibrados a la cobertura real (90/76/88/89): Ordnay no escribe tests solo para subir el número ("no sirve hacer test solo por coverage, esos tests no cubrirían nada"). Cobertura actual (2026-10-21, tras la migración a Tailwind): 91.74 / 84.93 / 91.75 / 92.15. Los commits de Redux la habían bajado por debajo de los cuatro thresholds (CI en rojo) porque `Stars.tsx` quedó sin ejecutar: la API no manda `rating`. La recuperó el test de `Stars`, que cubre comportamiento real, sin tocar los thresholds. Gap de cobertura conocido y aceptado: `Reservations.tsx`/`Form.tsx` (markup estático, sin test dedicado), los handlers de `Header.tsx`, `src/router` y ramas defensivas puntuales (ej. el `catch` de `setItem` en `orderStorage.ts`).
 
 Gotchas de testing a tener en cuenta en este repo:
 - `window.HTMLElement.prototype.scrollIntoView` stubbeado en `src/tests/vitest.setup.ts` — jsdom no lo implementa y `Menu.tsx`/`Reservations.tsx` lo llaman al montar.
