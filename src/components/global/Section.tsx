@@ -1,5 +1,6 @@
 import React from "react";
 import SectionHeader from './SectionHeader';
+import useReveal from '../../hooks/useReveal';
 import type { Header } from '../../types';
 
 const backgrounds = {
@@ -17,9 +18,11 @@ type SectionProps = {
 }
 
 function Section({ children, header, as: Tag = 'section', background = 'band', ref }: SectionProps): React.JSX.Element {
+    const revealRef = useReveal<HTMLDivElement>();
+
     return (
         <Tag ref={ref} className={`px-4 py-24 text-ctr ${backgrounds[background]}`}>
-            <div className='mx-auto flex w-full max-w-5xl flex-col items-center gap-20'>
+            <div ref={revealRef} className='mx-auto flex w-full max-w-5xl flex-col items-center gap-20 *:reveal'>
                 {header && <SectionHeader {...header} />}
                 {children}
             </div>
