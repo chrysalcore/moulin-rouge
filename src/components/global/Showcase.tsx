@@ -46,7 +46,7 @@ function Showcase<T>({ info, items, side, renderItem }: ShowcaseProps<T>): React
         <Section as='article'>
             <div className={`flex w-full flex-wrap justify-between gap-20 ${layout}`}>
                 <BriefHeader info={info} handleNext={handleNext} handlePrev={handlePrev} />
-                <div className='relative flex min-h-160 grow basis-80'>
+                <div className='relative flex min-h-160 grow basis-80 overflow-x-clip'>
                     {items.map((item, index) => {
                         const role = getRole(getOffset(index, current, items.length));
 

@@ -51,7 +51,7 @@ function Header(): React.JSX.Element {
                     <img className='size-7 transition-transform duration-200 ease-smooth hover:scale-110' src={cartIcon} alt='' />
                     <span key={itemCount} className='absolute -right-2 bottom-0 flex size-4 items-center justify-center rounded-full bg-com text-xs font-semibold motion-safe:animate-bump'>{itemCount}</span>
                 </Link>
-                <Button to={'/reservation'}>Reserv</Button>
+                <Button to={'/reservation'}>Reserve</Button>
                 <div className='lg:hidden'>
                     <IconButton icon={menuIcon} label='Toggle menu' expanded={active} onClick={handleMenu} />
                 </div>
